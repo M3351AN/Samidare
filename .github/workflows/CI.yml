@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         toolset: [ClangCL, MSVC]
-        configuration: [Debug, Ring3]
+        configuration: [Debug, Ring0, Ring3, Ring3 FIFO]
     steps:
     - uses: actions/checkout@v4
     - name: Add msbuild to PATH
