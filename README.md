@@ -10,6 +10,63 @@
 - Basic config system with yaml-cpp
 - Customizable i18n system with yaml-cpp
 - Random title with 风花雪月
+- Visible check with vphys parser
+- Auto teamcheck with cvar finder
+- Bypass Capture ability
+## Functions
+
+<details>
+<summary>Legit</summary>
+  
+- Customizable Aim Assist
+- Customizable Triggerbot
+- Customizable RCS
+</details>
+
+![Screenshot 2025-06-13 062118](https://github.com/user-attachments/assets/7f314185-98ed-4e48-a62a-f8db5d5b3deb)
+
+<details>
+
+<summary>Visuals</summary>
+  
+- Customizable player ESP
+- Bomb ESP
+- Customizable Radar
+</details>
+
+![Screenshot 2025-06-13 062148](https://github.com/user-attachments/assets/21fcd5a5-d3b6-4d1f-adb0-0aa60f6f4f44)
+
+<details>
+<summary>Miscs</summary>
+
+- Sonar
+- Pitch indicator
+- Bomb timer with damage calculation
+- Spectator List
+- Closest Enemy info
+- Fast stop
+</details>
+
+![Screenshot 2025-06-13 062219](https://github.com/user-attachments/assets/9f93a50a-30b1-451d-a9b3-f2789b0fb273)
+
+<details>
+<summary>Settings</summary>
+  
+- Build Info
+- Config Saver
+- Force Team Check Switch
+- Bypass Capture
+</details>
+
+![Screenshot 2025-06-13 062258](https://github.com/user-attachments/assets/4a7649f0-146d-40a8-851f-e1405725e4f9)
+
+<details>
+<summary>Experimental</summary>
+  
+- Performances Settings
+</details>
+
+![Screenshot 2025-06-13 062307](https://github.com/user-attachments/assets/d4477133-4f01-4ca2-99e1-76ac4a6746ab)
 
 ## Related
 - [UkiaRPM](https://github.com/M3351AN/UkiaRPM) as start point.
