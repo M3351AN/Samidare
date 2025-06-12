@@ -10,6 +10,52 @@
 - Basic config system with yaml-cpp
 - Customizable i18n system with yaml-cpp
 - Random title with 风花雪月
+- Visible check with vphys parser
+- Auto teamcheck with cvar finder
+- Bypass Capture ability
+## Functions
+
+<details>
+<summary>Legit</summary>
+  
+- Customizable Aim Assist
+- Customizable Triggerbot
+- Customizable RCS
+</details>
+
+<details>
+<summary>Visuals</summary>
+  
+- Customizable player ESP
+- Bomb ESP
+- Customizable Radar
+</details>
+
+<details>
+<summary>Miscs</summary>
+
+- Sonar
+- Pitch indicator
+- Bomb timer with damage calculation
+- Spectator List
+- Closest Enemy info
+- Fast stop
+</details>
+
+<details>
+<summary>Settings</summary>
+  
+- Build Info
+- Config Saver
+- Force Team Check Switch
+- Bypass Capture
+</details>
+
+<details>
+<summary>Experimental</summary>
+  
+- Performances Settings
+</details>
 
 ## Related
 - [UkiaRPM](https://github.com/M3351AN/UkiaRPM) as start point.
