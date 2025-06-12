@@ -16,7 +16,7 @@
 #include "Game.h"
 
 #ifndef CS_VERSION
-#define CS_VERSION 14083
+#define CS_VERSION 14084
 #endif
 
 enum BONEINDEX : DWORD {
