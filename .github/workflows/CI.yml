@@ -1,0 +1,36 @@
+name: CI
+
+on: 
+  workflow_dispatch: ~
+
+permissions:
+  contents: read
+
+jobs:
+  msbuild:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        toolset: [ClangCL, MSVC]
+        configuration: [Debug, Ring3]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v2
+    - name: Set toolset
+      if: matrix.toolset == 'ClangCL'
+      run: echo "toolset=/p:PlatformToolset=${{ matrix.toolset }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+    - name: Build
+      shell: cmd
+      run: msbuild Samidare.sln /p:Platform=x64 /p:Configuration=${{ matrix.configuration }} /p:OutDir=${{ github.workspace }}\x64\${{ matrix.configuration }}
+    - name: Rename EXE
+      run: |
+          ren Samidare-${{ matrix.configuration }}.exe Samidare-${{ matrix.toolset }}-${{ matrix.configuration }}-${{github.sha}}.exe
+      working-directory: ${{ github.workspace }}\x64\${{ matrix.configuration }}
+
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: CI--${{ matrix.toolset }}-${{ matrix.configuration }}-${{github.sha}}
+        path: ${{ github.workspace }}\x64\${{ matrix.configuration }}

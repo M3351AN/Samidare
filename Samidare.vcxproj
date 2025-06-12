@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Ring0|Win32">
+      <Configuration>Ring0</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Ring0|x64">
+      <Configuration>Ring0</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Ring3 FIFO|Win32">
+      <Configuration>Ring3 FIFO</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Ring3 FIFO|x64">
+      <Configuration>Ring3 FIFO</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Ring3|Win32">
+      <Configuration>Ring3</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Ring3|x64">
+      <Configuration>Ring3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{85eba95a-a588-4a7d-ace0-f1a6f97b8e6c}</ProjectGuid>
+    <RootNamespace>Samidare</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Samidare</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <TargetName>$(ProjectName)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'">
+    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <TargetName>$(ProjectName)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'">
+    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <TargetName>$(ProjectName)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'">
+    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <TargetName>$(ProjectName)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;USERMODE;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;USERMODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;USERMODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;USERMODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NOMINMAX;USERMODE;_CRT_SECURE_NO_WARNINGS;__DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <IntelJCCErratum>true</IntelJCCErratum>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <OpenMPSupport>true</OpenMPSupport>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <AdditionalDependencies>yaml-cppd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <LargeAddressAware>true</LargeAddressAware>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NOMINMAX;USERMODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <IntelJCCErratum>true</IntelJCCErratum>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <OpenMPSupport>true</OpenMPSupport>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AdditionalDependencies>yaml-cpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <IntelJCCErratum>true</IntelJCCErratum>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <OpenMPSupport>true</OpenMPSupport>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AdditionalDependencies>yaml-cpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NOMINMAX;FIFO_MODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <IntelJCCErratum>true</IntelJCCErratum>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <OpenMPSupport>true</OpenMPSupport>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AdditionalDependencies>yaml-cpp.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CS2x64.cc" />
+    <ClCompile Include="Functions\Aimbot\Aimbot.cc" />
+    <ClCompile Include="Functions\Aimbot\RCS.cc" />
+    <ClCompile Include="Functions\Aimbot\TriggerBot.cc" />
+    <ClCompile Include="Functions\ConfigSaver.cc" />
+    <ClCompile Include="Functions\Func.cc" />
+    <ClCompile Include="Functions\Miscs\BombTimer.cc" />
+    <ClCompile Include="Functions\Miscs\Miscs.cc" />
+    <ClCompile Include="Functions\Miscs\SpecList.cc" />
+    <ClCompile Include="Functions\Visuals\ESP.cc" />
+    <ClCompile Include="Functions\Visuals\Radar.cc" />
+    <ClCompile Include="Game.cc" />
+    <ClCompile Include="ImGui\imgui.cpp" />
+    <ClCompile Include="ImGui\imgui_demo.cpp" />
+    <ClCompile Include="ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ImGui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="ImGui\imgui_tables.cpp" />
+    <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Offsets.cc" />
+    <ClCompile Include="Overlay.cc" />
+    <ClCompile Include="UkiaStuff.cc" />
+    <ClCompile Include="Utils\miniz.c" />
+    <ClCompile Include="Utils\uiaccess.c" />
+    <ClCompile Include="源.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CS2x64.h" />
+    <ClInclude Include="Driver.h" />
+    <ClInclude Include="FIFO.h" />
+    <ClInclude Include="Functions\Aimbot\Aimbot.h" />
+    <ClInclude Include="Functions\Aimbot\RCS.h" />
+    <ClInclude Include="Functions\Aimbot\TriggerBot.h" />
+    <ClInclude Include="Functions\config.h" />
+    <ClInclude Include="Functions\ConfigSaver.h" />
+    <ClInclude Include="Functions\Func.h" />
+    <ClInclude Include="Functions\menu.h" />
+    <ClInclude Include="Functions\Miscs\BombTimer.h" />
+    <ClInclude Include="Functions\Miscs\Miscs.h" />
+    <ClInclude Include="Functions\Miscs\SpecList.h" />
+    <ClInclude Include="Functions\Visuals\ESP.h" />
+    <ClInclude Include="Functions\Visuals\Radar.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="HarmonySans.h" />
+    <ClInclude Include="ImGui\imconfig.h" />
+    <ClInclude Include="ImGui\imgui.h" />
+    <ClInclude Include="ImGui\imgui_impl_dx9.h" />
+    <ClInclude Include="ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="ImGui\imgui_internal.h" />
+    <ClInclude Include="ImGui\imstb_rectpack.h" />
+    <ClInclude Include="ImGui\imstb_textedit.h" />
+    <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="Lang.h" />
+    <ClInclude Include="maths.h" />
+    <ClInclude Include="Offsets.h" />
+    <ClInclude Include="Overlay.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
+    <ClInclude Include="shigure.h" />
+    <ClInclude Include="UkiaStuff.h" />
+    <ClInclude Include="Utils\CallStack-Spoofer.h" />
+    <ClInclude Include="Utils\miniz.h" />
+    <ClInclude Include="Utils\mouse_input_injection.h" />
+    <ClInclude Include="Utils\nlohmann\json.hpp" />
+    <ClInclude Include="Utils\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="Utils\stb_image.h" />
+    <ClInclude Include="Utils\uiaccess.h" />
+    <ClInclude Include="Utils\vphys_parser\ray_trace.h" />
+    <ClInclude Include="Utils\vphys_parser\vector.h" />
+    <ClInclude Include="Utils\XorStr.h" />
+    <ClInclude Include="Utils\yaml-cpp\anchor.h" />
+    <ClInclude Include="Utils\yaml-cpp\binary.h" />
+    <ClInclude Include="Utils\yaml-cpp\depthguard.h" />
+    <ClInclude Include="Utils\yaml-cpp\dll.h" />
+    <ClInclude Include="Utils\yaml-cpp\emitfromevents.h" />
+    <ClInclude Include="Utils\yaml-cpp\emitter.h" />
+    <ClInclude Include="Utils\yaml-cpp\emitterdef.h" />
+    <ClInclude Include="Utils\yaml-cpp\emittermanip.h" />
+    <ClInclude Include="Utils\yaml-cpp\emitterstyle.h" />
+    <ClInclude Include="Utils\yaml-cpp\eventhandler.h" />
+    <ClInclude Include="Utils\yaml-cpp\exceptions.h" />
+    <ClInclude Include="Utils\yaml-cpp\mark.h" />
+    <ClInclude Include="Utils\yaml-cpp\noexcept.h" />
+    <ClInclude Include="Utils\yaml-cpp\null.h" />
+    <ClInclude Include="Utils\yaml-cpp\ostream_wrapper.h" />
+    <ClInclude Include="Utils\yaml-cpp\parser.h" />
+    <ClInclude Include="Utils\yaml-cpp\stlemitter.h" />
+    <ClInclude Include="Utils\yaml-cpp\traits.h" />
+    <ClInclude Include="Utils\yaml-cpp\yaml.h" />
+    <ClInclude Include="zekamashi.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Samidare.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Samidare.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

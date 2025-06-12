@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Utils">
+      <UniqueIdentifier>{464098fd-779b-4b7c-8c4d-ea56431e14fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Functions">
+      <UniqueIdentifier>{0d84691b-ad53-4e8b-89be-15337bbe38be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Functions\Miscs">
+      <UniqueIdentifier>{ba6a50c4-dd82-4da8-abee-195efc4759db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Functions\Visuals">
+      <UniqueIdentifier>{110944b5-c3bc-494a-84fb-aa79b1dadfbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils\yaml-cpp">
+      <UniqueIdentifier>{23cb46c3-1829-4a0f-bfd1-3298f506fbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Functions\Aimbot">
+      <UniqueIdentifier>{0076d590-d7a5-4fb4-8e72-df8308bfd5f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ImGui">
+      <UniqueIdentifier>{908b7e56-a5e1-4807-a376-1bade3d6f142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils\nlohmann">
+      <UniqueIdentifier>{98dc854c-30d4-40e7-8d80-560dd5721221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils\vphys_parser">
+      <UniqueIdentifier>{1ab215d3-d789-4a4b-a4ac-f19af889dcbc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="源.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_demo.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx9.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>头文件\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\uiaccess.c">
+      <Filter>头文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\ConfigSaver.cc">
+      <Filter>头文件\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay.cc">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Func.cc">
+      <Filter>头文件\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Aimbot\RCS.cc">
+      <Filter>头文件\Functions\Aimbot</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Miscs\Miscs.cc">
+      <Filter>头文件\Functions\Miscs</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Visuals\ESP.cc">
+      <Filter>头文件\Functions\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Visuals\Radar.cc">
+      <Filter>头文件\Functions\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="UkiaStuff.cc">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cc">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Offsets.cc">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CS2x64.cc">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Aimbot\TriggerBot.cc">
+      <Filter>头文件\Functions\Aimbot</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Miscs\BombTimer.cc">
+      <Filter>头文件\Functions\Miscs</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\miniz.c">
+      <Filter>头文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Aimbot\Aimbot.cc">
+      <Filter>头文件\Functions\Aimbot</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Miscs\SpecList.cc">
+      <Filter>头文件\Functions\Miscs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UkiaStuff.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\XorStr.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CS2x64.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx9.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>头文件\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\uiaccess.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="shigure.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\stb_image.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Func.h">
+      <Filter>头文件\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Visuals\ESP.h">
+      <Filter>头文件\Functions\Visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\config.h">
+      <Filter>头文件\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Miscs\Miscs.h">
+      <Filter>头文件\Functions\Miscs</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\menu.h">
+      <Filter>头文件\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\ConfigSaver.h">
+      <Filter>头文件\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\anchor.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\binary.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\depthguard.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\dll.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\emitfromevents.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\emitter.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\emitterdef.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\emittermanip.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\emitterstyle.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\eventhandler.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\exceptions.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\mark.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\noexcept.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\null.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\ostream_wrapper.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\parser.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\stlemitter.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\traits.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\yaml-cpp\yaml.h">
+      <Filter>头文件\Utils\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="HarmonySans.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Aimbot\RCS.h">
+      <Filter>头文件\Functions\Aimbot</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Visuals\Radar.h">
+      <Filter>头文件\Functions\Visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="maths.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Offsets.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Lang.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\nlohmann\json.hpp">
+      <Filter>头文件\Utils\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\nlohmann\json_fwd.hpp">
+      <Filter>头文件\Utils\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Aimbot\TriggerBot.h">
+      <Filter>头文件\Functions\Aimbot</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Miscs\BombTimer.h">
+      <Filter>头文件\Functions\Miscs</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\miniz.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\vphys_parser\ray_trace.h">
+      <Filter>头文件\Utils\vphys_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\vphys_parser\vector.h">
+      <Filter>头文件\Utils\vphys_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Aimbot\Aimbot.h">
+      <Filter>头文件\Functions\Aimbot</Filter>
+    </ClInclude>
+    <ClInclude Include="zekamashi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\mouse_input_injection.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\CallStack-Spoofer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FIFO.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Miscs\SpecList.h">
+      <Filter>头文件\Functions\Miscs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Samidare.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Samidare.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
