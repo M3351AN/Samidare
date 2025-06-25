@@ -12,7 +12,7 @@ DWORD64 ListEntry = 0;
 DWORD64 PawnAddress = 0;
 CEntity Entity;
 bool AllowShoot = false;
-bool WaitForNoAttack = false;
+//bool WaitForNoAttack = false;
 HANDLE hDelayQueue, hDurationQueue;
 
 inline void ReleaseMouseButton() {
@@ -67,10 +67,12 @@ void TriggerBotRun(const CEntity& LocalEntity) {
   Vector3 Aimpunch = LocalEntity.Pawn.AimPunchAngle;
   if (Aimpunch.Length() > config::TriggerMaxRecoil)
     return;
+  /*
   if (!Ukia::ProcessMgr.ReadMemory<bool>(
           LocalEntity.Pawn.Address + Offset::C_CSPlayerPawn.m_bWaitForNoAttack,
           WaitForNoAttack))
     return;
+    */
   if (!Ukia::ProcessMgr.ReadMemory<DWORD>(
           LocalEntity.Pawn.Address + Offset::C_CSPlayerPawnBase.m_iIDEntIndex,
           uHandle))

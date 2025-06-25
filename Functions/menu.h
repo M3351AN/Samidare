@@ -382,7 +382,7 @@ inline void DrawMenu() {
                         &config::TriggerBot);
         ImGui::HotKey(XorStr(" ##hotkeytrigger"), &config::TriggerBotHotKey);
         ImGui::SliderInt(LangSettings::SliderTriggerDelay.c_str(),
-                         &config::TriggerDelay, 15, 1000, XorStr("%d ms"));
+                         &config::TriggerDelay, 0, 1000, XorStr("%d ms"));
         ImGui::SliderInt(LangSettings::SliderShotDuration.c_str(),
                          &config::ShotDuration, 15, 1000, XorStr("%d ms"));
         ImGui::SliderFloat(LangSettings::SliderTriggerMaxRecoil.c_str(),
