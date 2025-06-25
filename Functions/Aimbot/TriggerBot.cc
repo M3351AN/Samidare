@@ -13,9 +13,9 @@ DWORD64 PawnAddress = 0;
 CEntity Entity;
 bool AllowShoot = false;
 bool WaitForNoAttack = false;
+HANDLE hDelayQueue, hDurationQueue;
 
 inline void ReleaseMouseButton() {
-  std::this_thread::sleep_for(std::chrono::milliseconds(config::ShotDuration));
 #ifndef USERMODE
   driver.mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 #else
@@ -23,11 +23,47 @@ inline void ReleaseMouseButton() {
 #endif
 }
 
+inline void DownMouseButton() {
+#ifndef USERMODE
+  driver.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+#else
+  my_mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+#endif
+}
+
+VOID CALLBACK OnDurationEnd(PVOID lpParam, BOOLEAN TimerOrWaitFired) {
+  ReleaseMouseButton();
+}
+
+VOID CALLBACK OnDelay(PVOID lpParam, BOOLEAN TimerOrWaitFired) {
+  DownMouseButton();
+  HANDLE hDurationTimer = nullptr;
+  CreateTimerQueueTimer(&hDurationTimer, hDurationQueue, OnDurationEnd, nullptr,
+                        config::ShotDuration, 0, WT_EXECUTEDEFAULT);
+}
+
 void TriggerBotRun(const CEntity& LocalEntity) {
-  if (!config::TriggerBot) return;
+
+  if (!config::TriggerBot) {
+    if (hDelayQueue != 0) {
+      DeleteTimerQueueEx(hDelayQueue, nullptr);
+      hDelayQueue = 0;
+    }
+    if (hDurationQueue != 0) {
+      DeleteTimerQueueEx(hDurationQueue, nullptr);
+      hDurationQueue = 0;
+    }
+    return;
+  }
   if (LocalEntity.Controller.AliveStatus == 0) return;
   // When players hold c4/knife/grenades etc., don't shot
   if (LocalEntity.Pawn.MaxAmmo < 1) return;
+  if (hDelayQueue == 0) {
+    hDelayQueue = CreateTimerQueue();
+  }
+  if (hDurationQueue == 0) {
+    hDurationQueue = CreateTimerQueue();
+  }
   Vector3 Aimpunch = LocalEntity.Pawn.AimPunchAngle;
   if (Aimpunch.Length() > config::TriggerMaxRecoil)
     return;
@@ -68,23 +104,12 @@ void TriggerBotRun(const CEntity& LocalEntity) {
     return;
 
   if (!AllowShoot) return;
-
-  static std::chrono::time_point LastTimePoint =
-      std::chrono::steady_clock::now();
-  auto CurTimePoint = std::chrono::steady_clock::now();
-  if (CurTimePoint - LastTimePoint >=
-      std::chrono::milliseconds(config::TriggerDelay)) {
-    const bool isAlreadyShooting = GetAsyncKeyState(VK_LBUTTON) < 0;
-    if (!isAlreadyShooting) {
-#ifndef USERMODE
-      driver.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-#else
-      my_mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-#endif
-      std::thread TriggerThread(ReleaseMouseButton);
-      TriggerThread.detach();
-    }
-    LastTimePoint = CurTimePoint;
+  const bool isShootingInDuration =
+      (GetAsyncKeyState(VK_LBUTTON) < 0);
+  if (!isShootingInDuration) {
+    HANDLE hDelayTimer = nullptr;
+    CreateTimerQueueTimer(&hDelayTimer, hDelayQueue, OnDelay, nullptr,
+                          config::TriggerDelay, 0, WT_EXECUTEDEFAULT);
   }
 }
 }  // namespace TriggerBot
