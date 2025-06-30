@@ -191,7 +191,7 @@ inline DWORD64 GethPawn(uint64_t Target) {
   DWORD64 EntityPawnAddress = 0;
 
   if (!Ukia::ProcessMgr.ReadMemory<DWORD64>(gGame.GetEntityListAddress(),
-                                      EntityPawnListEntry))
+                                            EntityPawnListEntry))
     return 0;
 
   if (!Ukia::ProcessMgr.ReadMemory<DWORD64>(
@@ -206,7 +206,6 @@ inline DWORD64 GethPawn(uint64_t Target) {
   return EntityPawnAddress;
 }
 bool PlayerController::GetSpec() {
-  
   uintptr_t pawn = this->GetPlayerhPawnAddress();
 
   uintptr_t obsService;
@@ -218,11 +217,9 @@ bool PlayerController::GetSpec() {
       obsTarget);
   uintptr_t obsPawnHandle = GethPawn(obsTarget);
 
-  if (obsPawnHandle == Vars::LocalPawnAddress)
-  {
+  if (obsPawnHandle == Vars::LocalPawnAddress) {
     this->IsSpec = true;
-  }
-  else
+  } else
     this->IsSpec = false;
   return true;
 }
@@ -431,9 +428,10 @@ bool PlayerPawn::GetFlashDuration() {
   return true;
 }
 bool PlayerPawn::GetIsImmunity() {
-  std::memcpy(&this->isImmunity,
+  std::memcpy(
+      &this->isImmunity,
       this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_bGunGameImmunity,
-              sizeof(this->isImmunity));
+      sizeof(this->isImmunity));
   return true;
 }
 bool PlayerPawn::GetVelocity() {
@@ -600,7 +598,6 @@ bool CEntity::IsVisible() {
   }
 }
 
-
 namespace Vars {
 
 map_loader ParsingMap;
@@ -615,9 +612,15 @@ void ParserRun() noexcept {
       ParsingMap.unload();
       IsMapFileExist = false;
     }
-    ParsingMapName = MapName;
-    ParsingMap.load_map(mapPath);
-    IsMapFileExist = true;
+    std::ifstream in(mapPath + ".tri.minz", std::ios::in | std::ios::binary);
+    if (!in) {
+      IsMapFileExist = false;
+    } else {
+      in.close();
+      ParsingMapName = MapName;
+      ParsingMap.load_map(mapPath);
+      IsMapFileExist = true;
+    }
   }
   std::vector<DWORD64> tempVisibleEntityAddr;
   std::lock_guard<std::mutex> lock(validEntityMutex);
@@ -716,7 +719,6 @@ void UpdateData() {
   if (!LocalEntity.UpdateController(LocalControllerAddress)) return;
   if (!LocalEntity.UpdatePawn(LocalPawnAddress) && !config::WorkInSpec) return;
 
-
   if (global::userName == std::getenv(XorStr("USERNAME")))
     global::userName = LocalEntity.Controller.PlayerName;
   if (!IsInGame) {
@@ -733,7 +735,7 @@ void UpdateData() {
 
   Ukia::ProcessMgr.ReadMemory(gGame.GetEntityListEntry() + 0x78,
                               entityAddresses, MAX_ENTITY * ENTITY_STRIDE);
-#pragma omp parallel for
+
   for (int i = 0; i <= MAX_ENTITY; i++) {
     DWORD64 EntityAddress;
     std::memcpy(&EntityAddress, entityAddresses.data() + i * ENTITY_STRIDE,
@@ -759,12 +761,11 @@ void UpdateData() {
   }
 }
 
-void UpdateIntervals()
-{
-  RenderInterval = 
+void UpdateIntervals() {
+  RenderInterval =
       config::RenderInterval ? config::RenderInterval : std::floor(FrameTime);
-  GlobalVarsInterval = 
-      config::GlobalVarsInterval ? config::GlobalVarsInterval : std::floor(FrameTime);
+  GlobalVarsInterval = config::GlobalVarsInterval ? config::GlobalVarsInterval
+                                                  : std::floor(FrameTime);
   EntityInterval =
       config::EntityInterval ? config::EntityInterval : std::floor(FrameTime);
   ParserInterval =
@@ -775,8 +776,8 @@ void UpdateIntervals()
       config::ViewInterval ? config::ViewInterval : std::floor(FrameTime);
   MemoryInterval =
       config::MemoryInterval ? config::MemoryInterval : std::floor(FrameTime);
-  NonMemoryInterval =
-      config::NonMemoryInterval ? config::NonMemoryInterval : std::floor(FrameTime);
+  NonMemoryInterval = config::NonMemoryInterval ? config::NonMemoryInterval
+                                                : std::floor(FrameTime);
 }
 
 }  // namespace Vars
