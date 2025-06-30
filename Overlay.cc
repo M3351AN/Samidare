@@ -248,9 +248,8 @@ bool LoadTextureFromMemory(IDirect3DDevice9* device,
 
   D3DLOCKED_RECT rect;
   (*out_texture)->LockRect(0, &rect, nullptr, D3DLOCK_DISCARD);
-#pragma omp parallel for
+
   for (int y = 0; y < height; y++) {
-#pragma omp parallel for
     for (int x = 0; x < width; x++) {
       unsigned char* src = data + (y * width + x) * 4;
       unsigned char* dest =
