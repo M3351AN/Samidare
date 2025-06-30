@@ -14,8 +14,8 @@
 #include "Game.h"
 #include "Lang.h"
 #include "UkiaStuff.h"
-#include "uiaccess.h"
 #include "shigure.h"
+#include "uiaccess.h"
 #include "zekamashi.h"
 #pragma comment(lib, "winmm.lib")
 
@@ -512,11 +512,11 @@ void LogInfo() noexcept {
       "\n\u591c\u7a7a\u898b\u4e0a\u3052\u3066\u53eb\u3093\u3067\u3044\u308b"
       "\n"));
   printf(XorStr("Menukey [DEL]/[INS]\n"));
-  printf(XorStr("ProcessId: %d\nClientBase: %p\nEngineBase: %p\nTier0Base: %p\n"),
-         global::processId,
-         reinterpret_cast<void*>(gGame.GetClientDLLAddress()),
-         reinterpret_cast<void*>(gGame.GetEngineDLLAddress()),
-         reinterpret_cast<void*>(gGame.GetTier0DLLAddress()));
+  printf(
+      XorStr("ProcessId: %d\nClientBase: %p\nEngineBase: %p\nTier0Base: %p\n"),
+      global::processId, reinterpret_cast<void*>(gGame.GetClientDLLAddress()),
+      reinterpret_cast<void*>(gGame.GetEngineDLLAddress()),
+      reinterpret_cast<void*>(gGame.GetTier0DLLAddress()));
 }
 
 bool InitializeGameProcess() noexcept {
@@ -576,11 +576,12 @@ class ScopedThreadManager {
       constexpr wchar_t EXPECTED_TITLE[] = L"Counter-Strike 2";
       wchar_t actualTitle[256] = {0};
       GetWindowTextW(global::hwnd_, actualTitle, _countof(actualTitle));
-      constexpr wchar_t EXPECTED_TITLE_CN[] = L"\u53cd\u6050\u7cbe\u82f1\uff1a\u5168\u7403\u653b\u52bf";
+      constexpr wchar_t EXPECTED_TITLE_CN[] =
+          L"\u53cd\u6050\u7cbe\u82f1\uff1a\u5168\u7403\u653b\u52bf";
       wchar_t actualTitleCN[256] = {0};
       GetWindowTextW(global::hwnd_, actualTitleCN, _countof(actualTitle));
-      global::isRunning = ((wcscmp(actualTitle, EXPECTED_TITLE) ==0)||
-          (wcscmp(actualTitleCN, EXPECTED_TITLE_CN) == 0));
+      global::isRunning = ((wcscmp(actualTitle, EXPECTED_TITLE) == 0) ||
+                           (wcscmp(actualTitleCN, EXPECTED_TITLE_CN) == 0));
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
   }
@@ -692,6 +693,19 @@ void CleanupResources() noexcept {
   }
 }
 
+void ShowUpdateError() {
+  int ret = MessageBoxA(
+      nullptr,
+      XorStr("Failed to update offsets.\nPlease visit "
+             "https://github.com/a2x/cs2-dumper/tree/main/output \nto get "
+             "latest offsets.json & buttons.json & client_dll.json & "
+             "interfaces.json\n"),
+      XorStr("Samidare Error"), MB_ICONERROR);
+  ShellExecuteA(nullptr, XorStr("open"),
+                XorStr("https://github.com/a2x/cs2-dumper/tree/main/output"),
+                nullptr, nullptr, SW_SHOWNORMAL);
+}
+
 int Mian() noexcept {
   global::uiAccessStatus = PrepareForUIAccess();
 
@@ -717,13 +731,7 @@ int Mian() noexcept {
     }
   }
   if (!Offset::UpdateOffsets()) {
-    MessageBoxA(
-        nullptr,
-        XorStr("Failed to update offsets.\nPlease visit "
-               "https://github.com/a2x/cs2-dumper/tree/main/output \nto get "
-               "latest offsets.json & buttons.json & client_dll.json & "
-               "interfaces.json\n"),
-        XorStr("Samidare Error"), MB_ICONERROR);
+    ShowUpdateError();
     Ukia::UkiaExit();
   }
   if (std::filesystem::exists(LangSettings::path)) {
