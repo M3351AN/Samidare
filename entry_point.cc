@@ -23,7 +23,6 @@
 #include "shigure.h"
 #include "Utils/uiaccess.h"
 #include "zekamashi.h"
-#pragma comment(lib, "winmm.lib")
 
 enum ZBID {
   ZBID_DEFAULT = 0,

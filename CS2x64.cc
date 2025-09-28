@@ -1,4 +1,21 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: CS2x64.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file mainly manages the processing of game data in the Samidare project.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "CS2x64.h"
 
 #include "Offsets.h"
@@ -6,8 +23,6 @@
 #include "Utils/XorStr.h"
 #include "Utils/vphys_parser/ray_trace.h"
 #include "maths.h"
-#pragma comment(lib, "d3d9.lib")
-#pragma comment(lib, "dwmapi.lib")
 
 inline size_t strlen_imp(const char* str) {
   size_t length = 0;

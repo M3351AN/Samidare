@@ -1,4 +1,22 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: UkiaStuff.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file mainly includes some practical functions packaging 
+//   and reuse that simplify code usage.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "./UkiaStuff.h"
 #include "./Utils/XorStr.h"
 #ifndef USERMODE
@@ -9,11 +27,7 @@
 #endif
 #endif  // USERMODE
 
-
-
-
 #define WIN32_LEAN_AND_MEAN
-#pragma comment(lib, "iphlpapi.lib")
 
 constexpr uint32_t CompileTimeSeed() noexcept {
   const char* time_str = __TIME__ __DATE__;
