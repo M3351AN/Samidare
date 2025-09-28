@@ -1,8 +1,5 @@
-﻿#include "ConfigSaver.h"
-
-#include <XorStr.h>
-
-#include <unordered_map>
+﻿#include "pch.h"
+#include "ConfigSaver.h"
 
 #include "../global.h"
 

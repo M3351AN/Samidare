@@ -15,21 +15,7 @@
 //   This file is entry point for Samidare.
 //
 // -----------------------------------------------------------------------------
-
-#include <ShlObj.h>
-#include <mmsystem.h>
-#include <stdio.h>
-
-#include <array>
-#include <cmath>
-#include <execution>
-#include <filesystem>
-#include <limits>
-#include <thread>
-#include <unordered_map>
-#include <string>
-#include <vector>
-
+#include "pch.h"
 #include "Functions/Func.h"
 #include "Game.h"
 #include "Lang.h"

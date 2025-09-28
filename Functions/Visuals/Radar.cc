@@ -1,5 +1,6 @@
-﻿#include "Radar.h"
-#include "../maths.h"
+﻿#include "pch.h"
+#include "Radar.h"
+#include "../../maths.h"
 namespace Radar {
 
 class Base_Radar {
@@ -184,7 +185,7 @@ void Base_Radar::Render() noexcept {
                                       ImVec2(c.x, c.y), PointColor);
         this->DrawList->AddQuad(ImVec2(a.x, a.y), ImVec2(b.x, b.y),
                                 ImVec2(PointPos.x, PointPos.y),
-                                ImVec2(c.x, c.y), ImColor(0, 0, 0, 150), 0.1);
+                                ImVec2(c.x, c.y), ImColor(0, 0, 0, 150), 0.1f);
       } else {
         // 圆弧箭头
         ImVec2 TrianglePoint, TrianglePoint_1, TrianglePoint_2;
@@ -193,7 +194,7 @@ void Base_Radar::Render() noexcept {
         this->DrawList->AddCircleFilled(PointPos, 0.85f * this->ArcArrowSize,
                                         PointColor, 30);
         this->DrawList->AddCircle(PointPos, 0.95f * this->ArcArrowSize,
-                                  ImColor(0, 0, 0, 150), 0, 0.1);
+                                  ImColor(0, 0, 0, 150), 0, 0.1f);
 
         TrianglePoint.x =
             PointPos.x + (this->ArcArrowSize + this->ArcArrowSize / 3) *

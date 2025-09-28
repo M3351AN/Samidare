@@ -1,4 +1,4 @@
-#ifndef NODE_DETAIL_IMPL_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef NODE_DETAIL_IMPL_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define NODE_DETAIL_IMPL_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -7,8 +7,8 @@
 #pragma once
 #endif
 
-#include "yaml-cpp/node/detail/node.h"
-#include "yaml-cpp/node/detail/node_data.h"
+#include "../../node/detail/node.h"
+#include "../../node/detail/node_data.h"
 
 #include <algorithm>
 #include <type_traits>

@@ -1,5 +1,5 @@
-#pragma once
-#include <atomic>
+﻿#pragma once
+#include "pch.h"
 #include "Overlay.h"
 
 namespace global {

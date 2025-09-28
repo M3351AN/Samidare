@@ -1,9 +1,6 @@
-#pragma once
-#include <XorStr.h>
-
-#include <string>
-#include <vector>
-
+﻿#pragma once
+#include "pch.h"
+#include "../Utils/XorStr.h"
 #include "../Overlay.h"
 
 #define AUTO_CONFIG_VARS                   \

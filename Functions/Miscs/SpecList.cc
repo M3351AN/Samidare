@@ -1,14 +1,8 @@
-﻿#include "SpecList.h"
-
-#include <chrono>
-#include <ctime>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <utility>
+﻿#include "pch.h"
+#include "SpecList.h"
 
 #include "../../UkiaStuff.h"
-#include "..\config.h"
+#include "../config.h"
 
 namespace SpecList {
 

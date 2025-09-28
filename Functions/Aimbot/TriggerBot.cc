@@ -1,10 +1,8 @@
+﻿#include "pch.h"
 #include "TriggerBot.h"
-
-#include <XorStr.h>
 
 #include "../../UkiaStuff.h"
 #include "../config.h"
-#include "mouse_input_injection.h"
 #include "../../Driver.h"
 namespace TriggerBot {
 DWORD uHandle = 0;

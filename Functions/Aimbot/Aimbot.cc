@@ -1,10 +1,8 @@
-﻿#include "Aimbot.h"
-
-#include <XorStr.h>
+﻿#include "pch.h"
+#include "Aimbot.h"
 
 #include "../../UkiaStuff.h"
 #include "../config.h"
-#include "mouse_input_injection.h"
 #include "../../Driver.h"
 
 inline void UpdateAngles(const CEntity& Local, Vector3& Angles) {

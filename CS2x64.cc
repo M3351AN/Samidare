@@ -1,7 +1,5 @@
-﻿#include "CS2x64.h"
-
-#include <cstring>
-#include <memory>
+﻿#include "pch.h"
+#include "CS2x64.h"
 
 #include "Offsets.h"
 #include "UkiaStuff.h"

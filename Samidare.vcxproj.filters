@@ -117,6 +117,9 @@
     <ClCompile Include="CS2x64.cc">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UkiaStuff.h">
@@ -307,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

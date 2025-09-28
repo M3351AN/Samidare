@@ -1,14 +1,8 @@
+﻿#include "pch.h"
 #include "BombTimer.h"
 
-#include <chrono>
-#include <ctime>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <utility>
-
 #include "../../UkiaStuff.h"
-#include "..\config.h"
+#include "../config.h"
 
 namespace BombTimer {
 std::pair<int, int> get_bomb_calculations_by_map(const std::string& map) {

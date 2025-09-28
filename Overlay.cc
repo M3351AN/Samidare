@@ -1,11 +1,10 @@
-﻿#include "Overlay.h"
+﻿#include "pch.h"
+#include "Overlay.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "Utils/stb_image.h"
-#include <XorStr.h>
-#include <memory>
 #include "Functions/config.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "./Utils/stb_image.h"
 std::string string_To_UTF8(const std::string& str) noexcept {
   int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
   wchar_t* pwBuf = new wchar_t[nwLen + 1];

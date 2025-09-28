@@ -1,9 +1,5 @@
-﻿#include "Offsets.h"
-
-#include <filesystem>
-#include <fstream>
-#include <nlohmann/json.hpp>
-#include <string>
+﻿#include "pch.h"
+#include "Offsets.h"
 
 #include "Functions/config.h"
 #include "UkiaStuff.h"

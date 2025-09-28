@@ -1,9 +1,5 @@
 ﻿#pragma once
-#include <ShlObj.h>
-#include <XorStr.h>
-
-#include <filesystem>
-#include <string>
+#include "pch.h"
 
 #include "HarmonySans.h"
 #include "ImGui/imgui.h"

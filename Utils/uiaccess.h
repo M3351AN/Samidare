@@ -1,24 +1,28 @@
-#pragma once
+﻿#pragma once
 #include <windows.h>
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 #ifdef _DEBUG
 #include <stdio.h>
-#define dbgstart()						\
-	do									\
-	{									\
-		AllocConsole();					\
-		freopen("CON", "r", stdin);		\
-		freopen("CON", "w", stdout);	\
-		freopen("CON", "w", stderr);	\
-	} while (0)
-#define dbgend()			FreeConsole()
-#define dbg(...)			printf(__VA_ARGS__)
+#define dbgstart()               \
+  do {                           \
+    AllocConsole();              \
+    freopen("CON", "r", stdin);  \
+    freopen("CON", "w", stdout); \
+    freopen("CON", "w", stderr); \
+  } while (0)
+#define dbgend() FreeConsole()
+#define dbg(...) printf(__VA_ARGS__)
 #else
-#define dbgstart()			((void)0)
-#define dbgend()			FALSE
-#define dbg(...)			(-1)
+#define dbgstart() ((void)0)
+#define dbgend() FALSE
+#define dbg(...) (-1)
 #endif
 
 // Return win32 error code
 EXTERN_C DWORD PrepareForUIAccess();
 
+#ifdef __cplusplus
+}
+#endif

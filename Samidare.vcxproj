@@ -77,22 +77,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'">
-    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'">
-    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'">
-    <IncludePath>$(SolutionDir)/Utils;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Utils/yaml-cpp/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
   </PropertyGroup>
@@ -100,11 +100,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;USERMODE;_CRT_SECURE_NO_WARNINGS;__DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;YAML_CPP_STATIC_DEFINE;USERMODE;_CRT_SECURE_NO_WARNINGS;__DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/utf-8</AdditionalOptions>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <AdditionalOptions>/utf-8  /FI"pch.h"
+</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
@@ -113,6 +114,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,14 +136,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;USERMODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;YAML_CPP_STATIC_DEFINE;USERMODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/utf-8 -mbranches-within-32B-boundaries</AdditionalOptions>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <AdditionalOptions>/utf-8  /FI"pch.h" -mbranches-within-32B-boundaries -Wno-microsoft-cast
+</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -147,6 +152,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,14 +175,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;YAML_CPP_STATIC_DEFINE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/utf-8 -mbranches-within-32B-boundaries</AdditionalOptions>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <AdditionalOptions>/utf-8  /FI"pch.h" -mbranches-within-32B-boundaries -Wno-microsoft-cast</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -182,6 +190,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -202,14 +213,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;FIFO_MODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;YAML_CPP_STATIC_DEFINE;FIFO_MODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/utf-8 -mbranches-within-32B-boundaries</AdditionalOptions>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <AdditionalOptions>/utf-8  /FI"pch.h" -mbranches-within-32B-boundaries -Wno-microsoft-cast
+</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -217,6 +229,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -253,15 +268,32 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Offsets.cc" />
     <ClCompile Include="Overlay.cc" />
+    <ClCompile Include="pch.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="UkiaStuff.cc" />
-    <ClCompile Include="Utils\miniz.c" />
-    <ClCompile Include="Utils\uiaccess.c" />
+    <ClCompile Include="Utils\miniz.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Utils\uiaccess.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring3|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring3 FIFO|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Ring0|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="entry_point.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CS2x64.h" />
     <ClInclude Include="Driver.h" />
     <ClInclude Include="FIFO.h" />
+    <ClInclude Include="framework.h" />
     <ClInclude Include="Functions\Aimbot\Aimbot.h" />
     <ClInclude Include="Functions\Aimbot\RCS.h" />
     <ClInclude Include="Functions\Aimbot\TriggerBot.h" />
@@ -289,6 +321,7 @@
     <ClInclude Include="maths.h" />
     <ClInclude Include="Offsets.h" />
     <ClInclude Include="Overlay.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="shigure.h" />
     <ClInclude Include="UkiaStuff.h" />

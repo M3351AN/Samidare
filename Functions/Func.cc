@@ -1,6 +1,5 @@
+﻿#include "pch.h"
 #include "Func.h"
-
-#include <sstream>
 
 #include "../Overlay.h"
 #include "Aimbot/Aimbot.h"

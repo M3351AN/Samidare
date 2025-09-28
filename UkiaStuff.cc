@@ -1,24 +1,6 @@
-﻿#include "UkiaStuff.h"
-
-#include <TlHelp32.h>
-#include <malloc.h>
-
-#include <atlconv.h>
-#include <iphlpapi.h>
-#include <psapi.h>
-
-#include <algorithm>
-#include <chrono>
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <memory>
-#include <random>
-#include <sstream>
-#include <vector>
+﻿#include "pch.h"
+#include "./UkiaStuff.h"
+#include "./Utils/XorStr.h"
 #ifndef USERMODE
 #ifndef FIFO_MODE
 #include "./Driver.h"
@@ -26,7 +8,6 @@
 #include "./FIFO.h"
 #endif
 #endif  // USERMODE
-#include "./Utils/XorStr.h"
 
 
 

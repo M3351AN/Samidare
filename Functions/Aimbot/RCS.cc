@@ -1,6 +1,6 @@
+﻿#include "pch.h"
 #include "RCS.h"
 
-#include "mouse_input_injection.h"
 #include "../../Driver.h"
 namespace RCS {
 

@@ -1,9 +1,7 @@
 ﻿#pragma once
-#include "CallStack-Spoofer.h"
-#include <Windows.h>
+#include "pch.h"
+#include "./Utils/CallStack-Spoofer.h"
 
-#include <string>
-#include <vector>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846  // matches value in gcc v2 math.h
 #endif

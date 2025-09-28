@@ -1,12 +1,7 @@
 ﻿#pragma once
-
-#include <filesystem>
-#include <fstream>
-#include <string>
+#include "pch.h"
 
 #include "../ImGui/imgui.h"
-#include "../Utils/XorStr.h"
-#include "../Utils/yaml-cpp/yaml.h"
 #include "config.h"
 
 #if defined(__clang__)
