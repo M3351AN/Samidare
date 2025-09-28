@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CallStack-Spoofer.h"
 #include <Windows.h>
 
@@ -150,7 +150,7 @@ class ProcessManager {
   HWND GetWindowHandleFromProcessId(DWORD ProcessId) noexcept;
   //bool IsActive() noexcept;
   template <typename ReadType>
-  inline bool ReadMemory(DWORD64 Address, ReadType& Value, int Size) noexcept {
+  inline bool ReadMemory(DWORD64 Address, ReadType& Value, size_t Size) noexcept {
 #ifdef USERMODE
     IS_INVALID(hProcess);
 #endif

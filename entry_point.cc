@@ -74,18 +74,18 @@ CreateWindowInBand pCreateWindowInBand =
 
 void JustGetWindowRect() {
   if (Ukia::IsFullscreen(global::hwnd_)) {
-    global::screenSize.x = GetSystemMetrics(SM_CXSCREEN);
-    global::screenSize.y = GetSystemMetrics(SM_CYSCREEN);
-    global::screenPos.x = 0;
-    global::screenPos.y = 0;
+    global::screenSize.x = static_cast<float>(GetSystemMetrics(SM_CXSCREEN));
+    global::screenSize.y = static_cast<float>(GetSystemMetrics(SM_CYSCREEN));
+    global::screenPos.x = 0.f;
+    global::screenPos.y = 0.f;
   } else {
     RECT clientRect;
     if (GetClientRect(global::hwnd_, &clientRect)) {
       int clientWidth = clientRect.right - clientRect.left;
       int clientHeight = clientRect.bottom - clientRect.top;
 
-      global::screenSize.x = clientWidth;
-      global::screenSize.y = clientHeight;
+      global::screenSize.x = static_cast<float>(clientWidth);
+      global::screenSize.y = static_cast<float>(clientHeight);
     } else {
       MessageBoxA(nullptr, XorStr("Failed to get window rect."),
                   XorStr("Samidare"), MB_OK);
@@ -207,15 +207,16 @@ void SyncOverlayPosition(WindowStateTracker& stateTracker) {
                  clientRect.right, clientRect.bottom,
                  SWP_NOZORDER | SWP_NOACTIVATE);
 
-    global::screenSize.x = clientRect.right;
-    global::screenSize.y = clientRect.bottom;
+    global::screenSize.x = static_cast<float>(clientRect.right);
+    global::screenSize.y = static_cast<float>(clientRect.bottom);
     stateTracker.oldRect = {0, 0, clientRect.right, clientRect.bottom};
 
-    global::screenSize.x = clientRect.right;
-    global::screenSize.y = clientRect.bottom;
+    global::screenSize.x = static_cast<float>(clientRect.right);
+    global::screenSize.y = static_cast<float>(clientRect.bottom);
 
-    DirectX9Interface::pParams.BackBufferWidth = global::screenSize.x;
-    DirectX9Interface::pParams.BackBufferHeight = global::screenSize.y;
+    DirectX9Interface::pParams.BackBufferWidth =
+        static_cast<unsigned int>(global::screenSize.x);
+    DirectX9Interface::pParams.BackBufferHeight = static_cast<unsigned int>(global::screenSize.y);
   }
 }
 
@@ -391,8 +392,8 @@ bool DirectXInit() noexcept {
   Params.hDeviceWindow = OverlayWindow::Hwnd;
   Params.MultiSampleQuality = D3DMULTISAMPLE_NONE;
   Params.BackBufferFormat = D3DFMT_A8R8G8B8;
-  Params.BackBufferWidth = global::screenSize.x;
-  Params.BackBufferHeight = global::screenSize.y;
+  Params.BackBufferWidth = static_cast<unsigned int>(global::screenSize.x);
+  Params.BackBufferHeight = static_cast<unsigned int>(global::screenSize.y);
   Params.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
   Params.EnableAutoDepthStencil = TRUE;
   Params.AutoDepthStencilFormat = D3DFMT_D16;
@@ -457,8 +458,8 @@ void SetupWindow() noexcept {
     ClientToScreen(global::hwnd_, &TempPoint);
     TempRect.left = TempPoint.x;
     TempRect.top = TempPoint.y;
-    global::screenSize.x = TempRect.right;
-    global::screenSize.y = TempRect.bottom;
+    global::screenSize.x = static_cast<float>(TempRect.right);
+    global::screenSize.y = static_cast<float>(TempRect.bottom);
   }
 
   JustGetWindowRect();  // again.
@@ -481,8 +482,9 @@ void SetupWindow() noexcept {
     RegisterClassExA(&OverlayWindow::WindowClass);
     OverlayWindow::Hwnd = CreateWindowExA(
         WS_EX_TOPMOST, OverlayWindow::Name, OverlayWindow::Name,
-        WS_POPUP | WS_VISIBLE, global::screenPos.x, global::screenPos.y,
-        global::screenSize.x, global::screenSize.y, NULL, NULL,
+        WS_POPUP | WS_VISIBLE, static_cast<int>(global::screenPos.x),
+        static_cast<int>(global::screenPos.y),
+        static_cast<int>(global::screenSize.x), static_cast<int>(global::screenSize.y), NULL, NULL,
         OverlayWindow::WindowClass.hInstance, NULL);
   } else {
     WNDCLASSEXW wc = {};
@@ -501,8 +503,8 @@ void SetupWindow() noexcept {
     auto res = RegisterClassExW(&wc);
     OverlayWindow::Hwnd = pCreateWindowInBand(
         WS_EX_TOPMOST, res, randomWindowNameW, WS_POPUP | WS_VISIBLE,
-        global::screenPos.x, global::screenPos.y, global::screenSize.x,
-        global::screenSize.y, NULL, NULL, wc.hInstance, NULL, ZBID_UIACCESS);
+        static_cast<int>(global::screenPos.x), static_cast<int>(global::screenPos.y), static_cast<int>(global::screenSize.x),
+        static_cast<int>(global::screenSize.y), NULL, NULL, wc.hInstance, NULL, ZBID_UIACCESS);
   }
   if (OverlayWindow::Hwnd != NULL)
     DwmExtendFrameIntoClientArea(OverlayWindow::Hwnd,

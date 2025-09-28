@@ -11,11 +11,10 @@ inline void UpdateAngles(const CEntity& Local, Vector3& Angles) {
   auto oldPunch = Vector3{};
   auto shotsFired = Local.Pawn.ShotsFired;
 
-  int ScreenCenterX = global::screenSize.x / 2;
-  int ScreenCenterY = global::screenSize.y / 2;
+  int ScreenCenterX = static_cast<int>(global::screenSize.x / 2);
+  int ScreenCenterY = static_cast<int>(global::screenSize.y / 2);
   auto aimPunch = Local.Pawn.AimPunchAngle;
   if (shotsFired) {
-    uintptr_t clientState;
     Vector3 viewAngles;
     if (!gGame.GetViewAngles(viewAngles)) return;
     auto newAngles = Vector3{viewAngles.x + oldPunch.x - aimPunch.x * 2.f,
@@ -69,7 +68,7 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
     Vars::IsAimbotting = false;
     return;
   }
-  if (Local.Pawn.ShotsFired <= config::AimBullet && config::AimBullet != 0) {
+  if (Local.Pawn.ShotsFired <=  static_cast<unsigned int>(config::AimBullet) && config::AimBullet != 0) {
     Vars::IsAimbotting = false;
     return;
   }
@@ -90,7 +89,7 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
     return;
   }
 
-  int ListSize = AimPosList.size();
+  int ListSize =  static_cast<int>(AimPosList.size());
   float BestNorm = FLT_MAX;
   if (!ListSize) {
     Vars::IsAimbotting = false;
@@ -99,8 +98,8 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
   float Yaw, Pitch;
   float Distance, Norm, Length;
   Vector3 Angles{0, 0, 0};
-  int ScreenCenterX = global::screenSize.x / 2;
-  int ScreenCenterY = global::screenSize.y / 2;
+  int ScreenCenterX = static_cast<int>(global::screenSize.x / 2);
+  int ScreenCenterY = static_cast<int>(global::screenSize.y / 2);
   float TargetX = 0.f;
   float TargetY = 0.f;
 
@@ -113,21 +112,21 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
 
     OppPos = AimPosList[i] - LocalPos;
 
-    Distance = sqrt(pow(OppPos.x, 2) + pow(OppPos.y, 2));
+    Distance = static_cast<float>(sqrt(pow(OppPos.x, 2) + pow(OppPos.y, 2)));
 
     Length = OppPos.Length();
 
     // RCS by @Tairitsu
     if (IsAuto) {
       UpdateAngles(Local, Angles);
-      float rad = Angles.x / 360.f * M_PI;
+      float rad = Angles.x / 360.f * static_cast<float>(M_PI);
       float si = sinf(rad);
       float co = cosf(rad);
 
       float z = OppPos.z * co + Distance * si;
       float d = (Distance * co - OppPos.z * si) / Distance;
 
-      rad = -Angles.y / 360.f * M_PI;
+      rad = -Angles.y / 360.f * static_cast<float>(M_PI);
       si = sinf(rad);
       co = cosf(rad);
 
@@ -139,9 +138,9 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
       AimPosList[i] = LocalPos + OppPos;
     }
 
-    Yaw = atan2f(OppPos.y, OppPos.x) * 57.2957795131 - Local.Pawn.ViewAngle.y;
-    Pitch = -atan(OppPos.z / Distance) * 57.2957795131 - Local.Pawn.ViewAngle.x;
-    Norm = sqrt(pow(Yaw, 2) + pow(Pitch, 2));
+    Yaw = atan2f(OppPos.y, OppPos.x) * 57.2957795131f - Local.Pawn.ViewAngle.y;
+    Pitch = -atan(OppPos.z / Distance) * 57.2957795131f - Local.Pawn.ViewAngle.x;
+    Norm = static_cast<float>(sqrt(pow(Yaw, 2) + pow(Pitch, 2)));
     if (Norm < BestNorm) BestNorm = Norm;
     gGame.View.WorldToScreen(Vector3(AimPosList[i]), ScreenPos);
   }
@@ -205,7 +204,9 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
     #ifndef USERMODE
     driver.mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, NULL, NULL);
     #else
-    my_mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, NULL, NULL);
+    my_mouse_event(MOUSEEVENTF_MOVE, static_cast<DWORD>(TargetX),
+                   static_cast<DWORD>(TargetY),
+                   NULL, NULL);
     #endif
   } else
     Vars::IsAimbotting = false;

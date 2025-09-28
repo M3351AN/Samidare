@@ -99,12 +99,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NOMINMAX;USERMODE;_CRT_SECURE_NO_WARNINGS;__DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
@@ -112,7 +112,7 @@
       <OpenMPSupport>false</OpenMPSupport>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 -mbranches-within-32B-boundaries %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -173,7 +173,7 @@
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 -mbranches-within-32B-boundaries %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -207,7 +207,7 @@
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 -mbranches-within-32B-boundaries  %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 -mbranches-within-32B-boundaries %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>

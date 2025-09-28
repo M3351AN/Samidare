@@ -60,7 +60,7 @@ struct Triangle {
 
     if (a > -EPSILON && a < EPSILON) return false;  // 光线与三角形平行，不相交
 
-    f = 1.0 / a;
+    f = 1.f / a;
     s = ray_origin - p1;
     u = f * s.Dot(h);
 

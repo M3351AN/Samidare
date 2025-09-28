@@ -1,12 +1,12 @@
-#include "Miscs.h"
+﻿#include "Miscs.h"
 
 #include <mutex>
 
 namespace Sonar {
 struct SoundParams {
-  float frequency = 1000.0f;  // Ĭ��Ƶ��
-  float interval = 1000.0f;   // Ĭ�ϼ��(ms)
-  bool active = false;        // �Ƿ񼤻�
+  float frequency = 1000.0f;  // 默认频率
+  float interval = 1000.0f;   // 默认间隔(ms)
+  bool active = false;        // 是否激活
 };
 
 std::atomic<bool> running{true};
@@ -222,7 +222,7 @@ void PitchIndicator(CEntity& Local) noexcept {
 
           float verticalOffset = verticalOffsetRatio * global::screenSize.y;
 
-          screenPos.y = centerY - static_cast<int>(verticalOffset);
+          screenPos.y = static_cast<float>(centerY - static_cast<int>(verticalOffset));
         }
       }
     }
@@ -233,12 +233,12 @@ void PitchIndicator(CEntity& Local) noexcept {
   RGBA lineColor = {0, 255, 0, 255};
   int lineLength = 15;
   int thickness = 1;
-  DrawNewText(centerX - 3, centerY - 3, &lineColor, "^");
-  DrawLine(centerX - lineLength, dynamicY, centerX + lineLength - 20, dynamicY,
-           &lineColor, thickness);
-  DrawLine(centerX - lineLength + 20, dynamicY, centerX + lineLength, dynamicY,
-           &lineColor, thickness);
-  DrawNewText(centerX + lineLength + 5, dynamicY, &lineColor,
+  DrawNewText(centerX - 3.f, centerY - 3.f, &lineColor, "^");
+  DrawLine(static_cast<float>(centerX - lineLength), static_cast<float>(dynamicY), static_cast<float>(centerX + lineLength - 20), static_cast<float>(dynamicY),
+           &lineColor, static_cast<float>(thickness));
+  DrawLine(static_cast<float>(centerX - lineLength + 20), static_cast<float>(dynamicY), static_cast<float>(centerX + lineLength), static_cast<float>(dynamicY),
+           &lineColor, static_cast<float>(thickness));
+  DrawNewText(static_cast<float>(centerX + lineLength + 5), static_cast<float>(dynamicY), &lineColor,
               std::to_string(pitch).c_str());
 }
 inline void SendKey(WORD vk, bool bKeyDown) {

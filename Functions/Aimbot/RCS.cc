@@ -7,7 +7,8 @@ namespace RCS {
 void RCSRun(CEntity& Local) noexcept {
   if (!config::RCS) return;
   static Vector3 OldPunch;
-  if (Local.Pawn.ShotsFired > config::RCSBullet && !Vars::IsAimbotting) {
+  if (Local.Pawn.ShotsFired > static_cast<unsigned int>(config::RCSBullet) &&
+      !Vars::IsAimbotting) {
     Vector3 delta = (OldPunch - (Local.Pawn.AimPunchAngle));
 
     int MouseX = static_cast<int>(std::round(

@@ -1,4 +1,4 @@
-#include "CS2x64.h"
+ï»¿#include "CS2x64.h"
 
 #include <cstring>
 #include <memory>
@@ -33,7 +33,7 @@ DWORD64 GetConvar(const char* name) {
   DWORD64 objs;
   Ukia::ProcessMgr.ReadMemory(cvar_interface + 64, objs);
 
-  DWORD convar_length = strlen_imp(name);
+  DWORD convar_length = static_cast<DWORD>(strlen_imp(name));
 
   DWORD max_index;
   Ukia::ProcessMgr.ReadMemory(cvar_interface + 160, max_index);
@@ -522,7 +522,7 @@ bool PlantedC4::UpdatePlantedC4(const DWORD64& PlantedC4Address) {
   return true;
 }
 
-// ¸üÐÂÊý¾Ý
+// æ›´æ–°æ•°æ®
 bool CEntity::UpdateController(const DWORD64& PlayerControllerAddress) {
   if (PlayerControllerAddress == 0) return false;
   this->Controller.Address = PlayerControllerAddress;
@@ -585,7 +585,6 @@ bool CEntity::IsEnemy() {
 bool CEntity::IsVisible() {
   if (!this->IsInScreen()) return false;
   if (Vars::IsMapFileExist) {
-    bool Visible;
     std::lock_guard<std::mutex> lock(Vars::VisibleEntityAddrMutex);
     bool ParserVisible =
         std::find(Vars::VisibleEntityAddr.begin(),
@@ -639,7 +638,7 @@ void ParserRun() noexcept {
                             Vars::LocalEntity.Pawn.CameraPos.y,
                             Vars::LocalEntity.Pawn.CameraPos.z);
     Vector r_end = Vector(Entity.Pawn.Pos.x, Entity.Pawn.Pos.y,
-                          Entity.Pawn.Pos.z + 0.45 * Entity.Pawn.Height);
+                          Entity.Pawn.Pos.z + 0.45f * Entity.Pawn.Height);
     if (!ParsingMap.is_visible(r_start, r_end)) continue;
     tempVisibleEntityAddr.push_back(EntityAddress);
   }
@@ -763,21 +762,23 @@ void UpdateData() {
 
 void UpdateIntervals() {
   RenderInterval =
-      config::RenderInterval ? config::RenderInterval : std::floor(FrameTime);
+      config::RenderInterval ? config::RenderInterval : static_cast<int>(std::floor(FrameTime));
   GlobalVarsInterval = config::GlobalVarsInterval ? config::GlobalVarsInterval
-                                                  : std::floor(FrameTime);
-  EntityInterval =
-      config::EntityInterval ? config::EntityInterval : std::floor(FrameTime);
-  ParserInterval =
-      config::ParserInterval ? config::ParserInterval : std::floor(FrameTime);
-  AimInterval =
-      config::AimInterval ? config::AimInterval : std::floor(FrameTime);
-  ViewInterval =
-      config::ViewInterval ? config::ViewInterval : std::floor(FrameTime);
+                           : static_cast<int>(std::floor(FrameTime));
+  EntityInterval = config::EntityInterval
+                       ? config::EntityInterval
+                       : static_cast<int>(std::floor(FrameTime));
+  ParserInterval = config::ParserInterval
+                       ? config::ParserInterval
+                       : static_cast<int>(std::floor(FrameTime));
+  AimInterval = config::AimInterval ? config::AimInterval
+                                    : static_cast<int>(std::floor(FrameTime));
+  ViewInterval = config::ViewInterval ? config::ViewInterval
+                                      : static_cast<int>(std::floor(FrameTime));
   MemoryInterval =
-      config::MemoryInterval ? config::MemoryInterval : std::floor(FrameTime);
+      config::MemoryInterval ? config::MemoryInterval : static_cast<int>(std::floor(FrameTime));
   NonMemoryInterval = config::NonMemoryInterval ? config::NonMemoryInterval
-                                                : std::floor(FrameTime);
+                                                : static_cast<int>(std::floor(FrameTime));
 }
 
 }  // namespace Vars

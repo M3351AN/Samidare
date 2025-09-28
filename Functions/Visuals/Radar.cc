@@ -1,48 +1,48 @@
-#include "Radar.h"
+ï»¿#include "Radar.h"
 #include "../maths.h"
 namespace Radar {
 
 class Base_Radar {
  public:
-  // ÉèÖÃÀ×´ïÊý¾Ý
+  // è®¾ç½®é›·è¾¾æ•°æ®
   void SetSize(const float& Size) noexcept;
   void SetPos(const ImVec2& Pos) noexcept;
   void SetRange(const float& Range) noexcept;
   void SetCrossColor(const ImColor& Color) noexcept;
   void SetProportion(const float& Proportion) noexcept;
   void SetDrawList(ImDrawList* DrawList) noexcept;
-  // »ñÈ¡À×´ïÊý¾Ý
+  // èŽ·å–é›·è¾¾æ•°æ®
   float GetSize() noexcept;
   ImVec2 GetPos() noexcept;
-  // Ìí¼Ó»æÖÆµã
+  // æ·»åŠ ç»˜åˆ¶ç‚¹
   void AddPoint(const Vector3& LocalPos, const float& LocalYaw,
                 const Vector3& Pos, ImColor Color, int Type = 0,
                 float Yaw = 0.0f) noexcept;
-  // äÖÈ¾
+  // æ¸²æŸ“
   void Render() noexcept;
   void RadarSetting() noexcept;
 
  public:
   ImDrawList* DrawList = nullptr;
-  // Ê®×ÖÏÔÊ¾
+  // åå­—æ˜¾ç¤º
   bool ShowCrossLine = true;
-  // Ê®×ÖÑÕÉ«
+  // åå­—é¢œè‰²
   ImColor CrossColor = ImColor(255, 255, 255, 255);
-  // ±ÈÀý
+  // æ¯”ä¾‹
   float Proportion = 2680;
-  // Ô²µã°ë¾¶
+  // åœ†ç‚¹åŠå¾„
   float CircleSize = 4;
-  // ¼ýÍ·³ß´ç
+  // ç®­å¤´å°ºå¯¸
   float ArrowSize = 11;
-  // Ô²»¡¼ýÍ·³ß´ç
+  // åœ†å¼§ç®­å¤´å°ºå¯¸
   float ArcArrowSize = 7;
-  // À×´ï·¶Î§
+  // é›·è¾¾èŒƒå›´
   float RenderRange = 250;
-  // ±¾µØYawÊý¾Ý
+  // æœ¬åœ°Yawæ•°æ®
   float LocalYaw = 0.0f;
-  // ×´Ì¬
+  // çŠ¶æ€
   bool Opened = true;
-  // À×´ï»æÖÆÀàÐÍ 0:Ô²ÐÎ 1:¼ýÍ· 2:Ô²»¡¼ýÍ·
+  // é›·è¾¾ç»˜åˆ¶ç±»åž‹ 0:åœ†å½¢ 1:ç®­å¤´ 2:åœ†å¼§ç®­å¤´
   int PointType = 0;
 
  private:
@@ -96,7 +96,7 @@ void Base_Radar::AddPoint(const Vector3& LocalPos, const float& LocalYaw,
 
   this->LocalYaw = LocalYaw;
 
-  Distance = sqrt(pow(LocalPos.x - Pos.x, 2) + pow(LocalPos.y - Pos.y, 2));
+  Distance = static_cast<float>(sqrt(pow(LocalPos.x - Pos.x, 2) + pow(LocalPos.y - Pos.y, 2)));
 
   Angle = M_RAD2DEG(atan2(Pos.y - LocalPos.y, Pos.x - LocalPos.x));
   Angle = M_DEG2RAD(this->LocalYaw - Angle);
@@ -158,12 +158,12 @@ void Base_Radar::Render() noexcept {
       int PointType = std::get<2>(PointSingle);
       float PointYaw = std::get<3>(PointSingle);
       if (PointType == 0) {
-        // Ô²ÐÎÑùÊ½
+        // åœ†å½¢æ ·å¼
         this->DrawList->AddCircle(PointPos, this->CircleSize, PointColor);
         this->DrawList->AddCircleFilled(PointPos, this->CircleSize,
                                         ImColor(0, 0, 0));
       } else if (PointType == 1) {
-        // ¼ýÍ·ÑùÊ½
+        // ç®­å¤´æ ·å¼
         ImVec2 a, b, c;
         ImVec2 Re_a, Re_b, Re_c;
         ImVec2 Re_Point;
@@ -171,10 +171,10 @@ void Base_Radar::Render() noexcept {
         Re_Point = RevolveCoordinatesSystem(Angle, this->Pos, PointPos);
 
         Re_a = ImVec2(Re_Point.x, Re_Point.y + this->ArrowSize);
-        Re_b = ImVec2(Re_Point.x - this->ArrowSize / 1.5,
-                      Re_Point.y - this->ArrowSize / 2);
-        Re_c = ImVec2(Re_Point.x + this->ArrowSize / 1.5,
-                      Re_Point.y - this->ArrowSize / 2);
+        Re_b = ImVec2(Re_Point.x - this->ArrowSize / 1.5f,
+                      Re_Point.y - this->ArrowSize / 2.f);
+        Re_c = ImVec2(Re_Point.x + this->ArrowSize / 1.5f,
+                      Re_Point.y - this->ArrowSize / 2.f);
 
         a = RevolveCoordinatesSystem(-Angle, this->Pos, Re_a);
         b = RevolveCoordinatesSystem(-Angle, this->Pos, Re_b);
@@ -187,13 +187,13 @@ void Base_Radar::Render() noexcept {
                                 ImVec2(PointPos.x, PointPos.y),
                                 ImVec2(c.x, c.y), ImColor(0, 0, 0, 150), 0.1);
       } else {
-        // Ô²»¡¼ýÍ·
+        // åœ†å¼§ç®­å¤´
         ImVec2 TrianglePoint, TrianglePoint_1, TrianglePoint_2;
         float Angle = (this->LocalYaw - PointYaw) - 90;
 
-        this->DrawList->AddCircleFilled(PointPos, 0.85 * this->ArcArrowSize,
+        this->DrawList->AddCircleFilled(PointPos, 0.85f * this->ArcArrowSize,
                                         PointColor, 30);
-        this->DrawList->AddCircle(PointPos, 0.95 * this->ArcArrowSize,
+        this->DrawList->AddCircle(PointPos, 0.95f * this->ArcArrowSize,
                                   ImColor(0, 0, 0, 150), 0, 0.1);
 
         TrianglePoint.x =

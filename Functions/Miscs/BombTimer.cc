@@ -75,12 +75,11 @@ int calculate_bomb_damage(Vector3 player, Vector3 bomb, int armor) {
   const int bomb_radius = bomb_calculations.second;
 
   const double c = bomb_radius / 3;
-  const float damage =
-      bomb_damage * std::exp(-std::pow(sqrt(pow(player.x - bomb.x, 2) +
+  const float damage = static_cast<float>(bomb_damage *
+                       std::exp(-std::pow(sqrt(pow(player.x - bomb.x, 2) +
                                             pow(player.y - bomb.y, 2) +
                                             pow(player.z - bomb.z, 2)),
-                                       2) /
-                             (2 * std::pow(c, 2)));
+                                       2) / (2 * std::pow(c, 2))));
   const float damage_armor = armor_modifier(damage, armor);
 
   return static_cast<int>(std::ceil(

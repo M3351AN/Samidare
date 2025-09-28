@@ -1,4 +1,4 @@
-#include "UkiaStuff.h"
+Ôªø#include "UkiaStuff.h"
 
 #include <TlHelp32.h>
 #include <malloc.h>
@@ -45,14 +45,14 @@ namespace Ukia {
 void HideConsole() noexcept {
   HWND hwndConsole = GetConsoleWindow();
   if (hwndConsole) {
-    ShowWindow(hwndConsole, SW_SHOWMINNOACTIVE);  // “˛≤ÿøÿ÷∆Ã®
+    ShowWindow(hwndConsole, SW_SHOWMINNOACTIVE);  // ÈöêËóèÊéßÂà∂Âè∞
   }
 }
 
 void ShowConsole() noexcept {
   HWND hwndConsole = GetConsoleWindow();
   if (hwndConsole) {
-    ShowWindow(hwndConsole, SW_SHOWNOACTIVATE);  // œ‘ æøÿ÷∆Ã®
+    ShowWindow(hwndConsole, SW_SHOWNOACTIVATE);  // ÊòæÁ§∫ÊéßÂà∂Âè∞
   }
 }
 void AntiDebugger(std::string log) noexcept {
@@ -79,32 +79,32 @@ std::wstring utf8ToUtf16(const std::string& utf8Str) noexcept {
 
 std::string getRandomPoem() noexcept {
   static const std::vector<std::string> words = {
-      "\xE9\xA3\x8E",  // ∑Á
-      "\xE8\x8A\xB1",  // ª®
-      "\xE9\x9B\xAA",  // —©
-      "\xE6\x9C\x88",  // ‘¬
-      "\xE7\x83\x9F",  // —Ã
-      "\xE6\x97\xB6",  //  ±
-      "\xE9\x9B\xA8",  // ”Í
-      "\xE6\xB8\x9F",  // ús
-      "\xE4\xBA\x91",  // ‘∆
-      "\xE6\xB1\x9F",  // Ω≠
-      "\xE6\xB9\x96",  // ∫˛
-      "\xE6\x98\x9F",  // –«
-      "\xE6\x9C\x88",  // ‘¬
-      "\xE6\x99\xAF",  // æ∞
-      "\xE7\x94\x9F",  // …˙
-      "\xE6\xA2\x85",  // √∑
-      "\xE6\x9F\xB3",  // ¡¯
-      "\xE8\x93\x89",  // ¡´
-      "\xE5\xAE\x87",  // ”Ó
-      "\xE5\xAE\x99",  // ÷Ê
-      "\xE6\x98\xA5",  // ¥∫
-      "\xE5\xA4\x8F",  // œƒ
-      "\xE7\xA7\x8B",  // «Ô
-      "\xE5\x86\xAC",  // ∂¨
-      "\xE5\xB1\xB1",  // …Ω
-      "\xE6\xB0\xB4"   // ÀÆ
+      "\xE9\xA3\x8E",  // È£é
+      "\xE8\x8A\xB1",  // Ëä±
+      "\xE9\x9B\xAA",  // Èõ™
+      "\xE6\x9C\x88",  // Êúà
+      "\xE7\x83\x9F",  // ÁÉü
+      "\xE6\x97\xB6",  // Êó∂
+      "\xE9\x9B\xA8",  // Èõ®
+      "\xE6\xB8\x9F",  // Ê∏ü
+      "\xE4\xBA\x91",  // ‰∫ë
+      "\xE6\xB1\x9F",  // Ê±ü
+      "\xE6\xB9\x96",  // Êπñ
+      "\xE6\x98\x9F",  // Êòü
+      "\xE6\x9C\x88",  // Êúà
+      "\xE6\x99\xAF",  // ÊôØ
+      "\xE7\x94\x9F",  // Áîü
+      "\xE6\xA2\x85",  // Ê¢Ö
+      "\xE6\x9F\xB3",  // Êü≥
+      "\xE8\x93\x89",  // Ëé≤
+      "\xE5\xAE\x87",  // ÂÆá
+      "\xE5\xAE\x99",  // ÂÆô
+      "\xE6\x98\xA5",  // Êò•
+      "\xE5\xA4\x8F",  // Â§è
+      "\xE7\xA7\x8B",  // Áßã
+      "\xE5\x86\xAC",  // ÂÜ¨
+      "\xE5\xB1\xB1",  // Â±±
+      "\xE6\xB0\xB4"   // Ê∞¥
   };
 
   static std::mt19937 rng(static_cast<unsigned>(
@@ -370,7 +370,7 @@ HANDLE UkiaOpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle,
   HANDLE hProcess = 0;
   _NtOpenProcess NtOpenProcess = (_NtOpenProcess)GetProcAddress(
       GetModuleHandleA(XorStr("ntdll.dll")), XorStr("NtOpenProcess"));
-  CLIENT_ID clientId = {(HANDLE)dwProcessId, NULL};
+  CLIENT_ID clientId = {(PVOID)(ULONG_PTR)dwProcessId, NULL};
   OBJECT_ATTRIBUTES objAttr = InitObjectAttributes(NULL, 0, NULL, NULL);
   SPOOF_FUNC;
   SPOOF_CALL(NtOpenProcess)(&hProcess, dwDesiredAccess, &objAttr, &clientId);
@@ -692,7 +692,9 @@ int UkiaInit(int argc, char* argv[]) noexcept {
 
   srand(static_cast<unsigned int>(time(nullptr)));
   RandomTitle();
-  int iPadding = RANDOM_PADDING + (int)__FILE__ + __LINE__;
+  int iPadding = RANDOM_PADDING +
+                 static_cast<int>(std::hash<std::string>{}(__FILE__)) +
+                 __LINE__;
   // So that we can get randon .exe file Hash even codes are 100% same.
   printf(XorStr("%d\n"), iPadding);
   system("cls");

@@ -1,4 +1,4 @@
-#include <string>
+ï»¿#include <string>
 
 #include "../CS2x64.h"
 #include "../UkiaStuff.h"
@@ -819,12 +819,12 @@ inline void DrawMenu() {
                          interpolationFactorY * (mousePos.y - vecMenuPos.y));
   ImVec2 interpolatedPos{center.x - factor.x, center.y - factor.y};
 
-  // ¼ÆËã interpolatedPos µ½Ô²ÐÄµÄ¾àÀë
+  // è®¡ç®— interpolatedPos åˆ°åœ†å¿ƒçš„è·ç¦»
   float dx = interpolatedPos.x - center.x;
   float dy = interpolatedPos.y - center.y;
   float distance = sqrt(dx * dx + dy * dy);
 
-  // Èç¹û¾àÀë³¬¹ý°ë¾¶£¬Ôòµ÷Õû interpolatedPos
+  // å¦‚æžœè·ç¦»è¶…è¿‡åŠå¾„ï¼Œåˆ™è°ƒæ•´ interpolatedPos
   if (distance > radius) {
     float scale = radius / distance;
     factor.x = -dx * scale;
@@ -883,8 +883,8 @@ inline void DrawMenu() {
         DrawNameTag(ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.w),
                     ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.y),
                     (char*)(XorStr("Not ") + global::userName).c_str());
-      float t = ImGui::GetTime();
-      int valueHealth = std::abs(std::sin(t)) * 120.f;
+      float t = static_cast<float>(ImGui::GetTime());
+      int valueHealth = static_cast<int>(std::abs(std::sin(t)) * 120.f);
       if (config::ESPHealth)
         DrawHealthBar(ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.w),
                       ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.y),
