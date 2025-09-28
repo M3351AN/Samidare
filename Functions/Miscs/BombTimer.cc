@@ -1,4 +1,3 @@
-#pragma once
 #include "BombTimer.h"
 
 #include <chrono>

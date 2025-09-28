@@ -1,4 +1,3 @@
-#pragma once
 #include "SpecList.h"
 
 #include <chrono>
