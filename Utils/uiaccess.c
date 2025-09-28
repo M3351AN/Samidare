@@ -1,4 +1,4 @@
-#include "uiaccess.h"
+﻿#include "uiaccess.h"
 #include <tlhelp32.h>
 #include <tchar.h>
 
@@ -129,7 +129,7 @@ DWORD PrepareForUIAccess() {
 	HANDLE hTokenUIAccess;
 	BOOL fUIAccess;
 
-	if (CheckForUIAccess(&dwErr, &fUIAccess)) {
+	if (CheckForUIAccess(&dwErr, (DWORD *)&fUIAccess)) {
 		if (fUIAccess) {
 			dwErr = ERROR_SUCCESS;
 		} else {

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <filesystem>
 #include <fstream>
@@ -8,6 +8,10 @@
 #include "../Utils/XorStr.h"
 #include "../Utils/yaml-cpp/yaml.h"
 #include "config.h"
+
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wunused-function"
+#endif
 
 struct ConfigFileCache {
   std::filesystem::file_time_type modifyTime;

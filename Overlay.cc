@@ -458,8 +458,7 @@ int ImGuiKeyToVK(int imguiKey) {
     case ImGuiKey_LeftBracket:
       return VK_OEM_4;  // [
     case ImGuiKey_Backslash:
-      return VK_OEM_5;  // \
-
+      return VK_OEM_5;  // "\"
     case ImGuiKey_RightBracket: return VK_OEM_6;     // ]
     case ImGuiKey_GraveAccent:
       return VK_OEM_3;  // `

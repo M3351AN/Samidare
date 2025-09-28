@@ -247,7 +247,7 @@ inline void DrawMenu() {
   ImGuiIO& io = ImGui::GetIO();
   ImGuiStyle& style = ImGui::GetStyle();
   if (!config::ShowMenu) return;
-  const ImVec2 vecScreenSize = io.DisplaySize;
+  // const ImVec2 vecScreenSize = io.DisplaySize;
 
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(720, 365));
 
@@ -262,8 +262,8 @@ inline void DrawMenu() {
                    ImGuiWindowFlags_NoCollapse);
 
   const ImVec2 vecMenuPos = ImGui::GetWindowPos();
-  const ImVec2 vecMenuSize = ImGui::GetWindowSize();
-  ImDrawList* pDrawList = ImGui::GetWindowDrawList();
+  // const ImVec2 vecMenuSize = ImGui::GetWindowSize();
+  // ImDrawList* pDrawList = ImGui::GetWindowDrawList();
 
   ImGui::BeginTabBar(XorStr("##Tabs"));
 #ifdef _DEBUG
@@ -424,7 +424,7 @@ inline void DrawMenu() {
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
                    (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
-    static float flOverlayChildSize = 0.f;
+    // static float flOverlayChildSize = 0.f;
 
     ImGui::BeginChild(LangSettings::ChildESP.c_str(), child_size);
     {
@@ -438,7 +438,7 @@ inline void DrawMenu() {
       ImGui::Checkbox(LangSettings::SwitchHealthBar.c_str(), &config::ESPHealth);
       ImGui::PopStyleVar();
 
-      flOverlayChildSize = ImGui::GetCursorPosY() + style.ItemSpacing.y;
+      // flOverlayChildSize = ImGui::GetCursorPosY() + style.ItemSpacing.y;
     }
     ImGui::EndChild();
 
@@ -681,12 +681,12 @@ inline void DrawMenu() {
       }
       if (ImGui::BeginPopup(XorStr("##createConfirm"))) {
         ImGui::SetNextItemWidth(ComponentWidth);
-        ImGui::Text(LangSettings::TextNewConfigName.c_str());
+        ImGui::Text("%s", LangSettings::TextNewConfigName.c_str());
         ImGui::InputText(XorStr("##newConfigName"), configNameBuffer,
                          sizeof(configNameBuffer));
 
         ImGui::SetNextItemWidth(ComponentWidth);
-        ImGui::Text(LangSettings::TextConfigAuthorName.c_str());
+        ImGui::Text("%s", LangSettings::TextConfigAuthorName.c_str());
         ImGui::InputText(XorStr("##authorName"), configAuthorBuffer,
                          sizeof(configAuthorBuffer));
         std::string configFileName =
@@ -735,7 +735,7 @@ inline void DrawMenu() {
         global::isRunning = false;
       }
 
-      ImGui::Text(XorStr("Menukey [DEL]"));
+      ImGui::Text("%s", XorStr("Menukey [DEL]"));
       ImGui::PopStyleVar();
     }
     ImGui::EndChild();
@@ -892,10 +892,11 @@ inline void DrawMenu() {
     }
     ImGui::SetCursorPos(ImVec2{15 + textoffset, 250 - textoffset} * 1.f +
                         factor * 0.3351f);
-    ImGui::TextColored(ImColor(70, 50, 240, 200), XorStr("NOT FOR SELLING!!"));
+    ImGui::TextColored(ImColor(70, 50, 240, 200), "%s",
+                       XorStr("NOT FOR SELLING!!"));
     ImGui::SetCursorPos(ImVec2{15 + textoffset, 295 - textoffset} * 1.f +
                         factor * 0.1337f);
-    ImGui::TextColored(ImColor(70, 50, 240, 200),
+    ImGui::TextColored(ImColor(70, 50, 240, 200), "%s",
                        XorStr("Samidare for Counter-Strike 2"));
     ImGui::SetCursorPos(ImVec2{15 + textoffset, 335 - textoffset} * 1.f +
                         factor * 0.2024f);
@@ -903,20 +904,21 @@ inline void DrawMenu() {
                        __DATE__, __TIME__);
     ImGui::SetCursorPos(ImVec2{15 - textoffset, 250 + textoffset} * 1.f +
                         factor * 0.3351f);
-    ImGui::TextColored(ImColor(235, 5, 85, 200), XorStr("NOT FOR SELLING!!"));
+    ImGui::TextColored(ImColor(235, 5, 85, 200), "%s",
+                       XorStr("NOT FOR SELLING!!"));
     ImGui::SetCursorPos(ImVec2{15 - textoffset, 295 + textoffset} * 1.f +
                         factor * 0.1337f);
-    ImGui::TextColored(ImColor(235, 5, 85, 200),
+    ImGui::TextColored(ImColor(235, 5, 85, 200), "%s",
                        XorStr("Samidare for Counter-Strike 2"));
     ImGui::SetCursorPos(ImVec2{15 - textoffset, 335 + textoffset} * 1.f +
                         factor * 0.2024f);
     ImGui::TextColored(ImColor(235, 5, 85, 200), XorStr("Build: %s %s"),
                        __DATE__, __TIME__);
     ImGui::SetCursorPos(ImVec2{15, 250} * 1.f + factor * 0.3351f);
-    ImGui::TextColored(ImColor(245, 245, 245, 245),
+    ImGui::TextColored(ImColor(245, 245, 245, 245), "%s",
                        XorStr("NOT FOR SELLING!!"));
     ImGui::SetCursorPos(ImVec2{15, 295} * 1.f + factor * 0.1337f);
-    ImGui::TextColored(ImColor(245, 245, 245, 245),
+    ImGui::TextColored(ImColor(245, 245, 245, 245), "%s",
                        XorStr("Samidare for Counter-Strike 2"));
     ImGui::SetCursorPos(ImVec2{15, 335} * 1.f + factor * 0.2024f);
     ImGui::TextColored(ImColor(245, 245, 245, 245), XorStr("Build: %s %s"),

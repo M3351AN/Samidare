@@ -224,9 +224,6 @@ bool PlayerController::GetSpec() {
   return true;
 }
 DWORD64 PlayerController::GetPlayerPawnAddress() {
-  DWORD64 EntityPawnListEntry = 0;
-  DWORD64 EntityPawnAddress = 0;
-
   std::memcpy(
       &this->Pawn,
       this->ControllerBuffer.data() + Offset::CCSPlayerController.m_hPlayerPawn,
@@ -236,8 +233,6 @@ DWORD64 PlayerController::GetPlayerPawnAddress() {
 }
 
 DWORD64 PlayerController::GetPlayerhPawnAddress() {
-  DWORD64 EntityPawnListEntry = 0;
-  DWORD64 EntityPawnAddress = 0;
   std::memcpy(
       &this->Pawn,
       this->ControllerBuffer.data() + Offset::CBasePlayerController.m_hPawn,
@@ -299,7 +294,7 @@ bool PlayerPawn::GetCameraPos() {
 }
 bool PlayerPawn::GetWeaponName() {
   DWORD64 WeaponNameAddress = 0;
-  char Buffer[256]{};
+  // char Buffer[256]{};
 
   WeaponNameAddress = Ukia::ProcessMgr.TraceAddress(
       this->Address + Offset::C_CSPlayerPawnBase.m_pClippingWeapon,
@@ -590,7 +585,7 @@ bool CEntity::IsVisible() {
         std::find(Vars::VisibleEntityAddr.begin(),
                   Vars::VisibleEntityAddr.end(),
                   this->Controller.Address) != Vars::VisibleEntityAddr.end();
-    bool SpottedVisible = this->Pawn.bSpottedByMask;
+    // bool SpottedVisible = this->Pawn.bSpottedByMask;
     return (ParserVisible /* || SpottedVisible*/);
   } else {
     return this->Pawn.bSpottedByMask;

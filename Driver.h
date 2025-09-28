@@ -19,7 +19,7 @@ class _driver {
   HANDLE _driver_handle;
   UINT64 _processid;
   UINT64 _cur_processid;
-  ULONG64 _dlladdress;
+  // ULONG64 _dlladdress;
 
 // request codes
 #define DRIVER_READVM 0xCAFE1

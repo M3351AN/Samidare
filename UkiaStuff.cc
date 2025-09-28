@@ -21,12 +21,14 @@
 #include <vector>
 #ifndef USERMODE
 #ifndef FIFO_MODE
-#include "driver.h"
+#include "./Driver.h"
 #else
-#include "FIFO.h"
+#include "./FIFO.h"
 #endif
 #endif  // USERMODE
-#include "XorStr.h"
+#include "./Utils/XorStr.h"
+
+
 
 
 #define WIN32_LEAN_AND_MEAN
@@ -58,7 +60,7 @@ void ShowConsole() noexcept {
 void AntiDebugger(std::string log) noexcept {
   if (IsDebuggerPresent()) {
     if (log != "")
-      printf((log + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      printf("%s",(log + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
                     "\n\n\n\n\n\n\n\n\n\n\n\n")
                  .c_str());
     ShowWindow(GetConsoleWindow(), false);
@@ -687,8 +689,6 @@ int UkiaInit(int argc, char* argv[]) noexcept {
   SetConsoleCtrlHandler(ConsoleCtrlHandler, TRUE);
 #endif
   Ukia::ShowConsole();
-  HANDLE hConsole =
-      GetStdHandle(STD_OUTPUT_HANDLE);  // Gets a standard output device handle
 
   srand(static_cast<unsigned int>(time(nullptr)));
   RandomTitle();

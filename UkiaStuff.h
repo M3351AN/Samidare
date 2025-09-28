@@ -73,9 +73,10 @@ typedef NTSTATUS(NTAPI* _RtlAdjustPrivilege)(ULONG Privilege, BOOLEAN Enable,
                                              BOOLEAN CurrentThread,
                                              PBOOLEAN Enabled);
 
-typedef NTSYSAPI NTSTATUS(NTAPI* _NtOpenProcess)(
-    PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess,
-    POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);
+typedef NTSTATUS(NTAPI* _NtOpenProcess)(PHANDLE ProcessHandle,
+                                        ACCESS_MASK DesiredAccess,
+                                        POBJECT_ATTRIBUTES ObjectAttributes,
+                                        PCLIENT_ID ClientId);
 
 typedef NTSTATUS(NTAPI* _NtQuerySystemInformation)(
     ULONG

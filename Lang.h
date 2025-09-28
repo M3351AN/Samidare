@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <ShlObj.h>
 #include <XorStr.h>
 
@@ -44,8 +44,7 @@ class FontManager {
 
     ImFontConfig base_cfg;
     base_cfg.FontDataOwnedByAtlas = false;
-    ImFont* base_font =
-        io.Fonts->AddFontFromMemoryTTF((void*)harmonySans, sizeof(harmonySans),
+    io.Fonts->AddFontFromMemoryTTF((void*)harmonySans, sizeof(harmonySans),
                                        16.0f, &base_cfg, basic_ranges);
 
     ImFontConfig merge_cfg;

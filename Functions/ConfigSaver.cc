@@ -1,4 +1,4 @@
-#include "ConfigSaver.h"
+﻿#include "ConfigSaver.h"
 
 #include <XorStr.h>
 

@@ -124,7 +124,6 @@ void Base_Radar::AddPoint(const Vector3& LocalPos, const float& LocalYaw,
 void DrawTriangle(ImVec2 Center, ImColor Color, float Width, float Height,
                   float Yaw) noexcept {
   ImVec2 a, b, c;
-  ImVec2 Re_a, Re_b, Re_c;
   a = ImVec2{Center.x - Width / 2, Center.y};
   b = ImVec2{Center.x + Width / 2, Center.y};
   c = ImVec2{Center.x, Center.y - Height};

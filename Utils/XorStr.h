@@ -1,7 +1,20 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <array>
 #include <cstdarg>
+
+#if defined(__clang__)
+#if __has_warning("-Wunknown-warning-option")
+#pragma clang diagnostic ignored \
+    "-Wunknown-warning-option"  // warning: unknown warning group 'xxx' // not
+                                // all warnings are known by all Clang versions
+                                // and they tend to be rename-happy.. so
+                                // ignoring warnings triggers new warnings on
+                                // some configuration. Great!
+#endif
+#pragma clang diagnostic ignored "-Wunused-variable"
+#pragma clang diagnostic ignored "-Wunused-function"
+#endif
 
 #define BEGIN_NAMESPACE( x ) namespace x {
 #define END_NAMESPACE }

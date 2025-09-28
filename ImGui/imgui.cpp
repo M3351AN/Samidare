@@ -1,4 +1,4 @@
-// dear imgui, v1.91.9b
+﻿// dear imgui, v1.91.9b
 // (main code and documentation)
 
 // Help:
@@ -1159,6 +1159,8 @@ CODE
 #pragma clang diagnostic ignored "-Wunsafe-buffer-usage"            // warning: 'xxx' is an unsafe pointer used for buffer access
 #pragma clang diagnostic ignored "-Wnontrivial-memaccess"           // warning: first argument in call to 'memset' is a pointer to non-trivially copyable type
 #pragma clang diagnostic ignored "-Wswitch-default"                 // warning: 'switch' missing 'default' label
+#pragma clang diagnostic ignored "-Wunused-variable"
+#pragma clang diagnostic ignored "-Wunused-function"
 #elif defined(__GNUC__)
 // We disable -Wpragmas because GCC doesn't provide a has_warning equivalent and some forks/patches may not follow the warning/version association.
 #pragma GCC diagnostic ignored "-Wpragmas"                          // warning: unknown option after '#pragma GCC diagnostic' kind

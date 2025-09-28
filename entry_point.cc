@@ -417,8 +417,10 @@ bool DirectXInit() noexcept {
   MyConfigSaver::ExportDefaultLang();
   RegisterImGuiLangSettingsHandler();
   AfterImGuiIniLoaded();
-  ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantTextInput ||
-      ImGui::GetIO().WantCaptureKeyboard;
+  // I forgoted what these line do.
+  // ImGui::GetIO().WantCaptureMouse ||
+  // ImGui::GetIO().WantTextInput ||
+  // ImGui::GetIO().WantCaptureKeyboard;
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
   ImFontConfig font_cfg;
   font_cfg.FontDataOwnedByAtlas = false;
@@ -430,7 +432,7 @@ bool DirectXInit() noexcept {
       0x0400, 0x052F, 0x2DE0, 0x2DFF, 0xA640, 0xA69F,
 
       0x2000, 0x206F, 0xFF00, 0xFFEF, 0xFFFD, 0xFFFD, 0};
-  ImFont* font = io.Fonts->AddFontFromMemoryTTF(
+  io.Fonts->AddFontFromMemoryTTF(
       (void*)harmonySans, sizeof(harmonySans), 16.0f,
        &font_cfg, basic_ranges);
 
@@ -519,7 +521,7 @@ void LogInfo() noexcept {
 #ifdef NDEBUG
   system("cls");
 #endif
-  printf(
+  printf("%s", 
       XorStr("  ####    ##   #    # # #####    ##   #####  ###### \n"
              " #       #  #  ##  ## # #    #  #  #  #    # #      \n"
              "  ####  #    # # ## # # #    # #    # #    # #####  \n"
@@ -528,12 +530,14 @@ void LogInfo() noexcept {
              "  ####  #    # #    # # #####  #    # #    # ###### \n"
              "\"\u4e94\u6708\u96e8\" for Counter-Strike 2\n"));
   printf(XorStr("Build - %s - %s\n"), __DATE__, __TIME__);
-  printf(XorStr(
+  printf(
+      "%s",
+      XorStr(
       "\u305d\u308c\u3067\u3082\u8ab0\u304b\u306b\u898b\u3064\u3051\u3066\u6b32"
       "\u3057\u304f\u3066"
       "\n\u591c\u7a7a\u898b\u4e0a\u3052\u3066\u53eb\u3093\u3067\u3044\u308b"
       "\n"));
-  printf(XorStr("Menukey [DEL]/[INS]\n"));
+  printf("%s", XorStr("Menukey [DEL]/[INS]\n"));
   printf(
       XorStr("ProcessId: %d\nClientBase: %p\nEngineBase: %p\nTier0Base: %p\n"),
       global::processId, reinterpret_cast<void*>(gGame.GetClientDLLAddress()),
@@ -716,7 +720,7 @@ void CleanupResources() noexcept {
 }
 
 void ShowUpdateError() {
-  int ret = MessageBoxA(
+  MessageBoxA(
       nullptr,
       XorStr("Failed to update offsets.\nPlease visit "
              "https://github.com/a2x/cs2-dumper/tree/main/output \nto get "

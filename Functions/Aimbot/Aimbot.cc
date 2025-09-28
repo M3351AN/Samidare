@@ -1,4 +1,4 @@
-#include "Aimbot.h"
+﻿#include "Aimbot.h"
 
 #include <XorStr.h>
 
@@ -38,7 +38,7 @@ inline void UpdateAngles(const CEntity& Local, Vector3& Angles) {
 
   if (Local.Pawn.Ammo > 1 /*Local.Pawn.ShotsFired > RCSBullet*/) {
     Vector2 PunchAngle;
-    if (Local.Pawn.AimPunchCache.Count <= 0 &&
+    if (Local.Pawn.AimPunchCache.Count <= 0 ||
         Local.Pawn.AimPunchCache.Count > 0xFFFF)
       return;
     if (!Ukia::ProcessMgr.ReadMemory<Vector2>(
@@ -96,7 +96,8 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
     return;
   }
   float Yaw, Pitch;
-  float Distance, Norm, Length;
+  float Distance, Norm;
+  // , Length;
   Vector3 Angles{0, 0, 0};
   int ScreenCenterX = static_cast<int>(global::screenSize.x / 2);
   int ScreenCenterY = static_cast<int>(global::screenSize.y / 2);
@@ -114,7 +115,7 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
 
     Distance = static_cast<float>(sqrt(pow(OppPos.x, 2) + pow(OppPos.y, 2)));
 
-    Length = OppPos.Length();
+    // Length = OppPos.Length();
 
     // RCS by @Tairitsu
     if (IsAuto) {
