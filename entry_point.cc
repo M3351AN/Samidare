@@ -16,12 +16,13 @@
 //
 // -----------------------------------------------------------------------------
 #include "pch.h"
+
 #include "Functions/Func.h"
 #include "Game.h"
 #include "Lang.h"
 #include "UkiaStuff.h"
-#include "shigure.h"
 #include "Utils/uiaccess.h"
+#include "shigure.h"
 #include "zekamashi.h"
 
 enum ZBID {
@@ -201,7 +202,8 @@ void SyncOverlayPosition(WindowStateTracker& stateTracker) {
 
     DirectX9Interface::pParams.BackBufferWidth =
         static_cast<unsigned int>(global::screenSize.x);
-    DirectX9Interface::pParams.BackBufferHeight = static_cast<unsigned int>(global::screenSize.y);
+    DirectX9Interface::pParams.BackBufferHeight =
+        static_cast<unsigned int>(global::screenSize.y);
   }
 }
 
@@ -418,8 +420,9 @@ bool DirectXInit() noexcept {
 
       0x2000, 0x206F, 0xFF00, 0xFFEF, 0xFFFD, 0xFFFD, 0};
   io.Fonts->AddFontFromMemoryTTF(
-      (void*)harmonySans, sizeof(harmonySans), 16.0f,
-       &font_cfg, basic_ranges);
+      (void*)rawdata::kHarmonyosSansscRegularRawData,
+      sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &font_cfg,
+      basic_ranges);
 
   io.Fonts->Build();
 
@@ -471,7 +474,8 @@ void SetupWindow() noexcept {
         WS_EX_TOPMOST, OverlayWindow::Name, OverlayWindow::Name,
         WS_POPUP | WS_VISIBLE, static_cast<int>(global::screenPos.x),
         static_cast<int>(global::screenPos.y),
-        static_cast<int>(global::screenSize.x), static_cast<int>(global::screenSize.y), NULL, NULL,
+        static_cast<int>(global::screenSize.x),
+        static_cast<int>(global::screenSize.y), NULL, NULL,
         OverlayWindow::WindowClass.hInstance, NULL);
   } else {
     WNDCLASSEXW wc = {};
@@ -490,8 +494,11 @@ void SetupWindow() noexcept {
     auto res = RegisterClassExW(&wc);
     OverlayWindow::Hwnd = pCreateWindowInBand(
         WS_EX_TOPMOST, res, randomWindowNameW, WS_POPUP | WS_VISIBLE,
-        static_cast<int>(global::screenPos.x), static_cast<int>(global::screenPos.y), static_cast<int>(global::screenSize.x),
-        static_cast<int>(global::screenSize.y), NULL, NULL, wc.hInstance, NULL, ZBID_UIACCESS);
+        static_cast<int>(global::screenPos.x),
+        static_cast<int>(global::screenPos.y),
+        static_cast<int>(global::screenSize.x),
+        static_cast<int>(global::screenSize.y), NULL, NULL, wc.hInstance, NULL,
+        ZBID_UIACCESS);
   }
   if (OverlayWindow::Hwnd != NULL)
     DwmExtendFrameIntoClientArea(OverlayWindow::Hwnd,
@@ -506,22 +513,22 @@ void LogInfo() noexcept {
 #ifdef NDEBUG
   system("cls");
 #endif
-  printf("%s", 
-      XorStr("  ####    ##   #    # # #####    ##   #####  ###### \n"
-             " #       #  #  ##  ## # #    #  #  #  #    # #      \n"
-             "  ####  #    # # ## # # #    # #    # #    # #####  \n"
-             "      # ###### #    # # #    # ###### #####  #      \n"
-             " #    # #    # #    # # #    # #    # #   #  #      \n"
-             "  ####  #    # #    # # #####  #    # #    # ###### \n"
-             "\"\u4e94\u6708\u96e8\" for Counter-Strike 2\n"));
+  printf("%s", XorStr("  ####    ##   #    # # #####    ##   #####  ###### \n"
+                      " #       #  #  ##  ## # #    #  #  #  #    # #      \n"
+                      "  ####  #    # # ## # # #    # #    # #    # #####  \n"
+                      "      # ###### #    # # #    # ###### #####  #      \n"
+                      " #    # #    # #    # # #    # #    # #   #  #      \n"
+                      "  ####  #    # #    # # #####  #    # #    # ###### \n"
+                      "\"\u4e94\u6708\u96e8\" for Counter-Strike 2\n"));
   printf(XorStr("Build - %s - %s\n"), __DATE__, __TIME__);
   printf(
       "%s",
       XorStr(
-      "\u305d\u308c\u3067\u3082\u8ab0\u304b\u306b\u898b\u3064\u3051\u3066\u6b32"
-      "\u3057\u304f\u3066"
-      "\n\u591c\u7a7a\u898b\u4e0a\u3052\u3066\u53eb\u3093\u3067\u3044\u308b"
-      "\n"));
+          "\u305d\u308c\u3067\u3082\u8ab0\u304b\u306b\u898b\u3064\u3051\u3066"
+          "\u6b32"
+          "\u3057\u304f\u3066"
+          "\n\u591c\u7a7a\u898b\u4e0a\u3052\u3066\u53eb\u3093\u3067\u3044\u308b"
+          "\n"));
   printf("%s", XorStr("Menukey [DEL]/[INS]\n"));
   printf(
       XorStr("ProcessId: %d\nClientBase: %p\nEngineBase: %p\nTier0Base: %p\n"),

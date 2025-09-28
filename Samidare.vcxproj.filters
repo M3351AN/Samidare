@@ -242,9 +242,6 @@
     <ClInclude Include="Utils\yaml-cpp\yaml.h">
       <Filter>Headers\Utils\yaml-cpp</Filter>
     </ClInclude>
-    <ClInclude Include="HarmonySans.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Functions\Aimbot\RCS.h">
       <Filter>Headers\Functions\Aimbot</Filter>
     </ClInclude>
@@ -315,6 +312,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HarmonyOS_SansSC_Regular.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

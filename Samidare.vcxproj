@@ -308,7 +308,7 @@
     <ClInclude Include="Functions\Visuals\Radar.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="global.h" />
-    <ClInclude Include="HarmonySans.h" />
+    <ClInclude Include="HarmonyOS_SansSC_Regular.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
     <ClInclude Include="ImGui\imgui_impl_dx9.h" />
