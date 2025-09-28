@@ -1,5 +1,11 @@
 ![SAMIDARETITLE](.github/Samidare-Title.png)
 *"五月雨を集めて早し最上川"*
+
+## WIP, but when continue?
+- Firstly, since I haven't worked in this area for so long, I need to update the game and see what needs to be improved.
+- As you can see, the current project's code style is not easy and needs some sorting out. It shouldn't take long, but it still takes some time.
+- Similarly, there are some C++20 features mixed with old features in the code, as well as some meaningless duplication of implementations, which also need to be cleaned up.
+- I will gradually move forward with the above content when I have enough time and a stable network connection
 ## Feature 
 - Use Native APIs to OpenProcess/WPM/RPM/MouseEvent (Ring3) and CreateWindow
 - Inplement WPM/RPM/MouseEvent in kernel-mode (Ring0)
