@@ -42,7 +42,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="源.cc">
+    <ClCompile Include="entry_point.cc">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -72,9 +72,6 @@
     <ClCompile Include="Functions\ConfigSaver.cc">
       <Filter>头文件\Functions</Filter>
     </ClCompile>
-    <ClCompile Include="Overlay.cc">
-      <Filter>头文件</Filter>
-    </ClCompile>
     <ClCompile Include="Functions\Func.cc">
       <Filter>头文件\Functions</Filter>
     </ClCompile>
@@ -90,18 +87,6 @@
     <ClCompile Include="Functions\Visuals\Radar.cc">
       <Filter>头文件\Functions\Visuals</Filter>
     </ClCompile>
-    <ClCompile Include="UkiaStuff.cc">
-      <Filter>头文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cc">
-      <Filter>头文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Offsets.cc">
-      <Filter>头文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CS2x64.cc">
-      <Filter>头文件</Filter>
-    </ClCompile>
     <ClCompile Include="Functions\Aimbot\TriggerBot.cc">
       <Filter>头文件\Functions\Aimbot</Filter>
     </ClCompile>
@@ -116,6 +101,21 @@
     </ClCompile>
     <ClCompile Include="Functions\Miscs\SpecList.cc">
       <Filter>头文件\Functions\Miscs</Filter>
+    </ClCompile>
+    <ClCompile Include="UkiaStuff.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Offsets.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CS2x64.cc">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

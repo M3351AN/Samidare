@@ -1,4 +1,22 @@
-﻿#include <ShlObj.h>
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: entrypoint.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-28
+//
+// Description:
+//   This file is entry point for Samidare.
+//
+// -----------------------------------------------------------------------------
+
+#include <ShlObj.h>
 #include <mmsystem.h>
 #include <stdio.h>
 
@@ -9,13 +27,15 @@
 #include <limits>
 #include <thread>
 #include <unordered_map>
+#include <string>
+#include <vector>
 
 #include "Functions/Func.h"
 #include "Game.h"
 #include "Lang.h"
 #include "UkiaStuff.h"
 #include "shigure.h"
-#include "uiaccess.h"
+#include "Utils/uiaccess.h"
 #include "zekamashi.h"
 #pragma comment(lib, "winmm.lib")
 
@@ -324,7 +344,7 @@ void MainLoop() noexcept {
 
 static void* MySettingsReadOpen(ImGuiContext*, ImGuiSettingsHandler*,
                                 const char* name) {
-  return (strcmp(name, "Language") == 0) ? (void*)1 : nullptr;
+  return (strcmp(name, "Language") == 0) ? reinterpret_cast<void*>(1) : nullptr;
 }
 
 static void MySettingsReadLine(ImGuiContext*, ImGuiSettingsHandler*, void*,
@@ -402,7 +422,6 @@ bool DirectXInit() noexcept {
   ImFontConfig font_cfg;
   font_cfg.FontDataOwnedByAtlas = false;
   static constexpr ImWchar basic_ranges[] = {
-
       0x0020, 0x00FF,  // ASCII + Latin-1 Supplement
       0x0102, 0x0103, 0x0110, 0x0111, 0x0128, 0x0129, 0x0168,
       0x0169, 0x01A0, 0x01A1, 0x01AF, 0x01B0,
@@ -411,7 +430,8 @@ bool DirectXInit() noexcept {
 
       0x2000, 0x206F, 0xFF00, 0xFFEF, 0xFFFD, 0xFFFD, 0};
   ImFont* font = io.Fonts->AddFontFromMemoryTTF(
-      (void*)harmonySans, sizeof(harmonySans), 16.0f, &font_cfg, basic_ranges);
+      (void*)harmonySans, sizeof(harmonySans), 16.0f,
+       &font_cfg, basic_ranges);
 
   io.Fonts->Build();
 
