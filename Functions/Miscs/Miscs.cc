@@ -1,4 +1,21 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Misc.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains misc functions.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "Miscs.h"
 
 namespace Sonar {
@@ -48,8 +65,8 @@ void FoundEnemy(
 
   std::ostringstream allinfo;
 
-  int centerX = static_cast<int>(global::screenSize.x * 0.5f);
-  int centerY = static_cast<int>(global::screenSize.y * 0.5f);
+  int centerX = static_cast<int>(global::screen_size.x * 0.5f);
+  int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   CEntity* best_enemy = nullptr;
   float min_center_dist_sq = FLT_MAX;
   float min_3d_dist = FLT_MAX;
@@ -120,7 +137,7 @@ void FoundEnemy(
           << local_pos.z << ")\n"
           << "Flags: " << Vars::LocalEntity.Pawn.fFlags << "\n"
           << "FOV: " << Vars::LocalEntity.Pawn.Fov << "\n\n";
-  global::infos = allinfo.str();
+  global::gamedata_infos = allinfo.str();
   return;
 }
 
@@ -130,8 +147,8 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   Sonar::SoundParams newParams;
   newParams.active = false;
 
-  int centerX = static_cast<int>(global::screenSize.x * 0.5f);
-  int centerY = static_cast<int>(global::screenSize.y * 0.5f);
+  int centerX = static_cast<int>(global::screen_size.x * 0.5f);
+  int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   CEntity* best_enemy = nullptr;
   float min_center_dist_sq = FLT_MAX;
   float min_3d_dist = FLT_MAX;
@@ -195,8 +212,8 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
 void PitchIndicator(CEntity& Local) noexcept {
   if (!config::PitchIndicator) return;
   if (!Vars::IsInGame) return;
-  int centerX = static_cast<int>(global::screenSize.x * 0.5f);
-  int centerY = static_cast<int>(global::screenSize.y * 0.5f);
+  int centerX = static_cast<int>(global::screen_size.x * 0.5f);
+  int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   Vector3 ViewAngle;
   if (!gGame.GetViewAngles(ViewAngle)) return;
   float pitch = ViewAngle.x;
@@ -219,7 +236,7 @@ void PitchIndicator(CEntity& Local) noexcept {
           float verticalOffsetRatio =
               (pitchRadians / (actualFOV * (3.14159265f / 180.0f)));
 
-          float verticalOffset = verticalOffsetRatio * global::screenSize.y;
+          float verticalOffset = verticalOffsetRatio * global::screen_size.y;
 
           screenPos.y = static_cast<float>(centerY - static_cast<int>(verticalOffset));
         }

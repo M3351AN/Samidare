@@ -1,4 +1,23 @@
-﻿#pragma once
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: ConfigSaver.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file is declare of config saving functions of Samidare project.
+//
+// -----------------------------------------------------------------------------
+#pragma once
+#ifndef CONFIGSAVER_H_
+#define CONFIGSAVER_H_
 #include "pch.h"
 
 #include "../ImGui/imgui.h"
@@ -8,12 +27,13 @@
 #pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
+namespace configsaver {
 struct ConfigFileCache {
   std::filesystem::file_time_type modifyTime;
   std::string author;
   std::string modiTimeStr;
 };
-
+inline std::string selectedLangsFile;
 static std::string selectedConfigFile;
 static std::string deletePendingFile;
 static std::vector<std::tuple<std::string, std::string, std::string>>
@@ -21,9 +41,6 @@ static std::vector<std::tuple<std::string, std::string, std::string>>
 static std::unordered_map<std::string, ConfigFileCache> configFileCache;
 static std::filesystem::file_time_type lastConfigScanTime;
 static std::vector<std::string> langsFileList;
-
-namespace MyConfigSaver {
-inline std::string selectedLangsFile;
 inline void UpdateConfigFiles() {
   static std::vector<std::string> currentFiles;
   currentFiles.clear();
@@ -154,3 +171,4 @@ inline static std::vector<int> LoadVector(const YAML::Node& node,
 }
 
 }  // namespace MyConfigSaver
+#endif  // CONFIGSAVER_H_

@@ -1,4 +1,24 @@
-﻿#pragma once
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Game.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains functions and classes for game interaction and
+//   world-to-screen.
+//
+// -----------------------------------------------------------------------------
+#pragma once
+#ifndef GAME_H_
+#define GAME_H_
 #include <optional>
 #include "global.h"
 #include "Offsets.h"
@@ -8,8 +28,8 @@ class CView {
   float Matrix[4][4]{};
 
   bool WorldToScreen(const Vector3& Pos, Vector2& ToPos) {
-    float SightX = global::screenSize.x * .5f;
-    float SightY = global::screenSize.y * .5f;
+    float SightX = global::screen_size.x * .5f;
+    float SightY = global::screen_size.y * .5f;
 
     float m30 = Matrix[3][0], m31 = Matrix[3][1], m32 = Matrix[3][2],
           m33 = Matrix[3][3];
@@ -32,7 +52,7 @@ class CView {
   }
 
   Vector2 GetScreenCenterVec2() {
-    Vector2 Pos = global::screenSize * .5f;
+    Vector2 Pos = global::screen_size * .5f;
     return Pos;
   }
 };
@@ -112,3 +132,4 @@ public:
 };
 
 inline CGame gGame;
+#endif  // GAME_H_

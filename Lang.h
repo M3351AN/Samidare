@@ -16,6 +16,8 @@
 //
 // -----------------------------------------------------------------------------
 #pragma once
+#ifndef LANG_H_
+#define LANG_H_
 #include "pch.h"
 
 #include "./HarmonyOS_SansSC_Regular.h"
@@ -96,7 +98,7 @@ class FontManager {
     io.Fonts->Build();
     ImGui_ImplDX9_InvalidateDeviceObjects();
     ImGui_ImplDX9_CreateDeviceObjects();
-    global::fontUpdatePending = false;
+    global::is_font_update_pending = false;
   }
 
  private:
@@ -120,3 +122,4 @@ class FontManager {
 };
 
 static FontManager font_manager;
+#endif  // LANG_H_

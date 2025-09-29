@@ -1,9 +1,26 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: ConfigSaver.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file is config saving functions of Samidare project.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "ConfigSaver.h"
 
 #include "../global.h"
 
-namespace MyConfigSaver {
+namespace configsaver {
 
 static std::string GetAuthorFromFile(const std::string& filePath) {
   std::ifstream file(filePath);
@@ -24,7 +41,7 @@ void SaveConfig(const std::string& filename, const std::string& author) {
 
   if (isNewFile) {
     if (actualAuthor.empty()) {
-      if (const char* username = global::userName.c_str()) {
+      if (const char* username = global::user_name.c_str()) {
         actualAuthor = username;
       }
     }
@@ -129,7 +146,7 @@ void LoadLangs(const std::string& filename) {
     AUTO_LANG_VARS
 #undef Y
   }
-  global::fontUpdatePending = true;
+  global::is_font_update_pending = true;
 }
 
 void UpdateLangsFileList() {

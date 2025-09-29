@@ -59,19 +59,19 @@ CreateWindowInBand pCreateWindowInBand =
         LoadLibraryA(XorStr("user32.dll")), XorStr("CreateWindowInBand")));
 
 void JustGetWindowRect() {
-  if (Ukia::IsFullscreen(global::hwnd_)) {
-    global::screenSize.x = static_cast<float>(GetSystemMetrics(SM_CXSCREEN));
-    global::screenSize.y = static_cast<float>(GetSystemMetrics(SM_CYSCREEN));
-    global::screenPos.x = 0.f;
-    global::screenPos.y = 0.f;
+  if (Ukia::IsFullscreen(global::game_hwnd)) {
+    global::screen_size.x = static_cast<float>(GetSystemMetrics(SM_CXSCREEN));
+    global::screen_size.y = static_cast<float>(GetSystemMetrics(SM_CYSCREEN));
+    global::screen_pos.x = 0.f;
+    global::screen_pos.y = 0.f;
   } else {
     RECT clientRect;
-    if (GetClientRect(global::hwnd_, &clientRect)) {
+    if (GetClientRect(global::game_hwnd, &clientRect)) {
       int clientWidth = clientRect.right - clientRect.left;
       int clientHeight = clientRect.bottom - clientRect.top;
 
-      global::screenSize.x = static_cast<float>(clientWidth);
-      global::screenSize.y = static_cast<float>(clientHeight);
+      global::screen_size.x = static_cast<float>(clientWidth);
+      global::screen_size.y = static_cast<float>(clientHeight);
     } else {
       MessageBoxA(nullptr, XorStr("Failed to get window rect."),
                   XorStr("Samidare"), MB_OK);
@@ -134,7 +134,7 @@ struct WindowStateTracker {
 bool HandleFocusState(bool& wasFocused) {
   const HWND foreground = GetForegroundWindow();
   const bool focused =
-      (foreground == global::hwnd_) || (foreground == OverlayWindow::Hwnd);
+      (foreground == global::game_hwnd) || (foreground == OverlayWindow::Hwnd);
 
   if (focused != wasFocused) {
     ShowWindow(OverlayWindow::Hwnd, focused ? SW_SHOW : SW_HIDE);
@@ -159,9 +159,9 @@ void SyncMenuState(bool& lastState) {
                SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 
   if (!config::ShowMenu) {
-    SetForegroundWindow(global::hwnd_);
-    SetActiveWindow(global::hwnd_);
-    SetFocus(global::hwnd_);
+    SetForegroundWindow(global::game_hwnd);
+    SetActiveWindow(global::game_hwnd);
+    SetFocus(global::game_hwnd);
   }
 
   lastState = config::ShowMenu;
@@ -178,9 +178,9 @@ void ProcessMessageQueue() {
 void SyncOverlayPosition(WindowStateTracker& stateTracker) {
   std::lock_guard<std::mutex> lock(g_d3dMutex);
   RECT clientRect;
-  GetClientRect(global::hwnd_, &clientRect);
+  GetClientRect(global::game_hwnd, &clientRect);
   POINT clientPos{0};
-  ClientToScreen(global::hwnd_, &clientPos);
+  ClientToScreen(global::game_hwnd, &clientPos);
 
   bool positionChanged = (clientPos.x != stateTracker.oldRect.left) ||
                          (clientPos.y != stateTracker.oldRect.top);
@@ -193,17 +193,17 @@ void SyncOverlayPosition(WindowStateTracker& stateTracker) {
                  clientRect.right, clientRect.bottom,
                  SWP_NOZORDER | SWP_NOACTIVATE);
 
-    global::screenSize.x = static_cast<float>(clientRect.right);
-    global::screenSize.y = static_cast<float>(clientRect.bottom);
+    global::screen_size.x = static_cast<float>(clientRect.right);
+    global::screen_size.y = static_cast<float>(clientRect.bottom);
     stateTracker.oldRect = {0, 0, clientRect.right, clientRect.bottom};
 
-    global::screenSize.x = static_cast<float>(clientRect.right);
-    global::screenSize.y = static_cast<float>(clientRect.bottom);
+    global::screen_size.x = static_cast<float>(clientRect.right);
+    global::screen_size.y = static_cast<float>(clientRect.bottom);
 
     DirectX9Interface::pParams.BackBufferWidth =
-        static_cast<unsigned int>(global::screenSize.x);
+        static_cast<unsigned int>(global::screen_size.x);
     DirectX9Interface::pParams.BackBufferHeight =
-        static_cast<unsigned int>(global::screenSize.y);
+        static_cast<unsigned int>(global::screen_size.y);
   }
 }
 
@@ -212,7 +212,7 @@ void UpdateInputState() noexcept {
 
   POINT cursorPos{0};
   GetCursorPos(&cursorPos);
-  ScreenToClient(global::hwnd_, &cursorPos);
+  ScreenToClient(global::game_hwnd, &cursorPos);
   io.MousePos =
       ImVec2(static_cast<float>(cursorPos.x), static_cast<float>(cursorPos.y));
   io.MouseDown[0] = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
@@ -290,7 +290,7 @@ void MainLoop() noexcept {
   ZeroMemory(&msg, sizeof(MSG));
 
   while (msg.message != WM_QUIT) {
-    if (!global::isRunning) break;
+    if (!global::isRunning()) break;
 
     if (config::BypassCapture)
       SetWindowDisplayAffinity(OverlayWindow::Hwnd, WDA_EXCLUDEFROMCAPTURE);
@@ -298,7 +298,7 @@ void MainLoop() noexcept {
       SetWindowDisplayAffinity(OverlayWindow::Hwnd, WDA_NONE);
 
     stateTracker.UpdateWindowState([&]() {
-      const bool isFullscreen = Ukia::IsFullscreen(global::hwnd_);
+      const bool isFullscreen = Ukia::IsFullscreen(global::game_hwnd);
       if (isFullscreen != stateTracker.lastFullscreen) {
         JustGetWindowRect();
         return true;
@@ -306,8 +306,8 @@ void MainLoop() noexcept {
       return false;
     });
 
-    global::isFocused = HandleFocusState(stateTracker.wasGameFocused);
-    if (!global::isFocused) {
+    global::is_focused = HandleFocusState(stateTracker.wasGameFocused);
+    if (!global::isFocused()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(15));
       continue;
     }
@@ -320,7 +320,7 @@ void MainLoop() noexcept {
 
     UpdateInputState();
 
-    if (global::fontUpdatePending) font_manager.ReloadFonts();
+    if (global::isFontUpdatePending()) font_manager.ReloadFonts();
 
     RenderFrame();
     std::this_thread::sleep_for(
@@ -339,22 +339,22 @@ static void MySettingsReadLine(ImGuiContext*, ImGuiSettingsHandler*, void*,
                                const char* line) {
   char buf[256] = {};
   if (sscanf(line, "Selected=%255s", buf) == 1 && buf[0] != '\0') {
-    MyConfigSaver::selectedLangsFile = buf;
-    MyConfigSaver::LoadLangs(MyConfigSaver::selectedLangsFile + ".yaml");
+    configsaver::selectedLangsFile = buf;
+    configsaver::LoadLangs(configsaver::selectedLangsFile + ".yaml");
   }
 }
 
 void AfterImGuiIniLoaded() {
-  if (MyConfigSaver::selectedLangsFile.empty()) {
-    MyConfigSaver::selectedLangsFile = "Default";
-    MyConfigSaver::LoadLangs("Default.yaml");
+  if (configsaver::selectedLangsFile.empty()) {
+    configsaver::selectedLangsFile = "Default";
+    configsaver::LoadLangs("Default.yaml");
   }
 }
 
 static void MySettingsWriteAll(ImGuiContext*, ImGuiSettingsHandler* handler,
                                ImGuiTextBuffer* out_buf) {
   out_buf->appendf("[%s][Language]\nSelected=%s\n", handler->TypeName,
-                   MyConfigSaver::selectedLangsFile.c_str());
+                   configsaver::selectedLangsFile.c_str());
 }
 
 void RegisterImGuiLangSettingsHandler() {
@@ -379,8 +379,8 @@ bool DirectXInit() noexcept {
   Params.hDeviceWindow = OverlayWindow::Hwnd;
   Params.MultiSampleQuality = D3DMULTISAMPLE_NONE;
   Params.BackBufferFormat = D3DFMT_A8R8G8B8;
-  Params.BackBufferWidth = static_cast<unsigned int>(global::screenSize.x);
-  Params.BackBufferHeight = static_cast<unsigned int>(global::screenSize.y);
+  Params.BackBufferWidth = static_cast<unsigned int>(global::screen_size.x);
+  Params.BackBufferHeight = static_cast<unsigned int>(global::screen_size.y);
   Params.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
   Params.EnableAutoDepthStencil = TRUE;
   Params.AutoDepthStencilFormat = D3DFMT_D16;
@@ -401,7 +401,7 @@ bool DirectXInit() noexcept {
   static std::string iniPath;
   iniPath = config::path + XorStr("\\imgui_config.ini");
   io.IniFilename = iniPath.c_str();
-  MyConfigSaver::ExportDefaultLang();
+  configsaver::ExportDefaultLang();
   RegisterImGuiLangSettingsHandler();
   AfterImGuiIniLoaded();
   // I forgoted what these line do.
@@ -431,30 +431,32 @@ bool DirectXInit() noexcept {
   ImGui_ImplWin32_EnableDpiAwareness();
   ImGui_ImplWin32_Init(OverlayWindow::Hwnd);
   ImGui_ImplDX9_Init(DirectX9Interface::pDevice);
-  LoadTextureFromMemory(DirectX9Interface::pDevice, ShigureImg,
-                        sizeof(ShigureImg), &global::Shigure);
-  LoadTextureFromMemory(DirectX9Interface::pDevice, ZekamashiImg,
-                        sizeof(ZekamashiImg), &global::Zekamashi);
+  LoadTextureFromMemory(DirectX9Interface::pDevice, rawdata::kShigureRawData,
+                        sizeof(rawdata::kShigureRawData),
+                        &global::shigure_texture);
+  LoadTextureFromMemory(DirectX9Interface::pDevice, rawdata::kZekamashiRawData,
+                        sizeof(rawdata::kZekamashiRawData),
+                        &global::zekamashi_texture);
   DirectX9Interface::Direct3D9->Release();
   return true;
 }
 static LPCSTR randomWindowName;
 static LPCWSTR randomWindowNameW;
 void SetupWindow() noexcept {
-  if (global::hwnd_) {
+  if (global::game_hwnd) {
     static RECT TempRect = {NULL};
     static POINT TempPoint;
-    GetClientRect(global::hwnd_, &TempRect);
-    ClientToScreen(global::hwnd_, &TempPoint);
+    GetClientRect(global::game_hwnd, &TempRect);
+    ClientToScreen(global::game_hwnd, &TempPoint);
     TempRect.left = TempPoint.x;
     TempRect.top = TempPoint.y;
-    global::screenSize.x = static_cast<float>(TempRect.right);
-    global::screenSize.y = static_cast<float>(TempRect.bottom);
+    global::screen_size.x = static_cast<float>(TempRect.right);
+    global::screen_size.y = static_cast<float>(TempRect.bottom);
   }
 
   JustGetWindowRect();  // again.
 
-  if (global::uiAccessStatus != ERROR_SUCCESS) {
+  if (global::ui_access_status != ERROR_SUCCESS) {
     OverlayWindow::WindowClass = {};
     OverlayWindow::WindowClass.cbSize = sizeof(WNDCLASSEX);
     OverlayWindow::WindowClass.style = 0;
@@ -472,10 +474,10 @@ void SetupWindow() noexcept {
     RegisterClassExA(&OverlayWindow::WindowClass);
     OverlayWindow::Hwnd = CreateWindowExA(
         WS_EX_TOPMOST, OverlayWindow::Name, OverlayWindow::Name,
-        WS_POPUP | WS_VISIBLE, static_cast<int>(global::screenPos.x),
-        static_cast<int>(global::screenPos.y),
-        static_cast<int>(global::screenSize.x),
-        static_cast<int>(global::screenSize.y), NULL, NULL,
+        WS_POPUP | WS_VISIBLE, static_cast<int>(global::screen_pos.x),
+        static_cast<int>(global::screen_pos.y),
+        static_cast<int>(global::screen_size.x),
+        static_cast<int>(global::screen_size.y), NULL, NULL,
         OverlayWindow::WindowClass.hInstance, NULL);
   } else {
     WNDCLASSEXW wc = {};
@@ -494,10 +496,10 @@ void SetupWindow() noexcept {
     auto res = RegisterClassExW(&wc);
     OverlayWindow::Hwnd = pCreateWindowInBand(
         WS_EX_TOPMOST, res, randomWindowNameW, WS_POPUP | WS_VISIBLE,
-        static_cast<int>(global::screenPos.x),
-        static_cast<int>(global::screenPos.y),
-        static_cast<int>(global::screenSize.x),
-        static_cast<int>(global::screenSize.y), NULL, NULL, wc.hInstance, NULL,
+        static_cast<int>(global::screen_pos.x),
+        static_cast<int>(global::screen_pos.y),
+        static_cast<int>(global::screen_size.x),
+        static_cast<int>(global::screen_size.y), NULL, NULL, wc.hInstance, NULL,
         ZBID_UIACCESS);
   }
   if (OverlayWindow::Hwnd != NULL)
@@ -532,7 +534,7 @@ void LogInfo() noexcept {
   printf("%s", XorStr("Menukey [DEL]/[INS]\n"));
   printf(
       XorStr("ProcessId: %d\nClientBase: %p\nEngineBase: %p\nTier0Base: %p\n"),
-      global::processId, reinterpret_cast<void*>(gGame.GetClientDLLAddress()),
+      global::process_id, reinterpret_cast<void*>(gGame.GetClientDLLAddress()),
       reinterpret_cast<void*>(gGame.GetEngineDLLAddress()),
       reinterpret_cast<void*>(gGame.GetTier0DLLAddress()));
 }
@@ -552,8 +554,8 @@ bool InitializeGameProcess() noexcept {
                 XorStr("Samidare Error"), MB_ICONERROR);
     Ukia::UkiaExit();
   }
-  global::processId = processId;
-  global::hwnd_ = Ukia::ProcessMgr.GetWindowHandleFromProcessId(processId);
+  global::process_id = processId;
+  global::game_hwnd = Ukia::ProcessMgr.GetWindowHandleFromProcessId(processId);
 
   LogInfo();
   return true;
@@ -580,7 +582,7 @@ class ScopedThreadManager {
   }
 
   ~ScopedThreadManager() noexcept {
-    global::isRunning = false;
+    global::is_running = false;
     for (auto& thread : m_threads) {
       if (thread.joinable()) thread.join();
     }
@@ -590,62 +592,62 @@ class ScopedThreadManager {
   std::vector<std::thread> m_threads;
 
   void CheckAliveThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       constexpr wchar_t EXPECTED_TITLE[] = L"Counter-Strike 2";
       wchar_t actualTitle[256] = {0};
-      GetWindowTextW(global::hwnd_, actualTitle, _countof(actualTitle));
+      GetWindowTextW(global::game_hwnd, actualTitle, _countof(actualTitle));
       constexpr wchar_t EXPECTED_TITLE_CN[] =
           L"\u53cd\u6050\u7cbe\u82f1\uff1a\u5168\u7403\u653b\u52bf";
       wchar_t actualTitleCN[256] = {0};
-      GetWindowTextW(global::hwnd_, actualTitleCN, _countof(actualTitle));
-      global::isRunning = ((wcscmp(actualTitle, EXPECTED_TITLE) == 0) ||
+      GetWindowTextW(global::game_hwnd, actualTitleCN, _countof(actualTitle));
+      global::is_running = ((wcscmp(actualTitle, EXPECTED_TITLE) == 0) ||
                            (wcscmp(actualTitleCN, EXPECTED_TITLE_CN) == 0));
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
   }
   void DataUpdateThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       Vars::UpdateDataSlow();
       std::this_thread::sleep_for(
           std::chrono::milliseconds(Vars::GlobalVarsInterval));
     }
   }
   void EntityUpdateThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       Vars::UpdateData();
       std::this_thread::sleep_for(
           std::chrono::milliseconds(Vars::EntityInterval));
     }
   }
   void MapUpdateThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       Vars::ParserRun();
       std::this_thread::sleep_for(
           std::chrono::milliseconds(Vars::ParserInterval));
     }
   }
   void AimProcessThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       AimFunctions(Vars::ValidEntity);
       std::this_thread::sleep_for(std::chrono::milliseconds(Vars::AimInterval));
     }
   }
   void ViewProcessThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       ViewFunctions(Vars::ValidEntity);
       std::this_thread::sleep_for(
           std::chrono::milliseconds(Vars::ViewInterval));
     }
   }
   void MemoryProcessThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       MemoryFunctions(Vars::ValidEntity);
       std::this_thread::sleep_for(
           std::chrono::milliseconds(Vars::MemoryInterval));
     }
   }
   void NonMemoryProcessThread() noexcept {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       NonMemoryFunctions();
       std::this_thread::sleep_for(
           std::chrono::milliseconds(Vars::NonMemoryInterval));
@@ -657,11 +659,11 @@ bool WaitForGameFocus() {
   constexpr auto focusCheckInterval = std::chrono::milliseconds(15);
   auto startTime = std::chrono::steady_clock::now();
 
-  while (global::isRunning) {
+  while (global::isRunning()) {
     DWORD foregroundPID = 0;
     GetWindowThreadProcessId(GetForegroundWindow(), &foregroundPID);
 
-    if (foregroundPID == global::processId) {
+    if (foregroundPID == global::process_id) {
       JustGetWindowRect();
       return true;
     }
@@ -694,7 +696,7 @@ bool InitializeRendering() noexcept {
 
 void RunMainLoop() noexcept {
   try {
-    while (global::isRunning) {
+    while (global::isRunning()) {
       MainLoop();
     }
   } catch (const std::exception& e) {
@@ -725,7 +727,7 @@ void ShowUpdateError() {
 }
 
 int Mian() noexcept {
-  global::uiAccessStatus = PrepareForUIAccess();
+  global::ui_access_status = PrepareForUIAccess();
 
   char documentsPath[MAX_PATH];
   if (SHGetFolderPathA(NULL, CSIDL_PERSONAL, NULL, 0, documentsPath) != S_OK) {
@@ -779,7 +781,7 @@ int Mian() noexcept {
       Ukia::UkiaExit();
     }
   }
-  global::userName = std::getenv(XorStr("USERNAME"));
+  global::user_name = std::getenv(XorStr("USERNAME"));
 
   if (!InitializeGameProcess()) {
     MessageBoxA(nullptr, XorStr("Failed to initialize game process"),
@@ -787,7 +789,7 @@ int Mian() noexcept {
     return -1;
   }
 
-  global::isRunning = true;
+  global::is_running = true;
 
   if (!WaitForGameFocus()) {
     MessageBoxA(nullptr, XorStr("Wait game window focus time out"),

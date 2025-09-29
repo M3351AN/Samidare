@@ -711,7 +711,7 @@ void UpdateDataSlow() {
   if (!PlantedBomb.UpdatePlantedC4(PlantedC4Address)) return;
 }
 void UpdateData() {
-  if (!global::isFocused) return;
+  if (!global::isFocused()) return;
   if (!Ukia::ProcessMgr.ReadMemory(gGame.GetMatrixAddress(), gGame.View.Matrix,
                                    64))
     return;
@@ -726,8 +726,8 @@ void UpdateData() {
   if (!LocalEntity.UpdateController(LocalControllerAddress)) return;
   if (!LocalEntity.UpdatePawn(LocalPawnAddress) && !config::WorkInSpec) return;
 
-  if (global::userName == std::getenv(XorStr("USERNAME")))
-    global::userName = LocalEntity.Controller.PlayerName;
+  if (global::user_name == std::getenv(XorStr("USERNAME")))
+    global::user_name = LocalEntity.Controller.PlayerName;
   if (!IsInGame) {
     std::lock_guard<std::mutex> lock(validEntityMutex);
     ValidEntity.clear();

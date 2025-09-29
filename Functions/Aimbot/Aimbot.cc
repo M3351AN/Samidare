@@ -1,4 +1,21 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Aimbot.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains aimbot functions.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "Aimbot.h"
 
 #include "../../UkiaStuff.h"
@@ -9,8 +26,8 @@ inline void UpdateAngles(const CEntity& Local, Vector3& Angles) {
   auto oldPunch = Vector3{};
   auto shotsFired = Local.Pawn.ShotsFired;
 
-  int ScreenCenterX = static_cast<int>(global::screenSize.x / 2);
-  int ScreenCenterY = static_cast<int>(global::screenSize.y / 2);
+  int ScreenCenterX = static_cast<int>(global::screen_size.x / 2);
+  int ScreenCenterY = static_cast<int>(global::screen_size.y / 2);
   auto aimPunch = Local.Pawn.AimPunchAngle;
   if (shotsFired) {
     Vector3 viewAngles;
@@ -97,8 +114,8 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
   float Distance, Norm;
   // , Length;
   Vector3 Angles{0, 0, 0};
-  int ScreenCenterX = static_cast<int>(global::screenSize.x / 2);
-  int ScreenCenterY = static_cast<int>(global::screenSize.y / 2);
+  int ScreenCenterX = static_cast<int>(global::screen_size.x / 2);
+  int ScreenCenterY = static_cast<int>(global::screen_size.y / 2);
   float TargetX = 0.f;
   float TargetY = 0.f;
 
@@ -235,7 +252,7 @@ void AimBotRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
         DistanceToSight = Entity.GetBone()
                               .BonePosList[config::HitboxList[p]]
                               .ScreenPos.DistanceTo(
-                {global::screenSize.x / 2, global::screenSize.y / 2});
+                {global::screen_size.x / 2, global::screen_size.y / 2});
 
         TempPos = Entity.GetBone().BonePosList[config::HitboxList[p]].Pos;
         /*
