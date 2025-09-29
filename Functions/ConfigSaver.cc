@@ -97,7 +97,7 @@ void ExportLangs() {
   out << YAML::Key << "translate" << YAML::Value << YAML::BeginMap;
 
 #define Y(var, type) \
-  out << YAML::Key << #var << YAML::Value << LangSettings::var;
+  out << YAML::Key << #var << YAML::Value << languagesettings::var;
 
   AUTO_LANG_VARS
 
@@ -106,7 +106,7 @@ void ExportLangs() {
   out << YAML::EndMap;
   out << YAML::EndMap;
 
-  std::ofstream fout(LangSettings::path + XorStr("/") +
+  std::ofstream fout(languagesettings::path + XorStr("/") +
                      "language_template.yaml");
   fout << out.c_str();
 }
@@ -121,7 +121,7 @@ void ExportDefaultLang() {
   out << YAML::Key << "translate" << YAML::Value << YAML::BeginMap;
 
 #define Y(var, type) \
-  out << YAML::Key << #var << YAML::Value << LangSettings::var;
+  out << YAML::Key << #var << YAML::Value << languagesettings::var;
 
   AUTO_LANG_VARS
 
@@ -130,18 +130,18 @@ void ExportDefaultLang() {
   out << YAML::EndMap;
   out << YAML::EndMap;
 
-  std::ofstream fout(LangSettings::path + XorStr("/") +
+  std::ofstream fout(languagesettings::path + XorStr("/") +
                      "Default.yaml");
   fout << out.c_str();
 }
 
 void LoadLangs(const std::string& filename) {
-  YAML::Node root = YAML::LoadFile(LangSettings::path + XorStr("/") + filename);
+  YAML::Node root = YAML::LoadFile(languagesettings::path + XorStr("/") + filename);
   if (root["translate"]) {
     YAML::Node configNode = root["translate"];
 #define Y(var, type)                                 \
   if (configNode[#var]) {                            \
-    LangSettings::var = configNode[#var].as<type>(); \
+    languagesettings::var = configNode[#var].as<type>(); \
   }
     AUTO_LANG_VARS
 #undef Y
@@ -154,7 +154,7 @@ void UpdateLangsFileList() {
   std::error_code ec;
 
   for (const auto& entry :
-       std::filesystem::directory_iterator(LangSettings::path, ec)) {
+       std::filesystem::directory_iterator(languagesettings::path, ec)) {
     if (ec) {
       MessageBoxA(nullptr, XorStr("Fetch language files error."),
                   XorStr("Samidare Error"), MB_ICONERROR);

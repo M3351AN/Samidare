@@ -18,7 +18,7 @@
 #include "pch.h"
 #include "ESP.h"
 
-namespace ESP {
+namespace esp {
 
 static std::unordered_map<uintptr_t, float> g_dormantStartTimes;
 

@@ -259,7 +259,7 @@ inline int NonMemoryInterval = 1;
   Y(TextToggle, std::string)                \
   Y(TextDisable, std::string)
 
-namespace LangSettings {
+namespace languagesettings {
 inline std::string path = "";
 inline bool greek = false;
 inline bool vietnamese = false;

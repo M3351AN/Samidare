@@ -20,6 +20,7 @@
 #define FUNC_H_
 #include "pch.h"
 #include "../CS2x64.h"
+namespace functions {
 void RenderFunctions(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept;
 void AimFunctions(
@@ -29,4 +30,5 @@ void ViewFunctions(
 void MemoryFunctions(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept;
 void NonMemoryFunctions() noexcept;
+}  // namespace functions
 #endif  // FUNC_H_

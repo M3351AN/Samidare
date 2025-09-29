@@ -632,10 +632,10 @@ bool ImGui::HotKey(const char* szLabel, int* pKey) {
         szBufferEnd = std::strcat(szBufferEnd, ImGui::GetKeyName(static_cast<ImGuiKey>(*pKey)));
     else if (g.ActiveId == nIndex)
       szBufferEnd =
-          std::strcat(szBufferEnd, LangSettings::TextPress.c_str());
+          std::strcat(szBufferEnd, languagesettings::TextPress.c_str());
     else
       szBufferEnd =
-          std::strcat(szBufferEnd, LangSettings::TextNone.c_str());
+          std::strcat(szBufferEnd, languagesettings::TextNone.c_str());
     std::strcat(szBufferEnd, "  ");
 
     PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(style.FramePadding.x, -1));
@@ -671,9 +671,9 @@ bool ImGui::HotKey(const char* szLabel, KeyBind_t* pKeyBind,
 
     if (BeginPopup(XorStr("key##Popup"))) {
       SetNextItemWidth(95.f);
-      const std::string& hold = LangSettings::TextHold;
-      const std::string& toggle = LangSettings::TextToggle;
-      const std::string& disable = LangSettings::TextDisable;
+      const std::string& hold = languagesettings::TextHold;
+      const std::string& toggle = languagesettings::TextToggle;
+      const std::string& disable = languagesettings::TextDisable;
       std::string comboItems = hold + '\0' + toggle + '\0' + disable + '\0';
       comboItems.push_back('\0');
 

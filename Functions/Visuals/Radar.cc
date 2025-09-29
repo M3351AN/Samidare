@@ -18,7 +18,7 @@
 #include "pch.h"
 #include "Radar.h"
 #include "../../maths.h"
-namespace Radar {
+namespace radar {
 
 class Base_Radar {
  public:

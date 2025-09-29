@@ -22,9 +22,8 @@
 
 #include "../../CS2x64.h"
 
-namespace AimBot
+namespace aimbot
 {
-
-    void AimBotRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity);
+void AimBotRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity);
 }
 #endif  // AIMBOT_H_

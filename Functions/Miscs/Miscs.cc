@@ -18,7 +18,7 @@
 #include "pch.h"
 #include "Miscs.h"
 
-namespace Sonar {
+namespace sonar {
 struct SoundParams {
   float frequency = 1000.0f;  // 默认频率
   float interval = 1000.0f;   // 默认间隔(ms)
@@ -57,7 +57,7 @@ void SoundThread() noexcept {
 }
 }  // namespace Sonar
 
-namespace Misc {
+namespace misc {
 
 void FoundEnemy(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
@@ -144,7 +144,7 @@ void FoundEnemy(
 void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   if (!config::Sonar) return;
 
-  Sonar::SoundParams newParams;
+  sonar::SoundParams newParams;
   newParams.active = false;
 
   int centerX = static_cast<int>(global::screen_size.x * 0.5f);
@@ -203,8 +203,8 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
     }
   }
   {
-    std::lock_guard<std::mutex> lock(Sonar::soundMutex);
-    Sonar::currentParams = newParams;
+    std::lock_guard<std::mutex> lock(sonar::soundMutex);
+    sonar::currentParams = newParams;
   }
   return;
 }

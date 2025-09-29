@@ -9,7 +9,7 @@
 // -----------------------------------------------------------------------------
 // File: RCS.cc
 // Author: 渟雲(quq[at]outlook.it)
-// Date: 2025-09-29
+// Date: 2025-09-30
 //
 // Description:
 //   This file contains recoil control system function.
@@ -19,7 +19,7 @@
 #include "RCS.h"
 
 #include "../../Driver.h"
-namespace RCS {
+namespace rcs {
 
 void RCSRun(CEntity& Local) noexcept {
   if (!config::RCS) return;

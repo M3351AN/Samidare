@@ -67,31 +67,31 @@ class FontManager {
     merge_cfg.MergeMode = true;
     merge_cfg.FontDataOwnedByAtlas = false;
 
-    if (LangSettings::greek) {
+    if (languagesettings::greek) {
       io.Fonts->AddFontFromMemoryTTF(
           (void*)rawdata::kHarmonyosSansscRegularRawData,
           sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &merge_cfg,
           greek_ranges);
     }
-    if (LangSettings::vietnamese) {
+    if (languagesettings::vietnamese) {
       io.Fonts->AddFontFromMemoryTTF(
           (void*)rawdata::kHarmonyosSansscRegularRawData,
           sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &merge_cfg,
           vietnamese_ranges);
     }
-    if (LangSettings::kanji) {
+    if (languagesettings::kanji) {
       io.Fonts->AddFontFromMemoryTTF(
           (void*)rawdata::kHarmonyosSansscRegularRawData,
           sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &merge_cfg,
           kanji_ranges);
     }
-    if (LangSettings::korean) {
+    if (languagesettings::korean) {
       AddFontWithRange(merge_cfg, "malgun.ttf", korean_ranges);
     }
-    if (LangSettings::arabic) {
+    if (languagesettings::arabic) {
       AddFontWithRange(merge_cfg, "dubai-regular.ttf", arab_ranges);
     }
-    if (LangSettings::thai) {
+    if (languagesettings::thai) {
       AddFontWithRange(merge_cfg, "leelawui.ttf", thai_ranges);
     }
 

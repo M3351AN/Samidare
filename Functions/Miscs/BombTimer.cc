@@ -21,7 +21,7 @@
 #include "../../UkiaStuff.h"
 #include "../config.h"
 
-namespace BombTimer {
+namespace bombtimer {
 std::pair<int, int> get_bomb_calculations_by_map(const std::string& map) {
   // get these with map_showbombradius
   if (map == "de_dust2") {
@@ -125,7 +125,7 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
                         : (gamevars::PlantedBomb.boomRemaining / 40.0f);
   if (gamevars::PlantedBomb.isPlanted && gamevars::PlantedBomb.boomRemaining > 0 &&
       !gamevars::PlantedBomb.hasExploded) {
-    std::string text = LangSettings::TextBombOn;
+    std::string text = languagesettings::TextBombOn;
     char buf[128];
     snprintf(buf, sizeof(buf), text.c_str(),
              (!gamevars::PlantedBomb.bombSite ? XorStr("A") : XorStr("B")),
@@ -138,7 +138,7 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
     ImGui::SetCursorPosX((windowWidth - barWidth) * 0.5f);
     ImGui::ProgressBar(barLength, ImVec2(barWidth, 15), "");
 
-    text = LangSettings::TextBombEstimDamage;
+    text = languagesettings::TextBombEstimDamage;
     snprintf(buf, sizeof(buf), text.c_str(), damage);
     textWidth = ImGui::CalcTextSize(buf).x;
     ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
@@ -146,10 +146,10 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
 
     if (gamevars::PlantedBomb.isDefusing) {
       std::string defuseText;
-      snprintf(buf, sizeof(buf), LangSettings::TextDefuseCount.c_str(),
+      snprintf(buf, sizeof(buf), languagesettings::TextDefuseCount.c_str(),
                (gamevars::PlantedBomb.defuseTime < gamevars::PlantedBomb.boomTime)
-                   ? LangSettings::TextCanDefuse.c_str()
-                   : LangSettings::TextCanNotDefuse.c_str(),
+                   ? languagesettings::TextCanDefuse.c_str()
+                   : languagesettings::TextCanNotDefuse.c_str(),
                gamevars::PlantedBomb.defuseRemaining);
       float defuseTextWidth = ImGui::CalcTextSize(buf).x;
       ImGui::SetCursorPosX((windowWidth - defuseTextWidth) * 0.5f);
@@ -160,14 +160,14 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
       ImGui::Text("%s", buf);
       ImGui::PopStyleColor();
     } else {
-      text = LangSettings::TextNotDefusing;
+      text = languagesettings::TextNotDefusing;
       snprintf(buf, sizeof(buf), text.c_str(), damage);
       textWidth = ImGui::CalcTextSize(buf).x;
       ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
       ImGui::Text(XorStr("%s"), buf);
     }
   } else {
-    std::string text = LangSettings::TextBombNotPlanted;
+    std::string text = languagesettings::TextBombNotPlanted;
     float textWidth = ImGui::CalcTextSize(text.c_str()).x;
     ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
     ImGui::Text(XorStr("%s"), text.c_str());

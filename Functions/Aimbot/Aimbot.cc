@@ -22,6 +22,7 @@
 #include "../config.h"
 #include "../../Driver.h"
 
+namespace aimbot {
 inline void UpdateAngles(const CEntity& Local, Vector3& Angles) {
   auto oldPunch = Vector3{};
   auto shotsFired = Local.Pawn.ShotsFired;
@@ -69,9 +70,6 @@ inline void UpdateAngles(const CEntity& Local, Vector3& Angles) {
     Angles.y = 0.f;
   }
 }
-
-namespace AimBot {
-
 inline void AimBot(const CEntity& Local, Vector3 LocalPos,
                    std::vector<Vector3>& AimPosList) {
   // int isFired;
@@ -277,7 +275,7 @@ void AimBotRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
   }
   if (GetBindState(config::AimBotHotKey)) {
     if (AimPosList.size() != 0) {
-      AimBot::AimBot(gamevars::LocalEntity, gamevars::LocalEntity.Pawn.CameraPos,
+      AimBot(gamevars::LocalEntity, gamevars::LocalEntity.Pawn.CameraPos,
                      AimPosList);
     }
   }

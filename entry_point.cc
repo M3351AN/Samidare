@@ -251,7 +251,7 @@ void RenderFrame() noexcept {
   ImGui_ImplWin32_NewFrame();
   ImGui::NewFrame();
 
-  RenderFunctions(gamevars::ValidEntity);
+  functions::RenderFunctions(gamevars::ValidEntity);
 
   ImGui::EndFrame();
 
@@ -623,28 +623,28 @@ class ScopedThreadManager {
   }
   void AimProcessThread() noexcept {
     while (global::isRunning()) {
-      AimFunctions(gamevars::ValidEntity);
+      functions::AimFunctions(gamevars::ValidEntity);
       std::this_thread::sleep_for(
           std::chrono::milliseconds(gamevars::AimInterval));
     }
   }
   void ViewProcessThread() noexcept {
     while (global::isRunning()) {
-      ViewFunctions(gamevars::ValidEntity);
+      functions::ViewFunctions(gamevars::ValidEntity);
       std::this_thread::sleep_for(
           std::chrono::milliseconds(gamevars::ViewInterval));
     }
   }
   void MemoryProcessThread() noexcept {
     while (global::isRunning()) {
-      MemoryFunctions(gamevars::ValidEntity);
+      functions::MemoryFunctions(gamevars::ValidEntity);
       std::this_thread::sleep_for(
           std::chrono::milliseconds(gamevars::MemoryInterval));
     }
   }
   void NonMemoryProcessThread() noexcept {
     while (global::isRunning()) {
-      NonMemoryFunctions();
+      functions::NonMemoryFunctions();
       std::this_thread::sleep_for(
           std::chrono::milliseconds(gamevars::NonMemoryInterval));
     }
@@ -734,7 +734,7 @@ int Mian() noexcept {
 
   config::path = documentsPath;
   config::path += XorStr("\\Samidare");
-  LangSettings::path = config::path + XorStr("\\Langs");
+  languagesettings::path = config::path + XorStr("\\Langs");
   if (std::filesystem::exists(config::path)) {
     printf(XorStr("Config folder connected: %s\n"), config::path.c_str());
   } else {
@@ -750,13 +750,13 @@ int Mian() noexcept {
     ShowUpdateError();
     Ukia::UkiaExit();
   }
-  if (std::filesystem::exists(LangSettings::path)) {
+  if (std::filesystem::exists(languagesettings::path)) {
     printf(XorStr("Languages file folder connected: %s\n"),
-           LangSettings::path.c_str());
+           languagesettings::path.c_str());
   } else {
-    if (std::filesystem::create_directories(LangSettings::path)) {
+    if (std::filesystem::create_directories(languagesettings::path)) {
       printf(XorStr("Languages file folder created: %s\n"),
-             LangSettings::path.c_str());
+             languagesettings::path.c_str());
     } else {
       MessageBoxA(nullptr,
                   XorStr("Failed to create the languages file directory."),

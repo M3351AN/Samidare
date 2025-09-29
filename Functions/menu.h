@@ -24,6 +24,7 @@
 #include "../UkiaStuff.h"
 #include "../global.h"
 #include "ConfigSaver.h"
+namespace menu {
 static bool checkbox1;
 static bool checkbox2;
 static bool checkbox3;
@@ -68,7 +69,6 @@ inline void removeHitbox(int BoneIndex) {
     }
   }
 }
-namespace Menu {
 
 inline void Lumine() {
   ImGuiStyle& style = ImGui::GetStyle();
@@ -292,7 +292,7 @@ inline void DrawMenu() {
     ImGui::EndTabItem();
   }
 #endif
-  if (ImGui::BeginTabItem(LangSettings::TabLegit.c_str())) {
+  if (ImGui::BeginTabItem(languagesettings::TabLegit.c_str())) {
     ImVec2 child_size =
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
@@ -300,22 +300,22 @@ inline void DrawMenu() {
     auto childBegin = ImGui::GetCursorPosY();
 
     ImGui::SetCursorPosY(childBegin);
-    ImGui::BeginChild(LangSettings::ChildAimAssist.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildAimAssist.c_str(), child_size);
     {
-        ImGui::Checkbox(LangSettings::SwitchEnableAimBot.c_str(), &config::AimBot);
+        ImGui::Checkbox(languagesettings::SwitchEnableAimBot.c_str(), &config::AimBot);
         ImGui::HotKey(XorStr(" ##hotkeyaim"),&config::AimBotHotKey);
-        ImGui::SliderFloat(LangSettings::SliderAimFov.c_str(), &config::AimFov, 0.1f, 45.f, XorStr("%.2f"));
-        ImGui::SliderFloat(LangSettings::SliderAimFovMin.c_str(), &config::AimFovMin, 0.f, 1.f, XorStr("%.2f"));
-        ImGui::SliderFloat(LangSettings::SliderAimSmooth.c_str(), &config::AimSmooth, 2.f, 100.f, XorStr("%.1f"));
-        ImGui::SliderFloat(LangSettings::SliderAimMaxRecoil.c_str(),&config::AimMaxRecoil, 1.f, 90.f, XorStr("%.1f"));
-        ImGui::Checkbox(LangSettings::SwitchAimScopeOnly.c_str(), &config::AimScopeOnly);
-        ImGui::Checkbox(LangSettings::SwitchAimIgnoreFlash.c_str(), &config::AimIgnoreFlash);
-        ImGui::SliderInt(LangSettings::SliderAimBullet.c_str(), &config::AimBullet, 0, 5, XorStr("%d"));
+        ImGui::SliderFloat(languagesettings::SliderAimFov.c_str(), &config::AimFov, 0.1f, 45.f, XorStr("%.2f"));
+        ImGui::SliderFloat(languagesettings::SliderAimFovMin.c_str(), &config::AimFovMin, 0.f, 1.f, XorStr("%.2f"));
+        ImGui::SliderFloat(languagesettings::SliderAimSmooth.c_str(), &config::AimSmooth, 2.f, 100.f, XorStr("%.1f"));
+        ImGui::SliderFloat(languagesettings::SliderAimMaxRecoil.c_str(),&config::AimMaxRecoil, 1.f, 90.f, XorStr("%.1f"));
+        ImGui::Checkbox(languagesettings::SwitchAimScopeOnly.c_str(), &config::AimScopeOnly);
+        ImGui::Checkbox(languagesettings::SwitchAimIgnoreFlash.c_str(), &config::AimIgnoreFlash);
+        ImGui::SliderInt(languagesettings::SliderAimBullet.c_str(), &config::AimBullet, 0, 5, XorStr("%d"));
     }
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::SetCursorPosY(childBegin);
-    ImGui::BeginChild(LangSettings::ChildHitBox.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildHitBox.c_str(), child_size);
     {
       InitHitboxList();
       ImVec2 StartPos = ImGui::GetCursorScreenPos();
@@ -392,43 +392,43 @@ inline void DrawMenu() {
     ImGui::BeginGroup();
     {
       ImGui::BeginChild(
-          LangSettings::ChildTriggerbot.c_str(),
+          languagesettings::ChildTriggerbot.c_str(),
           ImVec2(child_size.x,
                  (child_size.y - (style.ItemInnerSpacing.y)) * .55f));
       {
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                             ImVec2(style.FramePadding.x, 0));
-        ImGui::Checkbox(LangSettings::SwitchEnableTriggerbot.c_str(),
+        ImGui::Checkbox(languagesettings::SwitchEnableTriggerbot.c_str(),
                         &config::TriggerBot);
         ImGui::HotKey(XorStr(" ##hotkeytrigger"), &config::TriggerBotHotKey);
-        ImGui::SliderInt(LangSettings::SliderTriggerDelay.c_str(),
+        ImGui::SliderInt(languagesettings::SliderTriggerDelay.c_str(),
                          &config::TriggerDelay, 0, 1000, XorStr("%d ms"));
-        ImGui::SliderInt(LangSettings::SliderShotDuration.c_str(),
+        ImGui::SliderInt(languagesettings::SliderShotDuration.c_str(),
                          &config::ShotDuration, 15, 1000, XorStr("%d ms"));
-        ImGui::SliderFloat(LangSettings::SliderTriggerMaxRecoil.c_str(),
+        ImGui::SliderFloat(languagesettings::SliderTriggerMaxRecoil.c_str(),
                            &config::TriggerMaxRecoil, 1.f, 90.f,
                            XorStr("%.1f"));
-        ImGui::Checkbox(LangSettings::SwitchTriggerScopeOnly.c_str(),
+        ImGui::Checkbox(languagesettings::SwitchTriggerScopeOnly.c_str(),
                         &config::TriggerScopeOnly);
-        ImGui::Checkbox(LangSettings::SwitchTriggerIgnoreFlash.c_str(),
+        ImGui::Checkbox(languagesettings::SwitchTriggerIgnoreFlash.c_str(),
                         &config::TriggerIgnoreFlash);
         ImGui::PopStyleVar();
       }
       ImGui::EndChild();
 
       ImGui::BeginChild(
-          LangSettings::ChildRCS.c_str(),
+          languagesettings::ChildRCS.c_str(),
           ImVec2(child_size.x,
                  (child_size.y - (style.ItemInnerSpacing.y)) * .45f));
       {
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                             ImVec2(style.FramePadding.x, 0));
-        ImGui::Checkbox(LangSettings::SwitchEnableRCS.c_str(), &config::RCS);
+        ImGui::Checkbox(languagesettings::SwitchEnableRCS.c_str(), &config::RCS);
         float RCSScaleValues[2] = {config::RCSScale.x, config::RCSScale.y};
-        ImGui::SliderFloat2(LangSettings::SliderRCSScale.c_str(),
+        ImGui::SliderFloat2(languagesettings::SliderRCSScale.c_str(),
                             RCSScaleValues, -.5f, 2.5f, XorStr("%.2f"));
         config::RCSScale = Vector2(RCSScaleValues[0], RCSScaleValues[1]);
-        ImGui::SliderInt(LangSettings::SliderRCSStartBullet.c_str(),
+        ImGui::SliderInt(languagesettings::SliderRCSStartBullet.c_str(),
                          &config::RCSBullet, 1, 15, XorStr("%d"));
         ImGui::PopStyleVar();
       }
@@ -439,23 +439,23 @@ inline void DrawMenu() {
     ImGui::EndTabItem();
   }
 
-  if (ImGui::BeginTabItem(LangSettings::TabVisuals.c_str())) {
+  if (ImGui::BeginTabItem(languagesettings::TabVisuals.c_str())) {
     ImVec2 child_size =
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
                    (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
     // static float flOverlayChildSize = 0.f;
 
-    ImGui::BeginChild(LangSettings::ChildESP.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildESP.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
 
-      ImGui::Checkbox(LangSettings::SwitchEnableESP.c_str(), &config::ESP);
-      ImGui::Checkbox(LangSettings::SwitchPlayerInfo.c_str(), &config::ESPInfo);
-      ImGui::Checkbox(LangSettings::SwitchBox.c_str(), &config::ESPBox);
-      ImGui::Checkbox(LangSettings::SwitchPlayerName.c_str(), &config::ESPName);
-      ImGui::Checkbox(LangSettings::SwitchHealthBar.c_str(), &config::ESPHealth);
+      ImGui::Checkbox(languagesettings::SwitchEnableESP.c_str(), &config::ESP);
+      ImGui::Checkbox(languagesettings::SwitchPlayerInfo.c_str(), &config::ESPInfo);
+      ImGui::Checkbox(languagesettings::SwitchBox.c_str(), &config::ESPBox);
+      ImGui::Checkbox(languagesettings::SwitchPlayerName.c_str(), &config::ESPName);
+      ImGui::Checkbox(languagesettings::SwitchHealthBar.c_str(), &config::ESPHealth);
       ImGui::PopStyleVar();
 
       // flOverlayChildSize = ImGui::GetCursorPosY() + style.ItemSpacing.y;
@@ -464,30 +464,30 @@ inline void DrawMenu() {
 
     ImGui::SameLine();
 
-    ImGui::BeginChild(LangSettings::ChildWorld.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildWorld.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Checkbox(LangSettings::SwitchC4ESP.c_str(), &config::C4ESP);
+      ImGui::Checkbox(languagesettings::SwitchC4ESP.c_str(), &config::C4ESP);
       ImGui::PopStyleVar();
     }
     ImGui::EndChild();
 
     ImGui::SameLine();
 
-    ImGui::BeginChild(LangSettings::ChildVisualOthers.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildVisualOthers.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Checkbox(LangSettings::SwitchEnableRadar.c_str(), &config::Radar);
-      ImGui::Checkbox(LangSettings::SwitchRadarCrossline.c_str(),
+      ImGui::Checkbox(languagesettings::SwitchEnableRadar.c_str(), &config::Radar);
+      ImGui::Checkbox(languagesettings::SwitchRadarCrossline.c_str(),
                       &config::RadarCrossLine);
-      ImGui::SliderFloat(LangSettings::SliderRadarPointSize.c_str(),
+      ImGui::SliderFloat(languagesettings::SliderRadarPointSize.c_str(),
                          &config::RadarPointSize, 0.5f, 5.f, XorStr("%.1f p"));
-      ImGui::SliderFloat(LangSettings::SliderRadarProportion.c_str(),
+      ImGui::SliderFloat(languagesettings::SliderRadarProportion.c_str(),
                          &config::RadarProportion, 500.f, 5000.f,
                          XorStr("%.1f u"));
-      ImGui::SliderFloat(LangSettings::SliderRadarRange.c_str(),
+      ImGui::SliderFloat(languagesettings::SliderRadarRange.c_str(),
                          &config::RadarRange, 50.f, 300.f, XorStr("%.1f u"));
       ImGui::PopStyleVar();
     }
@@ -496,32 +496,32 @@ inline void DrawMenu() {
     ImGui::EndTabItem();
   }
 
-  if (ImGui::BeginTabItem(LangSettings::TabMiscs.c_str())) {
+  if (ImGui::BeginTabItem(languagesettings::TabMiscs.c_str())) {
     ImVec2 child_size =
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
                    (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-    ImGui::BeginChild(LangSettings::ChildMiscGlobals.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildMiscGlobals.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Checkbox(LangSettings::SwitchSonar.c_str(), &config::Sonar);
-      ImGui::Checkbox(LangSettings::SwitchPitchIndicator.c_str(),
+      ImGui::Checkbox(languagesettings::SwitchSonar.c_str(), &config::Sonar);
+      ImGui::Checkbox(languagesettings::SwitchPitchIndicator.c_str(),
                       &config::PitchIndicator);
-      ImGui::Checkbox(LangSettings::SwitchC4Timer.c_str(), &config::C4Timer);
-      ImGui::Checkbox(LangSettings::SwitchSpecList.c_str(), &config::SpecList);
+      ImGui::Checkbox(languagesettings::SwitchC4Timer.c_str(), &config::C4Timer);
+      ImGui::Checkbox(languagesettings::SwitchSpecList.c_str(), &config::SpecList);
       ImGui::PopStyleVar();
     }
     ImGui::EndChild();
 
     ImGui::SameLine();
 
-    ImGui::BeginChild(LangSettings::ChildMisc.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildMisc.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Checkbox(LangSettings::SwitchEnemyInfo.c_str(),
+      ImGui::Checkbox(languagesettings::SwitchEnemyInfo.c_str(),
                       &config::InfoString);
       ImGui::PopStyleVar();
     }
@@ -529,12 +529,12 @@ inline void DrawMenu() {
 
     ImGui::SameLine();
 
-    ImGui::BeginChild(LangSettings::ChildMovement.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildMovement.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Checkbox(LangSettings::SwitchFastStop.c_str(), &config::FastStop);
-      ImGui::SliderFloat(LangSettings::SliderFastStopMinVelocity.c_str(),
+      ImGui::Checkbox(languagesettings::SwitchFastStop.c_str(), &config::FastStop);
+      ImGui::SliderFloat(languagesettings::SliderFastStopMinVelocity.c_str(),
                          &config::FastStopMinVelocity, 2.5f, 100.f,
                          XorStr("%.1f u/s"));
       ImGui::PopStyleVar();
@@ -544,7 +544,7 @@ inline void DrawMenu() {
     ImGui::EndTabItem();
   }
 
-  if (ImGui::BeginTabItem(LangSettings::TabSettings.c_str())) {
+  if (ImGui::BeginTabItem(languagesettings::TabSettings.c_str())) {
     ImVec2 child_size =
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
@@ -555,30 +555,30 @@ inline void DrawMenu() {
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Text(LangSettings::TextLastBuild.c_str(), __DATE__);
-      ImGui::Text(LangSettings::TextBuildVersion.c_str(),
+      ImGui::Text(languagesettings::TextLastBuild.c_str(), __DATE__);
+      ImGui::Text(languagesettings::TextBuildVersion.c_str(),
                   std::to_string(CS_VERSION).c_str());
-      ImGui::Text(LangSettings::TextCurrentGameVersion.c_str(),
+      ImGui::Text(languagesettings::TextCurrentGameVersion.c_str(),
                   std::to_string(gamevars::GameVersion).c_str());
 #ifdef _MSC_VER
 #ifndef __clang__
-      ImGui::Text((LangSettings::TextCompiler + XorStr(" MSVC %s")).c_str(),
+      ImGui::Text((languagesettings::TextCompiler + XorStr(" MSVC %s")).c_str(),
                   std::to_string(_MSC_VER).c_str());
 #endif
 #endif
 #ifdef __GNUC__
 #ifndef __clang__
-      ImGui::Text((LangSettings::TextCompiler + XorStr(" GCC %s")).c_str(),
+      ImGui::Text((languagesettings::TextCompiler + XorStr(" GCC %s")).c_str(),
                   std::to_string(__GNUC__).c_str());
 #endif
 #endif
 #ifdef __clang__
-      ImGui::Text((LangSettings::TextCompiler + XorStr(" Clang %s")).c_str(),
+      ImGui::Text((languagesettings::TextCompiler + XorStr(" Clang %s")).c_str(),
                   std::to_string(__clang_major__).c_str());
 #endif
-      ImGui::Text(LangSettings::TextLicenceToUser.c_str(),
+      ImGui::Text(languagesettings::TextLicenceToUser.c_str(),
                   global::user_name.c_str());
-      ImGui::TextUnformatted(LangSettings::textfortranslator.c_str());
+      ImGui::TextUnformatted(languagesettings::textfortranslator.c_str());
       ImGui::PopStyleVar();
     }
     ImGui::EndChild();
@@ -586,7 +586,7 @@ inline void DrawMenu() {
     ImGui::SameLine();
 
     configsaver::UpdateConfigFiles();
-    ImGui::BeginChild(LangSettings::ChildConfigList.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildConfigList.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(ImGui::GetStyle().FramePadding.x, 0));
@@ -613,33 +613,33 @@ inline void DrawMenu() {
           }
           ImGui::TextUnformatted(configname.c_str());
           ImGui::TextUnformatted(modify_time_string.c_str());
-          ImGui::Text(LangSettings::TextConfigAuthor.c_str(),
+          ImGui::Text(languagesettings::TextConfigAuthor.c_str(),
                       author_name.empty() ? XorStr("Akaza Akari")
                                           : author_name.c_str());
 
           if (configsaver::selectedConfigFile == file_name) {
-            if (ImGui::Button(LangSettings::ButtonSave.c_str())) {
+            if (ImGui::Button(languagesettings::ButtonSave.c_str())) {
               configsaver::SaveConfig(file_name, configAuthorBuffer);
             }
             ImGui::SameLine();
-            if (ImGui::Button(LangSettings::ButtonReLoad.c_str())) {
+            if (ImGui::Button(languagesettings::ButtonReLoad.c_str())) {
               configsaver::LoadConfig(file_name);
             }
           } else {
-            if (ImGui::Button(LangSettings::ButtonLoad.c_str())) {
+            if (ImGui::Button(languagesettings::ButtonLoad.c_str())) {
               configsaver::LoadConfig(file_name);
               configsaver::selectedConfigFile = file_name;
             }
           }
           ImGui::SameLine();
-          if (ImGui::Button(LangSettings::ButtonDelete.c_str())) {
+          if (ImGui::Button(languagesettings::ButtonDelete.c_str())) {
             configsaver::deletePendingFile = file_name;
             ImGui::OpenPopup(XorStr("##deleteConfirm"));
           }
           if (ImGui::BeginPopup(XorStr("##deleteConfirm"))) {
-            ImGui::Text(LangSettings::TextDeleteConfirm.c_str(),
+            ImGui::Text(languagesettings::TextDeleteConfirm.c_str(),
                         configsaver::deletePendingFile.c_str());
-            if (ImGui::Button(LangSettings::ButtonYes.c_str())) {
+            if (ImGui::Button(languagesettings::ButtonYes.c_str())) {
               std::string fullPath =
                   config::path + "\\" + configsaver::deletePendingFile;
               std::remove(fullPath.c_str());
@@ -647,7 +647,7 @@ inline void DrawMenu() {
               ImGui::CloseCurrentPopup();
             }
             ImGui::SameLine();
-            if (ImGui::Button(LangSettings::ButtonNo.c_str())) {
+            if (ImGui::Button(languagesettings::ButtonNo.c_str())) {
               configsaver::deletePendingFile.clear();
               ImGui::CloseCurrentPopup();
             }
@@ -682,18 +682,18 @@ inline void DrawMenu() {
 
     ImGui::SameLine();
 
-    ImGui::BeginChild(LangSettings::ChildSettings.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildSettings.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Checkbox(LangSettings::SwitchTeamCheck.c_str(),
+      ImGui::Checkbox(languagesettings::SwitchTeamCheck.c_str(),
                       &config::TeamCheck);
-      ImGui::Checkbox(LangSettings::SwitchBypassCapture.c_str(),
+      ImGui::Checkbox(languagesettings::SwitchBypassCapture.c_str(),
                       &config::BypassCapture);
-      ImGui::SliderFloat(LangSettings::SliderDormantTime.c_str(),
+      ImGui::SliderFloat(languagesettings::SliderDormantTime.c_str(),
                          &config::DormantTime, 0.f, 10.f, XorStr("%.1f s"));
       ImGui::Combo(
-          LangSettings::ComboStyle.c_str(), &config::Style,
+          languagesettings::ComboStyle.c_str(), &config::Style,
           XorStr("Lumine\0Aimstar\0ImGui Classic\0ImGui Dark\0ImGui Light\0"));
       configsaver::RenderLangsFileCombo();
       const float CursorX = 10.f;
@@ -701,17 +701,17 @@ inline void DrawMenu() {
                                    ImGui::GetStyle().ItemSpacing.x -
                                    CursorX * 2;
 
-      if (ImGui::Button(LangSettings::ButtonCreateConfig.c_str())) {
+      if (ImGui::Button(languagesettings::ButtonCreateConfig.c_str())) {
         ImGui::OpenPopup(XorStr("##createConfirm"));
       }
       if (ImGui::BeginPopup(XorStr("##createConfirm"))) {
         ImGui::SetNextItemWidth(ComponentWidth);
-        ImGui::Text("%s", LangSettings::TextNewConfigName.c_str());
+        ImGui::Text("%s", languagesettings::TextNewConfigName.c_str());
         ImGui::InputText(XorStr("##newConfigName"), configNameBuffer,
                          sizeof(configNameBuffer));
 
         ImGui::SetNextItemWidth(ComponentWidth);
-        ImGui::Text("%s", LangSettings::TextConfigAuthorName.c_str());
+        ImGui::Text("%s", languagesettings::TextConfigAuthorName.c_str());
         ImGui::InputText(XorStr("##authorName"), configAuthorBuffer,
                          sizeof(configAuthorBuffer));
         std::string configFileName =
@@ -723,41 +723,41 @@ inline void DrawMenu() {
                                   });
 
         if (!exists && !configFileName.empty()) {
-          if (ImGui::Button(LangSettings::ButtonCreate.c_str())) {
+          if (ImGui::Button(languagesettings::ButtonCreate.c_str())) {
             configsaver::SaveConfig(configFileName, configAuthorBuffer);
             configsaver::selectedConfigFile = configFileName;
           }
         } else {
           ImGui::BeginDisabled();
           {
-            ImGui::Button(LangSettings::ButtonCreate.c_str());
+            ImGui::Button(languagesettings::ButtonCreate.c_str());
           }
           ImGui::EndDisabled();
         }
         ImGui::EndPopup();
       }
       ImGui::SameLine();
-      if (ImGui::Button(LangSettings::ButtonOpenFolder.c_str())) {
+      if (ImGui::Button(languagesettings::ButtonOpenFolder.c_str())) {
         ShellExecuteA(NULL, XorStr("open"), config::path.c_str(), NULL, NULL,
                       SW_SHOWNORMAL);
       }
-      if (ImGui::Button(LangSettings::ButtonExtendFonts.c_str())) {
+      if (ImGui::Button(languagesettings::ButtonExtendFonts.c_str())) {
         ImGui::OpenPopup(XorStr("##extendFonts"));
       }
       if (ImGui::BeginPopup(XorStr("##extendFonts"))) {
-        ImGui::Checkbox(XorStr("Greek"), &LangSettings::greek);
-        ImGui::Checkbox(XorStr("Viet"), &LangSettings::vietnamese);
-        ImGui::Checkbox(XorStr("China&Nippon"), &LangSettings::kanji);
-        ImGui::Checkbox(XorStr("Korea"), &LangSettings::korean);
-        ImGui::Checkbox(XorStr("Arab"), &LangSettings::arabic);
-        ImGui::Checkbox(XorStr("Thai"), &LangSettings::thai);
+        ImGui::Checkbox(XorStr("Greek"), &languagesettings::greek);
+        ImGui::Checkbox(XorStr("Viet"), &languagesettings::vietnamese);
+        ImGui::Checkbox(XorStr("China&Nippon"), &languagesettings::kanji);
+        ImGui::Checkbox(XorStr("Korea"), &languagesettings::korean);
+        ImGui::Checkbox(XorStr("Arab"), &languagesettings::arabic);
+        ImGui::Checkbox(XorStr("Thai"), &languagesettings::thai);
 
-        if (ImGui::Button(LangSettings::ButtonApply.c_str())) {
+        if (ImGui::Button(languagesettings::ButtonApply.c_str())) {
           global::is_font_update_pending = true;
         }
         ImGui::EndPopup();
       }
-      if (ImGui::Button(LangSettings::ButtonUnhook.c_str())) {
+      if (ImGui::Button(languagesettings::ButtonUnhook.c_str())) {
         global::is_running = false;
       }
 
@@ -769,57 +769,57 @@ inline void DrawMenu() {
     ImGui::EndTabItem();
   }
 
-  if (ImGui::BeginTabItem(LangSettings::TabExperimental.c_str())) {
+  if (ImGui::BeginTabItem(languagesettings::TabExperimental.c_str())) {
     ImVec2 child_size =
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
                    (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-    ImGui::BeginChild(LangSettings::ChildLoopInterval.c_str(), child_size);
+    ImGui::BeginChild(languagesettings::ChildLoopInterval.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::SliderInt(LangSettings::SliderRenderFPS.c_str(),
+      ImGui::SliderInt(languagesettings::SliderRenderFPS.c_str(),
                        &config::RenderFPS, 29, 1000,
                        (config::RenderFPS >= 30)
                            ? XorStr("%d")
-                           : LangSettings::TextFPSBased.c_str());
+                           : languagesettings::TextFPSBased.c_str());
       config::RenderInterval = (config::RenderFPS > 30) ? (1000 / config::RenderFPS) : 0;
-      ImGui::SliderInt(LangSettings::SliderGlobalVarsInterval.c_str(),
+      ImGui::SliderInt(languagesettings::SliderGlobalVarsInterval.c_str(),
                        &config::GlobalVarsInterval, 0, 1000,
                        config::GlobalVarsInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
-      ImGui::SliderInt(LangSettings::SliderEntityInterval.c_str(),
+                           : languagesettings::TextFPSBased.c_str());
+      ImGui::SliderInt(languagesettings::SliderEntityInterval.c_str(),
                        &config::EntityInterval, 0, 1000,
                        config::EntityInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
-      ImGui::SliderInt(LangSettings::SliderParserInterval.c_str(),
+                           : languagesettings::TextFPSBased.c_str());
+      ImGui::SliderInt(languagesettings::SliderParserInterval.c_str(),
                        &config::ParserInterval, 0, 1000,
                        config::ParserInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
-      ImGui::SliderInt(LangSettings::SliderAimInterval.c_str(),
+                           : languagesettings::TextFPSBased.c_str());
+      ImGui::SliderInt(languagesettings::SliderAimInterval.c_str(),
                        &config::AimInterval, 0, 1000,
                        config::AimInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
-      ImGui::SliderInt(LangSettings::SliderViewInterval.c_str(),
+                           : languagesettings::TextFPSBased.c_str());
+      ImGui::SliderInt(languagesettings::SliderViewInterval.c_str(),
                        &config::ViewInterval, 0, 1000,
                        config::ViewInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
-      ImGui::SliderInt(LangSettings::SliderMemoryInterval.c_str(),
+                           : languagesettings::TextFPSBased.c_str());
+      ImGui::SliderInt(languagesettings::SliderMemoryInterval.c_str(),
                        &config::MemoryInterval, 0, 1000,
                        config::MemoryInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
-      ImGui::SliderInt(LangSettings::SliderNonMemoryInterval.c_str(),
+                           : languagesettings::TextFPSBased.c_str());
+      ImGui::SliderInt(languagesettings::SliderNonMemoryInterval.c_str(),
                        &config::NonMemoryInterval, 0, 1000,
                        config::NonMemoryInterval
                            ? XorStr("%d ms")
-                           : LangSettings::TextFPSBased.c_str());
+                           : languagesettings::TextFPSBased.c_str());
       
 
       ImGui::PopStyleVar();
