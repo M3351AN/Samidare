@@ -288,7 +288,7 @@ inline void DrawMenu() {
   ImGui::BeginTabBar(XorStr("##Tabs"));
 #ifdef _DEBUG
   if (ImGui::BeginTabItem(XorStr("Semi-rage"))) {
-    ImGui::Text(XorStr("Coming soon?"));
+    ImGui::Text("%s",XorStr("Coming soon?"));
     ImGui::EndTabItem();
   }
 #endif
