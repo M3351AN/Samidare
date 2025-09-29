@@ -80,9 +80,8 @@ Certain contributions are not helpful.
 
 ### Break C++23 language conformance
 
-This software is designed to work with C++23 and later. This means that any compiler that support C++23 should compile
-the software without problems. Some compilers like GCC 10 (and earlier), Clang 15 (and earlier), or MSVC 16.3.1 (and earlier) are known not to work due to missing or incomplete C++23 support.
-
+This software is designed to work with C++23 and later. Some compilers like GCC 10 (and earlier), Clang 15 (and earlier), or MSVC 16.3.1 (and earlier) are known not to work due to missing or incomplete C++23 support.
+At the same time, we encourage the use of more C++23 features and should be cautious about introducing C++26 features to ensure that the latest LLVM Clang and MSVC can compile without problems.
 Please do not add features that do not work with the mentioned supported compilers.
 
 ## Wanted
