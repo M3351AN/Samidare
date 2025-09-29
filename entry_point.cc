@@ -523,14 +523,9 @@ void LogInfo() noexcept {
                       "  ####  #    # #    # # #####  #    # #    # ###### \n"
                       "\"\u4e94\u6708\u96e8\" for Counter-Strike 2\n"));
   printf(XorStr("Build - %s - %s\n"), __DATE__, __TIME__);
-  printf(
-      "%s",
-      XorStr(
-          "\u305d\u308c\u3067\u3082\u8ab0\u304b\u306b\u898b\u3064\u3051\u3066"
-          "\u6b32"
-          "\u3057\u304f\u3066"
-          "\n\u591c\u7a7a\u898b\u4e0a\u3052\u3066\u53eb\u3093\u3067\u3044\u308b"
-          "\n"));
+  printf("%s", XorStr("\u7070\u306b\u6f5c\u308a\u3001\u79d2\u91dd\u3092\u565b"
+                      "\u307f\u3001\n\u767d\u663c\u5922\u306e\u4e2d\u3067\u30ac"
+                      "\u30f3\u30ac\u30f3\u7815\u3044\u305f\n"));
   printf("%s", XorStr("Menukey [DEL]/[INS]\n"));
   printf(
       XorStr("ProcessId: %d\nClientBase: %p\nEngineBase: %p\nTier0Base: %p\n"),
@@ -601,7 +596,7 @@ class ScopedThreadManager {
       wchar_t actualTitleCN[256] = {0};
       GetWindowTextW(global::game_hwnd, actualTitleCN, _countof(actualTitle));
       global::is_running = ((wcscmp(actualTitle, EXPECTED_TITLE) == 0) ||
-                           (wcscmp(actualTitleCN, EXPECTED_TITLE_CN) == 0));
+                            (wcscmp(actualTitleCN, EXPECTED_TITLE_CN) == 0));
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
   }
@@ -629,7 +624,8 @@ class ScopedThreadManager {
   void AimProcessThread() noexcept {
     while (global::isRunning()) {
       AimFunctions(gamevars::ValidEntity);
-      std::this_thread::sleep_for(std::chrono::milliseconds(gamevars::AimInterval));
+      std::this_thread::sleep_for(
+          std::chrono::milliseconds(gamevars::AimInterval));
     }
   }
   void ViewProcessThread() noexcept {

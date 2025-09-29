@@ -103,7 +103,7 @@
 - CHINA TOBACCO GUANGXI INDUSTRIAL CO., LTD. for magics
 ## License
 
-This project is licensed under [**TOSSRCU**](LICENSE).
+This project is licensed under [**TOSSRCU 2025.9**](LICENSE).
 ```diff
 + You are free to:
     • Use: Utilize the software for any purpose not explicitly restricted
