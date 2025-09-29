@@ -72,7 +72,7 @@ void FoundEnemy(
   float min_3d_dist = FLT_MAX;
   Vector2 best_screen_pos;
   bool best_on_screen = false;
-  const Vector3& local_pos = Vars::LocalEntity.Pawn.CameraPos;
+  const Vector3& local_pos = gamevars::LocalEntity.Pawn.CameraPos;
   for (int index = 0; index < ValidEntity.size(); index++) {
     CEntity Entity = ValidEntity[index].first;
     if (!Entity.IsEnemy()) continue;
@@ -131,12 +131,12 @@ void FoundEnemy(
   }
 
   allinfo << "Local:\n"
-          << "Health: " << Vars::LocalEntity.Pawn.Health << " HP\n"
-          << "Team: " << Vars::LocalEntity.Pawn.TeamID << "\n"
+          << "Health: " << gamevars::LocalEntity.Pawn.Health << " HP\n"
+          << "Team: " << gamevars::LocalEntity.Pawn.TeamID << "\n"
           << "Pos: (" << local_pos.x << ", " << local_pos.y << ", "
           << local_pos.z << ")\n"
-          << "Flags: " << Vars::LocalEntity.Pawn.fFlags << "\n"
-          << "FOV: " << Vars::LocalEntity.Pawn.Fov << "\n\n";
+          << "Flags: " << gamevars::LocalEntity.Pawn.fFlags << "\n"
+          << "FOV: " << gamevars::LocalEntity.Pawn.Fov << "\n\n";
   global::gamedata_infos = allinfo.str();
   return;
 }
@@ -154,7 +154,7 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   float min_3d_dist = FLT_MAX;
   Vector2 best_screen_pos;
   bool best_on_screen = false;
-  const Vector3& local_pos = Vars::LocalEntity.Pawn.CameraPos;
+  const Vector3& local_pos = gamevars::LocalEntity.Pawn.CameraPos;
 
   for (int index = 0; index < ValidEntity.size(); index++) {
     CEntity Entity = ValidEntity[index].first;
@@ -211,7 +211,7 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
 
 void PitchIndicator(CEntity& Local) noexcept {
   if (!config::PitchIndicator) return;
-  if (!Vars::IsInGame) return;
+  if (!gamevars::IsInGame) return;
   int centerX = static_cast<int>(global::screen_size.x * 0.5f);
   int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   Vector3 ViewAngle;

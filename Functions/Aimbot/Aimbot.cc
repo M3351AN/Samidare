@@ -80,34 +80,34 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
   //  When players hold these weapons, don't aim
   // When players hold c4/knife/grenades etc., don't aim
   if (Local.Pawn.MaxAmmo < 1) {
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
     return;
   }
   if (Local.Pawn.ShotsFired <=  static_cast<unsigned int>(config::AimBullet) && config::AimBullet != 0) {
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
     return;
   }
   Vector3 Aimpunch = Local.Pawn.AimPunchAngle;
   if (Aimpunch.Length() > config::TriggerMaxRecoil) {
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
     return;
   }
   if (config::AimScopeOnly) {
     if (!Local.Pawn.Scoped) {
-      Vars::IsAimbotting = false;
+      gamevars::IsAimbotting = false;
       return;
     }
   }
 
   if (!config::AimIgnoreFlash && Local.Pawn.FlashDuration > 0.15f) {
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
     return;
   }
 
   int ListSize =  static_cast<int>(AimPosList.size());
   float BestNorm = FLT_MAX;
   if (!ListSize) {
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
     return;
   }
   float Yaw, Pitch;
@@ -216,7 +216,7 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
                       : TargetY;
       }
     }
-    Vars::IsAimbotting = true;
+    gamevars::IsAimbotting = true;
     #ifndef USERMODE
     driver.mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, NULL, NULL);
     #else
@@ -225,12 +225,12 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
                    NULL, NULL);
     #endif
   } else
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
 }
 
 void AimBotRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
   if (!config::AimBot) {
-    Vars::IsAimbotting = false;
+    gamevars::IsAimbotting = false;
     return;
   }
   // AimBot data
@@ -277,7 +277,7 @@ void AimBotRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
   }
   if (GetBindState(config::AimBotHotKey)) {
     if (AimPosList.size() != 0) {
-      AimBot::AimBot(Vars::LocalEntity, Vars::LocalEntity.Pawn.CameraPos,
+      AimBot::AimBot(gamevars::LocalEntity, gamevars::LocalEntity.Pawn.CameraPos,
                      AimPosList);
     }
   }

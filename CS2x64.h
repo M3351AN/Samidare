@@ -1,17 +1,25 @@
-﻿#pragma once
-#include <Windows.h>
-#include <Uxtheme.h>
-#include <d3d9.h>
-#include <dwmapi.h>
-
-#include <algorithm>
-#include <atomic>
-#include <chrono>
-#include <execution>
-#include <iostream>
-#include <memory>
-#include <mutex>
-
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: CS2x64.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file mainly manages the processing of game data in the Samidare
+//   project.
+//
+// -----------------------------------------------------------------------------
+#pragma once
+#ifndef CS2X64_H_
+#define CS2X64_H_
+#include "pch.h"
 #include "Functions/ConfigSaver.h"
 #include "Game.h"
 
@@ -60,16 +68,6 @@ class CBone {
 
   bool UpdateAllBoneData(const DWORD64& EntityPawnAddress);
 };
-
-namespace BoneJointList {
-inline std::list<DWORD> Trunk = {neck_0, spine_2, pelvis};
-inline std::list<DWORD> LeftArm = {neck_0, arm_upper_L, arm_lower_L, hand_L};
-inline std::list<DWORD> RightArm = {neck_0, arm_upper_R, arm_lower_R, hand_R};
-inline std::list<DWORD> LeftLeg = {pelvis, leg_upper_L, leg_lower_L, ankle_L};
-inline std::list<DWORD> RightLeg = {pelvis, leg_upper_R, leg_lower_R, ankle_R};
-inline std::vector<std::list<DWORD>> List = {Trunk, LeftArm, RightArm, LeftLeg,
-                                             RightLeg};
-}  // namespace BoneJointList
 
 struct C_UTL_VECTOR {
   DWORD64 Count = 0;
@@ -235,7 +233,7 @@ class PlantedC4 {
   bool UpdatePlantedC4(const DWORD64& PlantedC4PTRAddress);
 };
 
-namespace Vars {
+namespace gamevars {
 inline std::mutex validEntityMutex;
 inline std::mutex VisibleEntityAddrMutex;
 
@@ -288,3 +286,4 @@ inline WNDCLASSEXA WindowClass;
 inline HWND Hwnd;
 inline LPCSTR Name;
 }  // namespace OverlayWindow
+#endif  // CS2X64_H_

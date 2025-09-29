@@ -559,7 +559,7 @@ inline void DrawMenu() {
       ImGui::Text(LangSettings::TextBuildVersion.c_str(),
                   std::to_string(CS_VERSION).c_str());
       ImGui::Text(LangSettings::TextCurrentGameVersion.c_str(),
-                  std::to_string(Vars::GameVersion).c_str());
+                  std::to_string(gamevars::GameVersion).c_str());
 #ifdef _MSC_VER
 #ifndef __clang__
       ImGui::Text((LangSettings::TextCompiler + XorStr(" MSVC %s")).c_str(),

@@ -1,4 +1,21 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: BombTimer.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains bomb timer function.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "BombTimer.h"
 
 #include "../../UkiaStuff.h"
@@ -64,7 +81,7 @@ float armor_modifier(float damage, int armor) {
 
 int calculate_bomb_damage(Vector3 player, Vector3 bomb, int armor) {
   const std::pair<int, int> bomb_calculations =
-      get_bomb_calculations_by_map(Vars::MapName);
+      get_bomb_calculations_by_map(gamevars::MapName);
   const int bomb_damage = bomb_calculations.first;
   const int bomb_radius = bomb_calculations.second;
 
@@ -85,10 +102,10 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
   if (!config::C4Timer) return;
   int damage = 0;
 
-  if (Vars::PlantedBomb.isPlanted && Vars::PlantedBomb.boomRemaining > 0) {
+  if (gamevars::PlantedBomb.isPlanted && gamevars::PlantedBomb.boomRemaining > 0) {
     damage =
-        calculate_bomb_damage(Vars::LocalEntity.Pawn.Pos, Vars::PlantedBomb.Pos,
-                              Vars::LocalEntity.Pawn.Armor);
+        calculate_bomb_damage(gamevars::LocalEntity.Pawn.Pos, gamevars::PlantedBomb.Pos,
+                              gamevars::LocalEntity.Pawn.Armor);
   } else {
     damage = 0;
   }
@@ -102,17 +119,17 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
   ImGui::Begin(XorStr("Bomb Timer"), nullptr, flags);
 
   float windowWidth = ImGui::GetWindowSize().x;
-  float barLength = Vars::PlantedBomb.boomRemaining <= 0.0f ? 0.0f
-                    : Vars::PlantedBomb.boomRemaining >= 40
+  float barLength = gamevars::PlantedBomb.boomRemaining <= 0.0f ? 0.0f
+                    : gamevars::PlantedBomb.boomRemaining >= 40
                         ? 1.0f
-                        : (Vars::PlantedBomb.boomRemaining / 40.0f);
-  if (Vars::PlantedBomb.isPlanted && Vars::PlantedBomb.boomRemaining > 0 &&
-      !Vars::PlantedBomb.hasExploded) {
+                        : (gamevars::PlantedBomb.boomRemaining / 40.0f);
+  if (gamevars::PlantedBomb.isPlanted && gamevars::PlantedBomb.boomRemaining > 0 &&
+      !gamevars::PlantedBomb.hasExploded) {
     std::string text = LangSettings::TextBombOn;
     char buf[128];
     snprintf(buf, sizeof(buf), text.c_str(),
-             (!Vars::PlantedBomb.bombSite ? XorStr("A") : XorStr("B")),
-             Vars::PlantedBomb.boomRemaining);
+             (!gamevars::PlantedBomb.bombSite ? XorStr("A") : XorStr("B")),
+             gamevars::PlantedBomb.boomRemaining);
     float textWidth = ImGui::CalcTextSize(buf).x;
     ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
     ImGui::Text(XorStr("%s"), buf);
@@ -127,16 +144,16 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
     ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
     ImGui::Text(XorStr("%s"), buf);
 
-    if (Vars::PlantedBomb.isDefusing) {
+    if (gamevars::PlantedBomb.isDefusing) {
       std::string defuseText;
       snprintf(buf, sizeof(buf), LangSettings::TextDefuseCount.c_str(),
-               (Vars::PlantedBomb.defuseTime < Vars::PlantedBomb.boomTime)
+               (gamevars::PlantedBomb.defuseTime < gamevars::PlantedBomb.boomTime)
                    ? LangSettings::TextCanDefuse.c_str()
                    : LangSettings::TextCanNotDefuse.c_str(),
-               Vars::PlantedBomb.defuseRemaining);
+               gamevars::PlantedBomb.defuseRemaining);
       float defuseTextWidth = ImGui::CalcTextSize(buf).x;
       ImGui::SetCursorPosX((windowWidth - defuseTextWidth) * 0.5f);
-      ImVec4 color = (Vars::PlantedBomb.defuseTime < Vars::PlantedBomb.boomTime)
+      ImVec4 color = (gamevars::PlantedBomb.defuseTime < gamevars::PlantedBomb.boomTime)
                          ? ImVec4(0.2f, 1.0f, 0.2f, 1.0f)
                          : ImVec4(1.0f, 0.2f, 0.2f, 1.0f);
       ImGui::PushStyleColor(ImGuiCol_Text, color);

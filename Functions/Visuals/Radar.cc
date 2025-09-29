@@ -1,4 +1,21 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Radar.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains radar functions.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "Radar.h"
 #include "../../maths.h"
 namespace Radar {
@@ -288,8 +305,8 @@ void RadarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
 
     float eyeAng = Entity.Pawn.ViewAngle.y;
 
-    Radar.AddPoint(Vars::LocalEntity.Pawn.CameraPos,
-                   Vars::LocalEntity.Pawn.ViewAngle.y,
+    Radar.AddPoint(gamevars::LocalEntity.Pawn.CameraPos,
+                   gamevars::LocalEntity.Pawn.ViewAngle.y,
                    vecPos,
                    ImColor(237, 85, 106, 200), 2, eyeAng);
   }

@@ -230,7 +230,7 @@ bool PlayerController::GetSpec() {
       obsTarget);
   uintptr_t obsPawnHandle = GethPawn(obsTarget);
 
-  if (obsPawnHandle == Vars::LocalPawnAddress) {
+  if (obsPawnHandle == gamevars::LocalPawnAddress) {
     this->IsSpec = true;
   } else
     this->IsSpec = false;
@@ -486,14 +486,14 @@ bool PlantedC4::GetBoomRemaining() {
   if (!this->isPlanted)
     this->boomRemaining = 0;
   else
-    this->boomRemaining = this->boomTime - Vars::CurTime;
+    this->boomRemaining = this->boomTime - gamevars::CurTime;
   return true;
 }
 bool PlantedC4::GetDefuseRemaining() {
   if (!this->isDefusing)
     this->defuseRemaining = 0;
   else
-    this->defuseRemaining = this->defuseTime - Vars::CurTime;
+    this->defuseRemaining = this->defuseTime - gamevars::CurTime;
   return true;
 }
 bool PlantedC4::GetBombSite() {
@@ -583,21 +583,22 @@ bool CEntity::UpdatePawn(const DWORD64& PlayerPawnAddress) {
 }
 
 bool CEntity::IsEnemy() {
-  if (!config::TeamCheck || Vars::FreeFire) return true;
-  if (this->Controller.TeamID == Vars::LocalEntity.Controller.TeamID)
+  if (!config::TeamCheck || gamevars::FreeFire) return true;
+  if (this->Controller.TeamID == gamevars::LocalEntity.Controller.TeamID)
     return false;
-  if (this->Pawn.TeamID == Vars::LocalEntity.Pawn.TeamID) return false;
+  if (this->Pawn.TeamID == gamevars::LocalEntity.Pawn.TeamID) return false;
   return true;
 }
 
 bool CEntity::IsVisible() {
   if (!this->IsInScreen()) return false;
-  if (Vars::IsMapFileExist) {
-    std::lock_guard<std::mutex> lock(Vars::VisibleEntityAddrMutex);
+  if (gamevars::IsMapFileExist) {
+    std::lock_guard<std::mutex> lock(gamevars::VisibleEntityAddrMutex);
     bool ParserVisible =
-        std::find(Vars::VisibleEntityAddr.begin(),
-                  Vars::VisibleEntityAddr.end(),
-                  this->Controller.Address) != Vars::VisibleEntityAddr.end();
+        std::find(gamevars::VisibleEntityAddr.begin(),
+                  gamevars::VisibleEntityAddr.end(),
+                                   this->Controller.Address) !=
+                         gamevars::VisibleEntityAddr.end();
     // bool SpottedVisible = this->Pawn.bSpottedByMask;
     return (ParserVisible /* || SpottedVisible*/);
   } else {
@@ -605,7 +606,7 @@ bool CEntity::IsVisible() {
   }
 }
 
-namespace Vars {
+namespace gamevars {
 
 map_loader ParsingMap;
 std::string ParsingMapName = {};
@@ -642,9 +643,9 @@ void ParserRun() noexcept {
     if (!Entity.ESPAlive()) continue;
 
     if (!Entity.IsInScreen()) continue;
-    Vector r_start = Vector(Vars::LocalEntity.Pawn.CameraPos.x,
-                            Vars::LocalEntity.Pawn.CameraPos.y,
-                            Vars::LocalEntity.Pawn.CameraPos.z);
+    Vector r_start = Vector(LocalEntity.Pawn.CameraPos.x,
+                            LocalEntity.Pawn.CameraPos.y,
+                            LocalEntity.Pawn.CameraPos.z);
     Vector r_end = Vector(Entity.Pawn.Pos.x, Entity.Pawn.Pos.y,
                           Entity.Pawn.Pos.z + 0.45f * Entity.Pawn.Height);
     if (!ParsingMap.is_visible(r_start, r_end)) continue;
@@ -697,7 +698,7 @@ void UpdateDataSlow() {
   TickCount = Global_Vars.m_tickcount;
   FrameTime = Global_Vars.m_frametime;
   UpdateIntervals();
-  GetConvarValue(XorStr("mp_teammates_are_enemies"), Vars::FreeFire);
+  GetConvarValue(XorStr("mp_teammates_are_enemies"), FreeFire);
   InGameCheck();
   GetSensitivity();
   if (!IsInGame) return;

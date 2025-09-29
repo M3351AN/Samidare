@@ -1,4 +1,21 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://github.com/M3351AN/M3351AN/blob/main/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: ESP.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains ESP functions.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "ESP.h"
 
 namespace ESP {
@@ -6,7 +23,7 @@ namespace ESP {
 static std::unordered_map<uintptr_t, float> g_dormantStartTimes;
 
 void ESPRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
-  if (!Vars::IsInGame) return;
+  if (!gamevars::IsInGame) return;
   auto now = std::chrono::steady_clock::now();
   float currentTime =
       std::chrono::duration<float>(now.time_since_epoch()).count();
@@ -32,7 +49,7 @@ void ESPRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
 
       Vector3 vecPos = Entity.Pawn.Pos;
 
-      float dist = vecPos.DistanceTo(Vars::LocalEntity.Pawn.Pos);
+      float dist = vecPos.DistanceTo(gamevars::LocalEntity.Pawn.Pos);
       Vector2 screen_pos = Entity.Pawn.ScreenPos;
 
       if (Entity.ESPAlive() && Entity.IsInScreen()) {
@@ -69,15 +86,15 @@ void ESPRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
       }
     }
   }
-  if (config::C4ESP && Vars::PlantedBomb.isPlanted &&
-      Vars::PlantedBomb.boomRemaining > 0) 
+  if (config::C4ESP && gamevars::PlantedBomb.isPlanted &&
+      gamevars::PlantedBomb.boomRemaining > 0) 
       {
     Vector2 screen_pos;
-    gGame.View.WorldToScreen(Vars::PlantedBomb.Pos, screen_pos);
+    gGame.View.WorldToScreen(gamevars::PlantedBomb.Pos, screen_pos);
     Vector2 head_screen_pos;
     gGame.View.WorldToScreen(
-        Vector3(Vars::PlantedBomb.Pos.x, Vars::PlantedBomb.Pos.y,
-                              Vars::PlantedBomb.Pos.z+10.f),
+        Vector3(gamevars::PlantedBomb.Pos.x, gamevars::PlantedBomb.Pos.y,
+                              gamevars::PlantedBomb.Pos.z+10.f),
                              head_screen_pos);
     DrawEspBox2D(screen_pos, head_screen_pos, &Green, 1);
     DrawNameTag(screen_pos, head_screen_pos, XorStr("C4"));

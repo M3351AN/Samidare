@@ -32,11 +32,11 @@
 void RenderFunctions(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   if (!global::isFocused()) return;
-  std::lock_guard<std::mutex> lock(Vars::validEntityMutex);
+  std::lock_guard<std::mutex> lock(gamevars::validEntityMutex);
   std::vector<std::pair<CEntity, DWORD64>> EntityList = ValidEntity;
   ESP::ESPRun(EntityList);
   Radar::RadarRun(EntityList);
-  Misc::PitchIndicator(Vars::LocalEntity);
+  Misc::PitchIndicator(gamevars::LocalEntity);
   BombTimer::RenderWindow(EntityList);
   SpecList::RenderWindow(EntityList);
   Menu::DrawMenu();
@@ -49,33 +49,33 @@ void RenderFunctions(
 void AimFunctions(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   if (!global::isFocused() || config::ShowMenu) return;
-  if (!Vars::IsInGame) return;
-  if (!Vars::LocalEntity.Controller.Connected) return;
-  std::lock_guard<std::mutex> lock(Vars::validEntityMutex);
+  if (!gamevars::IsInGame) return;
+  if (!gamevars::LocalEntity.Controller.Connected) return;
+  std::lock_guard<std::mutex> lock(gamevars::validEntityMutex);
   std::vector<std::pair<CEntity, DWORD64>> EntityList = ValidEntity;
   AimBot::AimBotRun(EntityList);
-  TriggerBot::TriggerBotRun(Vars::LocalEntity);
-  RCS::RCSRun(Vars::LocalEntity);
+  TriggerBot::TriggerBotRun(gamevars::LocalEntity);
+  RCS::RCSRun(gamevars::LocalEntity);
 }
   void ViewFunctions(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   if (!global::isFocused()) return;
-  if (!Vars::IsInGame) return;
-  std::lock_guard<std::mutex> lock(Vars::validEntityMutex);
+  if (!gamevars::IsInGame) return;
+  std::lock_guard<std::mutex> lock(gamevars::validEntityMutex);
   std::vector<std::pair<CEntity, DWORD64>> EntityList = ValidEntity;
   Misc::SonarRun(EntityList);
-  Misc::FastStop(Vars::LocalEntity);
+  Misc::FastStop(gamevars::LocalEntity);
   }
 void MemoryFunctions(
     std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   if (!global::isFocused()) return;
-  if (!Vars::IsInGame) return;
-  std::lock_guard<std::mutex> lock(Vars::validEntityMutex);
+  if (!gamevars::IsInGame) return;
+  std::lock_guard<std::mutex> lock(gamevars::validEntityMutex);
   std::vector<std::pair<CEntity, DWORD64>> EntityList = ValidEntity;
   Misc::FoundEnemy(EntityList);
 }
 void NonMemoryFunctions() noexcept {
   if (!global::isFocused()) return;
-  if (!Vars::IsInGame) return;
+  if (!gamevars::IsInGame) return;
   Sonar::SoundThread();
 }

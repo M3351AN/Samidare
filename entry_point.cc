@@ -251,7 +251,7 @@ void RenderFrame() noexcept {
   ImGui_ImplWin32_NewFrame();
   ImGui::NewFrame();
 
-  RenderFunctions(Vars::ValidEntity);
+  RenderFunctions(gamevars::ValidEntity);
 
   ImGui::EndFrame();
 
@@ -324,7 +324,7 @@ void MainLoop() noexcept {
 
     RenderFrame();
     std::this_thread::sleep_for(
-        std::chrono::milliseconds(Vars::RenderInterval));
+        std::chrono::milliseconds(gamevars::RenderInterval));
   }
 
   CleanupRenderResources();
@@ -549,7 +549,7 @@ bool InitializeGameProcess() noexcept {
     return false;
   }
   if (!Ukia::ProcessMgr.ReadMemory(gGame.GetBuildNumberAddress(),
-                                   Vars::GameVersion)) {
+                                   gamevars::GameVersion)) {
     MessageBoxA(nullptr, XorStr("Failed to get game version."),
                 XorStr("Samidare Error"), MB_ICONERROR);
     Ukia::UkiaExit();
@@ -607,50 +607,50 @@ class ScopedThreadManager {
   }
   void DataUpdateThread() noexcept {
     while (global::isRunning()) {
-      Vars::UpdateDataSlow();
+      gamevars::UpdateDataSlow();
       std::this_thread::sleep_for(
-          std::chrono::milliseconds(Vars::GlobalVarsInterval));
+          std::chrono::milliseconds(gamevars::GlobalVarsInterval));
     }
   }
   void EntityUpdateThread() noexcept {
     while (global::isRunning()) {
-      Vars::UpdateData();
+      gamevars::UpdateData();
       std::this_thread::sleep_for(
-          std::chrono::milliseconds(Vars::EntityInterval));
+          std::chrono::milliseconds(gamevars::EntityInterval));
     }
   }
   void MapUpdateThread() noexcept {
     while (global::isRunning()) {
-      Vars::ParserRun();
+      gamevars::ParserRun();
       std::this_thread::sleep_for(
-          std::chrono::milliseconds(Vars::ParserInterval));
+          std::chrono::milliseconds(gamevars::ParserInterval));
     }
   }
   void AimProcessThread() noexcept {
     while (global::isRunning()) {
-      AimFunctions(Vars::ValidEntity);
-      std::this_thread::sleep_for(std::chrono::milliseconds(Vars::AimInterval));
+      AimFunctions(gamevars::ValidEntity);
+      std::this_thread::sleep_for(std::chrono::milliseconds(gamevars::AimInterval));
     }
   }
   void ViewProcessThread() noexcept {
     while (global::isRunning()) {
-      ViewFunctions(Vars::ValidEntity);
+      ViewFunctions(gamevars::ValidEntity);
       std::this_thread::sleep_for(
-          std::chrono::milliseconds(Vars::ViewInterval));
+          std::chrono::milliseconds(gamevars::ViewInterval));
     }
   }
   void MemoryProcessThread() noexcept {
     while (global::isRunning()) {
-      MemoryFunctions(Vars::ValidEntity);
+      MemoryFunctions(gamevars::ValidEntity);
       std::this_thread::sleep_for(
-          std::chrono::milliseconds(Vars::MemoryInterval));
+          std::chrono::milliseconds(gamevars::MemoryInterval));
     }
   }
   void NonMemoryProcessThread() noexcept {
     while (global::isRunning()) {
       NonMemoryFunctions();
       std::this_thread::sleep_for(
-          std::chrono::milliseconds(Vars::NonMemoryInterval));
+          std::chrono::milliseconds(gamevars::NonMemoryInterval));
     }
   }
 };
