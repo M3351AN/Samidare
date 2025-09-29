@@ -1,6 +1,24 @@
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Offsets.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-30
+//
+// Description:
+//   This file declares functions and vars deal with game data offsets.
+//
+// -----------------------------------------------------------------------------
 #pragma once
-#include <windows.h>
-#include <cstdint>
+#ifndef OFFSETS_H_
+#define OFFSETS_H_
+#include "pch.h"
 /*
 We using a2x header for quick PoC while develop & to figure out type of data
 In the end, we use our own offset system by reading offset.yaml for release
@@ -24,7 +42,7 @@ class CGlobalVarsBase {
   uintptr_t m_current_mapname;  // 0x0180
 };
 
-namespace Offset {
+namespace offset {
 
 extern uintptr_t ForceJump;
 extern uintptr_t ForceCrouch;
@@ -232,3 +250,4 @@ extern PawnT Pawn;
 
 bool UpdateOffsets();
 }  // namespace Offset
+#endif

@@ -41,7 +41,7 @@ inline int strcmpi_imp(const char* s1, const char* s2) {
 
 DWORD64 GetConvar(const char* name) {
   if (!name) return 0;
-  DWORD64 cvar_interface = gGame.GetTier0DLLAddress() + Offset::VEngineCvar007;
+  DWORD64 cvar_interface = gGame.GetTier0DLLAddress() + offset::VEngineCvar007;
 
   DWORD64 objs;
   Ukia::ProcessMgr.ReadMemory(cvar_interface + 64, objs);
@@ -85,12 +85,12 @@ bool CBone::UpdateAllBoneData(const DWORD64& EntityPawnAddress) {
   DWORD64 GameSceneNode = 0;
   DWORD64 BoneArrayAddress = 0;
   if (!Ukia::ProcessMgr.ReadMemory<DWORD64>(
-          EntityPawnAddress + Offset::C_BaseEntity.m_pGameSceneNode,
+          EntityPawnAddress + offset::C_BaseEntity.m_pGameSceneNode,
           GameSceneNode)) {
     return false;
   }
   if (!Ukia::ProcessMgr.ReadMemory<DWORD64>(
-          GameSceneNode + Offset::Pawn.BoneArray, BoneArrayAddress)) {
+          GameSceneNode + offset::Pawn.BoneArray, BoneArrayAddress)) {
     return false;
   }
 
@@ -120,65 +120,65 @@ bool PlayerController::GetMoney() {
   DWORD64 MoneyServices;
   std::memcpy(&MoneyServices,
               this->ControllerBuffer.data() +
-                  Offset::CCSPlayerController.m_pInGameMoneyServices,
+                  offset::CCSPlayerController.m_pInGameMoneyServices,
               sizeof(MoneyServices));
   Ukia::ProcessMgr.GetDataAddressWithOffset<int>(
-      MoneyServices, Offset::CCSPlayerController_InGameMoneyServices.m_iAccount,
+      MoneyServices, offset::CCSPlayerController_InGameMoneyServices.m_iAccount,
       this->Money);
   Ukia::ProcessMgr.GetDataAddressWithOffset<int>(
       MoneyServices,
-      Offset::CCSPlayerController_InGameMoneyServices.m_iTotalCashSpent,
+      offset::CCSPlayerController_InGameMoneyServices.m_iTotalCashSpent,
       this->CashSpent);
   Ukia::ProcessMgr.GetDataAddressWithOffset<int>(
       MoneyServices,
-      Offset::CCSPlayerController_InGameMoneyServices.m_iCashSpentThisRound,
+      offset::CCSPlayerController_InGameMoneyServices.m_iCashSpentThisRound,
       this->CashSpentTotal);
   return true;
 }
 bool PlayerController::GetTeamID() {
   std::memcpy(&this->TeamID,
-              this->ControllerBuffer.data() + Offset::C_BaseEntity.m_iTeamNum,
+              this->ControllerBuffer.data() + offset::C_BaseEntity.m_iTeamNum,
               sizeof(this->TeamID));
   return true;
 }
 bool PlayerController::GetHealth() {
   std::memcpy(&this->Health,
-              this->ControllerBuffer.data() + Offset::C_BaseEntity.m_iHealth,
+              this->ControllerBuffer.data() + offset::C_BaseEntity.m_iHealth,
               sizeof(this->Health));
   return true;
 }
 bool PlayerController::GetIsAlive() {
   std::memcpy(&this->AliveStatus,
               this->ControllerBuffer.data() +
-                  Offset::CCSPlayerController.m_bPawnIsAlive,
+                  offset::CCSPlayerController.m_bPawnIsAlive,
               sizeof(this->AliveStatus));
   return true;
 }
 bool PlayerController::GetIsCtrlBot() {
   std::memcpy(&this->CtrlBot,
               this->ControllerBuffer.data() +
-                  Offset::CCSPlayerController.m_bControllingBot,
+                  offset::CCSPlayerController.m_bControllingBot,
               sizeof(this->CtrlBot));
   return true;
 }
 bool PlayerController::GetConnected() {
   std::memcpy(&this->Connected,
               this->ControllerBuffer.data() +
-                  Offset::CCSPlayerController.m_bEverPlayedOnTeam,
+                  offset::CCSPlayerController.m_bEverPlayedOnTeam,
               sizeof(this->Connected));
   return true;
 }
 bool PlayerController::GetHasHelmet() {
   std::memcpy(&this->HasHelmet,
               this->ControllerBuffer.data() +
-                  Offset::CCSPlayerController.m_bPawnHasHelmet,
+                  offset::CCSPlayerController.m_bPawnHasHelmet,
               sizeof(this->HasHelmet));
   return true;
 }
 bool PlayerController::GetPlayerSteamID() {
   std::memcpy(
       &this->SteamID,
-      this->ControllerBuffer.data() + Offset::CBasePlayerController.m_steamID,
+      this->ControllerBuffer.data() + offset::CBasePlayerController.m_steamID,
       sizeof(this->SteamID));
   return true;
 }
@@ -187,7 +187,7 @@ bool PlayerController::GetPlayerName() {
   char Buffer[128]{};
   std::memcpy(&Addr,
               this->ControllerBuffer.data() +
-                  Offset::CCSPlayerController.m_sSanitizedPlayerName,
+                  offset::CCSPlayerController.m_sSanitizedPlayerName,
               sizeof(Addr));
   if (!Ukia::ProcessMgr.ReadMemory(Addr, Buffer, 128)) return false;
 
@@ -223,10 +223,10 @@ bool PlayerController::GetSpec() {
 
   uintptr_t obsService;
   Ukia::ProcessMgr.ReadMemory(
-      pawn + Offset::C_BasePlayerPawn.m_pObserverServices, obsService);
+      pawn + offset::C_BasePlayerPawn.m_pObserverServices, obsService);
   uint64_t obsTarget;
   Ukia::ProcessMgr.ReadMemory(
-      obsService + Offset::CPlayer_ObserverServices.m_hObserverTarget,
+      obsService + offset::CPlayer_ObserverServices.m_hObserverTarget,
       obsTarget);
   uintptr_t obsPawnHandle = GethPawn(obsTarget);
 
@@ -239,7 +239,7 @@ bool PlayerController::GetSpec() {
 DWORD64 PlayerController::GetPlayerPawnAddress() {
   std::memcpy(
       &this->Pawn,
-      this->ControllerBuffer.data() + Offset::CCSPlayerController.m_hPlayerPawn,
+      this->ControllerBuffer.data() + offset::CCSPlayerController.m_hPlayerPawn,
       sizeof(this->Pawn));
 
   return GethPawn(this->Pawn);
@@ -248,7 +248,7 @@ DWORD64 PlayerController::GetPlayerPawnAddress() {
 DWORD64 PlayerController::GetPlayerhPawnAddress() {
   std::memcpy(
       &this->Pawn,
-      this->ControllerBuffer.data() + Offset::CBasePlayerController.m_hPawn,
+      this->ControllerBuffer.data() + offset::CBasePlayerController.m_hPawn,
       sizeof(this->Pawn));
 
   return GethPawn(this->Pawn);
@@ -257,30 +257,30 @@ DWORD64 PlayerController::GetPlayerhPawnAddress() {
 bool PlayerPawn::GetPos() {
   DWORD64 GameSceneNode;
   std::memcpy(&GameSceneNode,
-              this->PawnBuffer.data() + Offset::C_BaseEntity.m_pGameSceneNode,
+              this->PawnBuffer.data() + offset::C_BaseEntity.m_pGameSceneNode,
               sizeof(GameSceneNode));
   if (!Ukia::ProcessMgr.ReadMemory<bool>(
-          GameSceneNode + Offset::CGameSceneNode.m_bDormant, this->IsDormanted))
+          GameSceneNode + offset::CGameSceneNode.m_bDormant, this->IsDormanted))
     return false;
 
   if (!Ukia::ProcessMgr.ReadMemory<Vector3>(
-          GameSceneNode + Offset::CGameSceneNode.m_vecOrigin, this->Pos))
+          GameSceneNode + offset::CGameSceneNode.m_vecOrigin, this->Pos))
     return false;
   gGame.View.WorldToScreen(this->Pos, this->ScreenPos);
   return true;
   // return GetDataAddressWithOffset<Vec3>(Address,
-  // Offset::C_BasePlayerPawn.m_vOldOrigin, this->Pos);
+  // offset::C_BasePlayerPawn.m_vOldOrigin, this->Pos);
 }
 bool PlayerPawn::GetHeight() {
   DWORD64 Collision;
   std::memcpy(&Collision,
-              this->PawnBuffer.data() + Offset::C_BaseEntity.m_pCollision,
+              this->PawnBuffer.data() + offset::C_BaseEntity.m_pCollision,
               sizeof(Collision));
   if (!Ukia::ProcessMgr.ReadMemory<Vector3>(
-          Collision + Offset::CCollisionProperty.m_vecMins, this->MinPos))
+          Collision + offset::CCollisionProperty.m_vecMins, this->MinPos))
     return false;
   if (!Ukia::ProcessMgr.ReadMemory<Vector3>(
-          Collision + Offset::CCollisionProperty.m_vecMaxs, this->MaxPos))
+          Collision + offset::CCollisionProperty.m_vecMaxs, this->MaxPos))
     return false;
   this->Height = this->MaxPos.z - this->MinPos.z;
   this->Width = (Vector2{this->MaxPos.x, this->MaxPos.y} -
@@ -288,12 +288,12 @@ bool PlayerPawn::GetHeight() {
                     .Length();
   return true;
   // return GetDataAddressWithOffset<Vec3>(Address,
-  // Offset::C_BasePlayerPawn.m_vOldOrigin, this->Pos);
+  // offset::C_BasePlayerPawn.m_vOldOrigin, this->Pos);
 }
 bool PlayerPawn::GetViewAngle() {
   std::memcpy(
       &this->ViewAngle,
-      this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_angEyeAngles,
+      this->PawnBuffer.data() + offset::C_CSPlayerPawnBase.m_angEyeAngles,
       sizeof(this->ViewAngle));
   return true;
 }
@@ -301,7 +301,7 @@ bool PlayerPawn::GetViewAngle() {
 bool PlayerPawn::GetCameraPos() {
   std::memcpy(&this->CameraPos,
               this->PawnBuffer.data() +
-                  Offset::C_CSPlayerPawnBase.m_vecLastClipCameraPos,
+                  offset::C_CSPlayerPawnBase.m_vecLastClipCameraPos,
               sizeof(this->CameraPos));
   return true;
 }
@@ -310,7 +310,7 @@ bool PlayerPawn::GetWeaponName() {
   // char Buffer[256]{};
 
   WeaponNameAddress = Ukia::ProcessMgr.TraceAddress(
-      this->Address + Offset::C_CSPlayerPawnBase.m_pClippingWeapon,
+      this->Address + offset::C_CSPlayerPawnBase.m_pClippingWeapon,
       {0x10, 0x20, 0x0});
   if (WeaponNameAddress == 0) return false;
 
@@ -325,33 +325,33 @@ bool PlayerPawn::GetWeaponName() {
 
 bool PlayerPawn::GetShotsFired() {
   std::memcpy(&this->ShotsFired,
-              this->PawnBuffer.data() + Offset::C_CSPlayerPawn.m_iShotsFired,
+              this->PawnBuffer.data() + offset::C_CSPlayerPawn.m_iShotsFired,
               sizeof(this->ShotsFired));
   return true;
 }
 
 bool PlayerPawn::GetScoped() {
   std::memcpy(&this->Scoped,
-              this->PawnBuffer.data() + Offset::C_CSPlayerPawn.m_bIsScoped,
+              this->PawnBuffer.data() + offset::C_CSPlayerPawn.m_bIsScoped,
               sizeof(this->Scoped));
   return true;
 }
 
 bool PlayerPawn::GetAimPunchAngle() {
   std::memcpy(&this->AimPunchAngle,
-              this->PawnBuffer.data() + Offset::C_CSPlayerPawn.m_aimPunchAngle,
+              this->PawnBuffer.data() + offset::C_CSPlayerPawn.m_aimPunchAngle,
               sizeof(this->AimPunchAngle));
   return true;
 }
 bool PlayerPawn::GetHealth() {
   std::memcpy(&this->Health,
-              this->PawnBuffer.data() + Offset::C_BaseEntity.m_iHealth,
+              this->PawnBuffer.data() + offset::C_BaseEntity.m_iHealth,
               sizeof(this->Health));
   return true;
 }
 bool PlayerPawn::GetTeamID() {
   std::memcpy(&this->TeamID,
-              this->PawnBuffer.data() + Offset::C_BaseEntity.m_iTeamNum,
+              this->PawnBuffer.data() + offset::C_BaseEntity.m_iTeamNum,
               sizeof(this->TeamID));
   return true;
 }
@@ -359,27 +359,27 @@ bool PlayerPawn::GetFov() {
   DWORD64 CameraServices = 0;
   std::memcpy(
       &CameraServices,
-      this->PawnBuffer.data() + Offset::C_BasePlayerPawn.m_pCameraServices,
+      this->PawnBuffer.data() + offset::C_BasePlayerPawn.m_pCameraServices,
       sizeof(CameraServices));
   return Ukia::ProcessMgr.GetDataAddressWithOffset<int>(
-      CameraServices, Offset::CCSPlayerBase_CameraServices.m_iFOVStart,
+      CameraServices, offset::CCSPlayerBase_CameraServices.m_iFOVStart,
       this->Fov);
 }
 bool PlayerPawn::GetSpotted() {
   std::memcpy(&this->bSpottedByMask,
-              this->PawnBuffer.data() + Offset::C_CSPlayerPawn.m_bSpottedByMask,
+              this->PawnBuffer.data() + offset::C_CSPlayerPawn.m_bSpottedByMask,
               sizeof(this->bSpottedByMask));
   return true;
 }
 bool PlayerPawn::GetFFlags() {
   std::memcpy(&this->fFlags,
-              this->PawnBuffer.data() + Offset::C_BaseEntity.m_fFlags,
+              this->PawnBuffer.data() + offset::C_BaseEntity.m_fFlags,
               sizeof(this->fFlags));
   return true;
 }
 bool PlayerPawn::GetAimPunchCache() {
   std::memcpy(&this->AimPunchCache,
-              this->PawnBuffer.data() + Offset::C_CSPlayerPawn.m_aimPunchCache,
+              this->PawnBuffer.data() + offset::C_CSPlayerPawn.m_aimPunchCache,
               sizeof(this->AimPunchCache));
   return true;
 }
@@ -387,11 +387,11 @@ bool PlayerPawn::GetAmmo() {
   DWORD64 ClippingWeapon = 0;
   std::memcpy(
       &ClippingWeapon,
-      this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_pClippingWeapon,
+      this->PawnBuffer.data() + offset::C_CSPlayerPawnBase.m_pClippingWeapon,
       sizeof(ClippingWeapon));
 
   return Ukia::ProcessMgr.GetDataAddressWithOffset<int>(
-      ClippingWeapon, Offset::WeaponBaseData.Clip1, this->Ammo);
+      ClippingWeapon, offset::WeaponBaseData.Clip1, this->Ammo);
 }
 
 bool PlayerPawn::GetMaxAmmo() {
@@ -399,52 +399,52 @@ bool PlayerPawn::GetMaxAmmo() {
   DWORD64 WeaponData = 0;
   std::memcpy(
       &ClippingWeapon,
-      this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_pClippingWeapon,
+      this->PawnBuffer.data() + offset::C_CSPlayerPawnBase.m_pClippingWeapon,
       sizeof(ClippingWeapon));
   if (!Ukia::ProcessMgr.ReadMemory<DWORD64>(
-          ClippingWeapon + Offset::WeaponBaseData.WeaponDataPTR, WeaponData))
+          ClippingWeapon + offset::WeaponBaseData.WeaponDataPTR, WeaponData))
     return false;
 
   return Ukia::ProcessMgr.GetDataAddressWithOffset<int>(
-      WeaponData, Offset::WeaponBaseData.MaxClip, this->MaxAmmo);
+      WeaponData, offset::WeaponBaseData.MaxClip, this->MaxAmmo);
 }
 bool PlayerPawn::GetIsAuto() {
   DWORD64 ClippingWeapon = 0;
   DWORD64 WeaponData = 0;
   std::memcpy(
       &ClippingWeapon,
-      this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_pClippingWeapon,
+      this->PawnBuffer.data() + offset::C_CSPlayerPawnBase.m_pClippingWeapon,
       sizeof(ClippingWeapon));
   if (!Ukia::ProcessMgr.ReadMemory<DWORD64>(
-          ClippingWeapon + Offset::WeaponBaseData.WeaponDataPTR, WeaponData))
+          ClippingWeapon + offset::WeaponBaseData.WeaponDataPTR, WeaponData))
     return false;
 
   return Ukia::ProcessMgr.GetDataAddressWithOffset<bool>(
-      WeaponData, Offset::WeaponBaseData.m_bIsFullAuto, this->IsAuto);
+      WeaponData, offset::WeaponBaseData.m_bIsFullAuto, this->IsAuto);
 }
 bool PlayerPawn::GetArmor() {
   std::memcpy(&this->Armor,
-              this->PawnBuffer.data() + Offset::C_CSPlayerPawn.m_ArmorValue,
+              this->PawnBuffer.data() + offset::C_CSPlayerPawn.m_ArmorValue,
               sizeof(this->Armor));
   return true;
 }
 bool PlayerPawn::GetFlashDuration() {
   std::memcpy(
       &this->FlashDuration,
-      this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_flFlashDuration,
+      this->PawnBuffer.data() + offset::C_CSPlayerPawnBase.m_flFlashDuration,
       sizeof(this->FlashDuration));
   return true;
 }
 bool PlayerPawn::GetIsImmunity() {
   std::memcpy(
       &this->isImmunity,
-      this->PawnBuffer.data() + Offset::C_CSPlayerPawnBase.m_bGunGameImmunity,
+      this->PawnBuffer.data() + offset::C_CSPlayerPawnBase.m_bGunGameImmunity,
       sizeof(this->isImmunity));
   return true;
 }
 bool PlayerPawn::GetVelocity() {
   std::memcpy(&this->Velocity,
-              this->PawnBuffer.data() + Offset::C_BaseEntity.m_vecAbsVelocity,
+              this->PawnBuffer.data() + offset::C_BaseEntity.m_vecAbsVelocity,
               sizeof(this->Velocity));
   this->Speed = sqrt(this->Velocity.x * this->Velocity.x +
                      this->Velocity.y * this->Velocity.y);
@@ -453,32 +453,32 @@ bool PlayerPawn::GetVelocity() {
 
 bool PlantedC4::GetIsPlanted() {
   std::memcpy(&this->isPlanted,
-              this->c4Buffer.data() + Offset::C_PlantedC4.m_bC4Activated,
+              this->c4Buffer.data() + offset::C_PlantedC4.m_bC4Activated,
               sizeof(this->isPlanted));
   return true;
 }
 bool PlantedC4::GetIsDefusing() {
   std::memcpy(&this->isDefusing,
-              this->c4Buffer.data() + Offset::C_PlantedC4.m_bBeingDefused,
+              this->c4Buffer.data() + offset::C_PlantedC4.m_bBeingDefused,
               sizeof(this->isDefusing));
   return true;
 }
 bool PlantedC4::GetHasExploded() {
   std::memcpy(&this->hasExploded,
-              this->c4Buffer.data() + Offset::C_PlantedC4.m_bHasExploded,
+              this->c4Buffer.data() + offset::C_PlantedC4.m_bHasExploded,
               sizeof(this->hasExploded));
   return true;
 }
 bool PlantedC4::GetBoomTime() {
   std::memcpy(&this->boomTime,
-              this->c4Buffer.data() + Offset::C_PlantedC4.m_flC4Blow,
+              this->c4Buffer.data() + offset::C_PlantedC4.m_flC4Blow,
               sizeof(this->boomTime));
   return true;
 }
 
 bool PlantedC4::GetDefuseTime() {
   std::memcpy(&this->defuseTime,
-              this->c4Buffer.data() + Offset::C_PlantedC4.m_flDefuseCountDown,
+              this->c4Buffer.data() + offset::C_PlantedC4.m_flDefuseCountDown,
               sizeof(this->defuseTime));
   return true;
 }
@@ -498,17 +498,17 @@ bool PlantedC4::GetDefuseRemaining() {
 }
 bool PlantedC4::GetBombSite() {
   std::memcpy(&this->bombSite,
-              this->c4Buffer.data() + Offset::C_PlantedC4.m_nBombSite,
+              this->c4Buffer.data() + offset::C_PlantedC4.m_nBombSite,
               sizeof(this->bombSite));
   return true;
 }
 bool PlantedC4::GetBombPos() {
   DWORD64 GameSceneNode;
   std::memcpy(&GameSceneNode,
-              this->c4Buffer.data() + Offset::C_BaseEntity.m_pGameSceneNode,
+              this->c4Buffer.data() + offset::C_BaseEntity.m_pGameSceneNode,
               sizeof(GameSceneNode));
   if (!Ukia::ProcessMgr.ReadMemory<Vector3>(
-          GameSceneNode + Offset::CGameSceneNode.m_vecOrigin, this->Pos))
+          GameSceneNode + offset::CGameSceneNode.m_vecOrigin, this->Pos))
     this->Pos = {0, 0, 0};
   return true;
 }
@@ -663,7 +663,7 @@ inline void InGameCheck() {
   /*
     DWORD game_state;
   Ukia::ProcessMgr.ReadMemory(gGame.GetEngineDLLAddress()+
-  Offset::dwNetworkGameClient_signOnState, game_state); std::cout << game_state
+  offset::dwNetworkGameClient_signOnState, game_state); std::cout << game_state
   << std::endl; if (game_state != 6) { IsInGame = false; return;
     }
 
@@ -681,8 +681,8 @@ inline bool GetSensitivity() {
   DWORD64 dwSensitivity;
   float flSensitivity;
   Ukia::ProcessMgr.ReadMemory(
-      gGame.GetClientDLLAddress() + Offset::dwSensitivity, dwSensitivity);
-  if (Ukia::ProcessMgr.ReadMemory(dwSensitivity + Offset::Sensitivity,
+      gGame.GetClientDLLAddress() + offset::dwSensitivity, dwSensitivity);
+  if (Ukia::ProcessMgr.ReadMemory(dwSensitivity + offset::Sensitivity,
                                   flSensitivity)) {
     Sensitivity = flSensitivity;
     return true;

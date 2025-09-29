@@ -1,18 +1,32 @@
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: FIFO.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-30
+//
+// Description:
+//   This file contains communication between Samidare and Shirakumo.
+//
+// -----------------------------------------------------------------------------
 #pragma once
+#ifndef FIFO_H_
+#define FIFO_H_
+#include "pch.h"
+
 #include <fileapi.h>
 #include <handleapi.h>
-#include <windows.h>
 
-#include <cstdint>
-#include <cstdio>
-#include <cstring>
-#include <mutex>
-#include <string>
-
-#define kInitFifo 0xF1F0
-#define kFifoReadVm 0xF1F01
-#define kFifoWriteVm 0xF1F02
-#define kFifoDllBase 0xF1F04
+constexpr DWORD kInitFifo = 0xF1F0;
+constexpr DWORD kFifoReadVm = 0xF1F01;
+constexpr DWORD kFifoWriteVm = 0xF1F02;
+constexpr DWORD kFifoDllBase = 0xF1F04;
 
 #pragma pack(push, 1)
 struct FixedStr64 {
@@ -169,3 +183,4 @@ class Fifo {
 };
 
 inline Fifo fifo;
+#endif

@@ -746,7 +746,7 @@ int Mian() noexcept {
       Ukia::UkiaExit();
     }
   }
-  if (!Offset::UpdateOffsets()) {
+  if (!offset::UpdateOffsets()) {
     ShowUpdateError();
     Ukia::UkiaExit();
   }

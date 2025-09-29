@@ -12,14 +12,13 @@
 // Date: 2025-09-29
 //
 // Description:
-//   This file contains functions and classes for game interaction and
+//   This file declares functions and classes for game interaction and
 //   world-to-screen.
 //
 // -----------------------------------------------------------------------------
 #pragma once
 #ifndef GAME_H_
 #define GAME_H_
-#include <optional>
 #include "global.h"
 #include "Offsets.h"
 #include "Overlay.h"

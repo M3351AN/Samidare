@@ -1,9 +1,24 @@
-﻿#pragma once
-#include <Windows.h>
-#include <d3d9.h>
-
-#include <iostream>
-#include <string>
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Overlay.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-30
+//
+// Description:
+//   This file contains and declares functions of Samidare overlay
+//
+// -----------------------------------------------------------------------------
+#pragma once
+#ifndef OVERLAY_H_
+#define OVERLAY_H_
+#include"pch.h"
 
 #include "./ImGui/imgui.h"
 #include "./ImGui/imgui_internal.h"
@@ -197,3 +212,4 @@ bool HotKey(const char* szLabel, int* pKey);
 bool HotKey(const char* szLabel, KeyBind_t* pKeyBind,
             const bool bAllowSwitch = true);
 }  // namespace ImGui
+#endif

@@ -1,4 +1,25 @@
-﻿#pragma once
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Driver.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-30
+//
+// Description:
+//   This file contains communication between Samidare and Usugumo.
+//
+// -----------------------------------------------------------------------------
+#pragma once
+#ifndef DRIVER_H_
+#define DRIVER_H_
+#include "pch.h"
+
 #include <fileapi.h>
 #include <handleapi.h>
 #include <ioapiset.h>
@@ -6,10 +27,6 @@
 #include <processthreadsapi.h>
 #include <vadefs.h>
 #include <winioctl.h>
-
-#include <cstdint>
-#include <cstdio>
-#include <string>
 
 constexpr ULONG ioctl_call_driver =
     CTL_CODE(FILE_DEVICE_UNKNOWN, 0x775, METHOD_BUFFERED, FILE_SPECIAL_ACCESS);
@@ -22,10 +39,10 @@ class _driver {
   // ULONG64 _dlladdress;
 
 // request codes
-#define DRIVER_READVM 0xCAFE1
-#define DRIVER_WRITEVM 0xCAFE2
-#define HID 0xCAFE3
-#define DLL_BASE 0xCAFE4
+static const DWORD kDriverReadVM = 0xCAFE1;
+static const DWORD kDriverWriteVM = 0xCAFE2;
+static const DWORD kDriverEmulateHID = 0xCAFE3;
+static const DWORD kDriverFetchModuleBase = 0xCAFE4;
 
 #pragma pack(push, 1)
   typedef struct _FixedStr64 {
@@ -80,7 +97,7 @@ class _driver {
     ULONG_PTR dwExtraInfo;
 
     // return value
-    UINT64 dll_base;
+    UINT64 kDriverFetchModuleBase;
 
     // dllbase request
     FixedStr64 dll_name;
@@ -91,7 +108,7 @@ class _driver {
               size_t size) -> void {
     if (src_pid == 0 || src_addr == 0) return;
 
-    Requests out = {DRIVER_READVM,  src_pid,  src_addr,
+    Requests out = {kDriverReadVM,  src_pid,  src_addr,
                     _cur_processid, dst_addr, size};
 
     DeviceIoControl(_driver_handle, ioctl_call_driver, &out, sizeof(out),
@@ -101,7 +118,7 @@ class _driver {
                size_t size) -> void {
     if (src_pid == 0 || dst_addr == 0) return;
 
-    Requests out = {DRIVER_WRITEVM, src_pid,  src_addr,
+    Requests out = {kDriverWriteVM, src_pid,  src_addr,
                     _cur_processid, dst_addr, size};
 
     DeviceIoControl(_driver_handle, ioctl_call_driver, &out, sizeof(out),
@@ -130,7 +147,7 @@ class _driver {
   }
   auto dll_address(const char* dllname) -> ULONG64 {
     Requests out = {0};
-    out.request_key = DLL_BASE;
+    out.request_key = kDriverFetchModuleBase;
     out.src_pid = _processid;
 
     size_t originalLen = strlen(dllname);
@@ -143,13 +160,13 @@ class _driver {
     DeviceIoControl(_driver_handle, ioctl_call_driver, &out, sizeof(out), &out,
                     sizeof(out), nullptr, nullptr);
 
-    return out.dll_base;
+    return out.kDriverFetchModuleBase;
   }
 
   void mouse_event(DWORD dwFlags, DWORD dx, DWORD dy, DWORD dwData,
                    ULONG_PTR dwExtraInfo) {
     Requests request = {0};
-    request.request_key = HID;
+    request.request_key = kDriverEmulateHID;
     request.dwFlags = dwFlags;
     request.dx = dx;
     request.dy = dy;
@@ -162,6 +179,4 @@ class _driver {
 };
 
 inline _driver driver;
-
-
-
+#endif

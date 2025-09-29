@@ -1,11 +1,28 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Offsets.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-30
+//
+// Description:
+//   This file contains functions and vars deal with game data offsets.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "Offsets.h"
 
 #include "Functions/config.h"
 #include "UkiaStuff.h"
 #include "Utils/XorStr.h"
 
-namespace Offset {
+namespace offset {
 
 uintptr_t ForceJump = 0;
 uintptr_t ForceCrouch = 0;
@@ -71,8 +88,6 @@ SmokeGrenadeProjectileT SmokeGrenadeProjectile = {};
 
 PawnT Pawn = {};
 
-}  // namespace Offset
-
 using json = nlohmann::json;
 
 namespace fs = std::filesystem;
@@ -101,7 +116,7 @@ inline static T ReadJsonData(const nlohmann::json& node, T defaultValue) {
   return node.is_null() ? defaultValue : node.get<T>();
 }
 
-bool Offset::UpdateOffsets() {
+bool UpdateOffsets() {
   std::string currentDir = fs::current_path().string();
   std::string offsetFileName = "offsets.json";
   std::string buttonFileName = "buttons.json";
@@ -142,94 +157,90 @@ bool Offset::UpdateOffsets() {
         fs::exists(files[2].dst) && fs::exists(files[3].dst))) {
     printf("%s",
            XorStr("Failed to locate all offsets file. Please visit "
-               "https://github.com/a2x/cs2-dumper/tree/main/output to get "
-               "latest offsets.json & buttons.json & client_dll.json & "
-               "interfaces.json\n"));
+                  "https://github.com/a2x/cs2-dumper/tree/main/output to get "
+                  "latest offsets.json & buttons.json & client_dll.json & "
+                  "interfaces.json\n"));
     return false;
   }
 
-  Offset::WeaponBaseData.WeaponSize = 0x50;
+  WeaponBaseData.WeaponSize = 0x50;
 
-  Offset::Pawn.BoneArray = 0x1F0;
+  Pawn.BoneArray = 0x1F0;
 
   std::ifstream offsetfile(files[0].dst);
   nlohmann::json offset;
   offsetfile >> offset;
 
-  Offset::EntityList = ReadJsonData(offset["client.dll"]["dwEntityList"], 0);
+  EntityList = ReadJsonData(offset["client.dll"]["dwEntityList"], 0);
 
-  Offset::LocalPlayerController =
+  LocalPlayerController =
       ReadJsonData(offset["client.dll"]["dwLocalPlayerController"], 0);
-  Offset::Matrix = ReadJsonData(offset["client.dll"]["dwViewMatrix"], 0);
-  Offset::GlobalVars = ReadJsonData(offset["client.dll"]["dwGlobalVars"], 0);
-  Offset::CSGOInput = ReadJsonData(offset["client.dll"]["dwCSGOInput"], 0);
-  Offset::ViewAngle = ReadJsonData(offset["client.dll"]["dwViewAngles"], 0);
-  Offset::LocalPlayerPawn =
-      ReadJsonData(offset["client.dll"]["dwLocalPlayerPawn"], 0);
-  Offset::PlantedC4 = ReadJsonData(offset["client.dll"]["dwPlantedC4"], 0);
-  Offset::dwSensitivity =
-      ReadJsonData(offset["client.dll"]["dwSensitivity"], 0);
-  Offset::Sensitivity =
+  Matrix = ReadJsonData(offset["client.dll"]["dwViewMatrix"], 0);
+  GlobalVars = ReadJsonData(offset["client.dll"]["dwGlobalVars"], 0);
+  CSGOInput = ReadJsonData(offset["client.dll"]["dwCSGOInput"], 0);
+  ViewAngle = ReadJsonData(offset["client.dll"]["dwViewAngles"], 0);
+  LocalPlayerPawn = ReadJsonData(offset["client.dll"]["dwLocalPlayerPawn"], 0);
+  PlantedC4 = ReadJsonData(offset["client.dll"]["dwPlantedC4"], 0);
+  dwSensitivity = ReadJsonData(offset["client.dll"]["dwSensitivity"], 0);
+  Sensitivity =
       ReadJsonData(offset["client.dll"]["dwSensitivity_sensitivity"], 0);
-  Offset::BuildNumber = ReadJsonData(offset["engine2.dll"]["dwBuildNumber"], 0);
-  Offset::dwNetworkGameClient_signOnState =
+  BuildNumber = ReadJsonData(offset["engine2.dll"]["dwBuildNumber"], 0);
+  dwNetworkGameClient_signOnState =
       ReadJsonData(offset["engine2.dll"]["dwNetworkGameClient_signOnState"], 0);
-  Offset::InputSystem =
-      ReadJsonData(offset["inputsystem.dll"]["dwInputSystem"], 0);
+  InputSystem = ReadJsonData(offset["inputsystem.dll"]["dwInputSystem"], 0);
 
   std::ifstream interfacesfile(files[3].dst);
   nlohmann::json interfaces;
   interfacesfile >> interfaces;
-  Offset::VEngineCvar007 =
-      ReadJsonData(interfaces["tier0.dll"]["VEngineCvar007"], 0);
+  VEngineCvar007 = ReadJsonData(interfaces["tier0.dll"]["VEngineCvar007"], 0);
 
   std::ifstream buttonfile(files[1].dst);
   nlohmann::json button;
   buttonfile >> button;
-  Offset::ForceJump = ReadJsonData(button["client.dll"]["jump"], 0);
-  Offset::ForceCrouch = ReadJsonData(button["client.dll"]["duck"], 0);
-  Offset::ForceForward = ReadJsonData(button["client.dll"]["forward"], 0);
-  Offset::ForceLeft = ReadJsonData(button["client.dll"]["left"], 0);
-  Offset::ForceRight = ReadJsonData(button["client.dll"]["right"], 0);
+  ForceJump = ReadJsonData(button["client.dll"]["jump"], 0);
+  ForceCrouch = ReadJsonData(button["client.dll"]["duck"], 0);
+  ForceForward = ReadJsonData(button["client.dll"]["forward"], 0);
+  ForceLeft = ReadJsonData(button["client.dll"]["left"], 0);
+  ForceRight = ReadJsonData(button["client.dll"]["right"], 0);
 
   std::ifstream clientfile(files[2].dst);
   nlohmann::json client;
   clientfile >> client;
-  Offset::C_BaseEntity.m_flGravityScale =
+  C_BaseEntity.m_flGravityScale =
       ReadJsonData(client["client.dll"]["classes"]["C_BaseEntity"]["fields"]
                          ["m_flGravityScale"],
                    0);
-  Offset::C_BaseEntity.m_iMaxHealth = ReadJsonData(
+  C_BaseEntity.m_iMaxHealth = ReadJsonData(
       client["client.dll"]["classes"]["C_BaseEntity"]["fields"]["m_iMaxHealth"],
       0);
-  Offset::C_BaseEntity.m_iHealth = ReadJsonData(
+  C_BaseEntity.m_iHealth = ReadJsonData(
       client["client.dll"]["classes"]["C_BaseEntity"]["fields"]["m_iHealth"],
       0);
-  Offset::C_BaseEntity.m_pGameSceneNode =
+  C_BaseEntity.m_pGameSceneNode =
       ReadJsonData(client["client.dll"]["classes"]["C_BaseEntity"]["fields"]
                          ["m_pGameSceneNode"],
                    0);
-  Offset::C_BaseEntity.m_pCollision = ReadJsonData(
+  C_BaseEntity.m_pCollision = ReadJsonData(
       client["client.dll"]["classes"]["C_BaseEntity"]["fields"]["m_pCollision"],
       0);
-  Offset::C_BaseEntity.m_vecAbsVelocity =
+  C_BaseEntity.m_vecAbsVelocity =
       ReadJsonData(client["client.dll"]["classes"]["C_BaseEntity"]["fields"]
                          ["m_vecAbsVelocity"],
                    0);
-  Offset::C_BaseEntity.m_iTeamNum = ReadJsonData(
+  C_BaseEntity.m_iTeamNum = ReadJsonData(
       client["client.dll"]["classes"]["C_BaseEntity"]["fields"]["m_iTeamNum"],
       0);
-  Offset::C_BaseEntity.m_fFlags = ReadJsonData(
+  C_BaseEntity.m_fFlags = ReadJsonData(
       client["client.dll"]["classes"]["C_BaseEntity"]["fields"]["m_fFlags"], 0);
 
-  Offset::C_BaseModelEntity.GlowFunction =
+  C_BaseModelEntity.GlowFunction =
       ReadJsonData(client["client.dll"]["classes"]["C_BaseModelEntity"]
                          ["fields"]["m_Glow"],
                    0) +
       ReadJsonData(client["client.dll"]["classes"]["CGlowProperty"]["fields"]
                          ["m_bGlowing"],
                    0);
-  Offset::C_BaseModelEntity.GlowColorOverride =
+  C_BaseModelEntity.GlowColorOverride =
       ReadJsonData(client["client.dll"]["classes"]["C_BaseModelEntity"]
                          ["fields"]["m_Glow"],
                    0) +
@@ -237,176 +248,176 @@ bool Offset::UpdateOffsets() {
                          ["m_glowColorOverride"],
                    0);
 
-  Offset::CGameSceneNode.m_vecOrigin =
+  CGameSceneNode.m_vecOrigin =
       ReadJsonData(client["client.dll"]["classes"]["CGameSceneNode"]["fields"]
                          ["m_vecOrigin"],
                    0);
-  Offset::CGameSceneNode.m_bDormant = ReadJsonData(
+  CGameSceneNode.m_bDormant = ReadJsonData(
       client["client.dll"]["classes"]["CGameSceneNode"]["fields"]["m_bDormant"],
       0);
 
-  Offset::CCollisionProperty.m_vecMins =
+  CCollisionProperty.m_vecMins =
       ReadJsonData(client["client.dll"]["classes"]["CCollisionProperty"]
                          ["fields"]["m_vecMins"],
                    0);
-  Offset::CCollisionProperty.m_vecMaxs =
+  CCollisionProperty.m_vecMaxs =
       ReadJsonData(client["client.dll"]["classes"]["CCollisionProperty"]
                          ["fields"]["m_vecMaxs"],
                    0);
 
-  Offset::CBasePlayerController.m_hPawn =
+  CBasePlayerController.m_hPawn =
       ReadJsonData(client["client.dll"]["classes"]["CBasePlayerController"]
                          ["fields"]["m_hPawn"],
                    0);
-  Offset::CBasePlayerController.m_iszPlayerName =
+  CBasePlayerController.m_iszPlayerName =
       ReadJsonData(client["client.dll"]["classes"]["CBasePlayerController"]
                          ["fields"]["m_iszPlayerName"],
                    0);
-  Offset::CBasePlayerController.m_iDesiredFOV =
+  CBasePlayerController.m_iDesiredFOV =
       ReadJsonData(client["client.dll"]["classes"]["CBasePlayerController"]
                          ["fields"]["m_iDesiredFOV"],
                    0);
-  Offset::CBasePlayerController.m_steamID =
+  CBasePlayerController.m_steamID =
       ReadJsonData(client["client.dll"]["classes"]["CBasePlayerController"]
                          ["fields"]["m_steamID"],
                    0);
 
-  Offset::CCSPlayerController.m_bPawnIsAlive =
+  CCSPlayerController.m_bPawnIsAlive =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_bPawnIsAlive"],
                    0);
-  Offset::CCSPlayerController.m_bControllingBot =
+  CCSPlayerController.m_bControllingBot =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_bControllingBot"],
                    0);
-  Offset::CCSPlayerController.m_bEverPlayedOnTeam =
+  CCSPlayerController.m_bEverPlayedOnTeam =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_bEverPlayedOnTeam"],
                    0);
-  Offset::CCSPlayerController.m_hPlayerPawn =
+  CCSPlayerController.m_hPlayerPawn =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_hPlayerPawn"],
                    0);
-  Offset::CCSPlayerController.m_sSanitizedPlayerName =
+  CCSPlayerController.m_sSanitizedPlayerName =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_sSanitizedPlayerName"],
                    0);
-  Offset::CCSPlayerController.m_iPawnArmor =
+  CCSPlayerController.m_iPawnArmor =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_iPawnArmor"],
                    0);
-  Offset::CCSPlayerController.m_bPawnHasDefuser =
+  CCSPlayerController.m_bPawnHasDefuser =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_bPawnHasDefuser"],
                    0);
-  Offset::CCSPlayerController.m_bPawnHasHelmet =
+  CCSPlayerController.m_bPawnHasHelmet =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_bPawnHasHelmet"],
                    0);
-  Offset::CCSPlayerController.m_iPing =
+  CCSPlayerController.m_iPing =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_iPing"],
                    0);
-  Offset::CCSPlayerController.m_pInGameMoneyServices =
+  CCSPlayerController.m_pInGameMoneyServices =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayerController"]
                          ["fields"]["m_pInGameMoneyServices"],
                    0);
 
-  Offset::C_BasePlayerPawn.m_pMovementServices =
+  C_BasePlayerPawn.m_pMovementServices =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerPawn"]["fields"]
                          ["m_pMovementServices"],
                    0);
-  Offset::C_BasePlayerPawn.m_pWeaponServices =
+  C_BasePlayerPawn.m_pWeaponServices =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerPawn"]["fields"]
                          ["m_pWeaponServices"],
                    0);
-  Offset::C_BasePlayerPawn.m_pCameraServices =
+  C_BasePlayerPawn.m_pCameraServices =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerPawn"]["fields"]
                          ["m_pCameraServices"],
                    0);
-  Offset::C_BasePlayerPawn.m_pObserverServices =
+  C_BasePlayerPawn.m_pObserverServices =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerPawn"]["fields"]
                          ["m_pObserverServices"],
                    0);
-  Offset::C_BasePlayerPawn.m_vOldOrigin =
+  C_BasePlayerPawn.m_vOldOrigin =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerPawn"]["fields"]
                          ["m_vOldOrigin"],
                    0);
-  Offset::C_BasePlayerPawn.m_hController =
+  C_BasePlayerPawn.m_hController =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerPawn"]["fields"]
                          ["m_hController"],
                    0);
 
-  Offset::C_CSPlayerPawnBase.m_pViewModelServices =
+  C_CSPlayerPawnBase.m_pViewModelServices =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_pViewModelServices"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_pClippingWeapon =
+  C_CSPlayerPawnBase.m_pClippingWeapon =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_pClippingWeapon"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_angEyeAngles =
+  C_CSPlayerPawnBase.m_angEyeAngles =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_angEyeAngles"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_bGunGameImmunity =
+  C_CSPlayerPawnBase.m_bGunGameImmunity =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_bGunGameImmunity"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_vecLastClipCameraPos =
+  C_CSPlayerPawnBase.m_vecLastClipCameraPos =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_vecLastClipCameraPos"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_flFlashMaxAlpha =
+  C_CSPlayerPawnBase.m_flFlashMaxAlpha =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_flFlashMaxAlpha"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_flFlashDuration =
+  C_CSPlayerPawnBase.m_flFlashDuration =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_flFlashDuration"],
                    0);
-  Offset::C_CSPlayerPawnBase.m_iIDEntIndex =
+  C_CSPlayerPawnBase.m_iIDEntIndex =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawnBase"]
                          ["fields"]["m_iIDEntIndex"],
                    0);
 
-  Offset::C_CSPlayerPawn.m_pBulletServices =
+  C_CSPlayerPawn.m_pBulletServices =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_pBulletServices"],
                    0);
-  Offset::C_CSPlayerPawn.m_bIsScoped =
+  C_CSPlayerPawn.m_bIsScoped =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_bIsScoped"],
                    0);
-  Offset::C_CSPlayerPawn.m_bIsDefusing =
+  C_CSPlayerPawn.m_bIsDefusing =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_bIsDefusing"],
                    0);
-  Offset::C_CSPlayerPawn.m_ArmorValue =
+  C_CSPlayerPawn.m_ArmorValue =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_ArmorValue"],
                    0);
-  Offset::C_CSPlayerPawn.m_iShotsFired =
+  C_CSPlayerPawn.m_iShotsFired =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_iShotsFired"],
                    0);
-  Offset::C_CSPlayerPawn.m_aimPunchAngle =
+  C_CSPlayerPawn.m_aimPunchAngle =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_aimPunchAngle"],
                    0);
-  Offset::C_CSPlayerPawn.m_aimPunchCache =
+  C_CSPlayerPawn.m_aimPunchCache =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_aimPunchCache"],
                    0);
-  Offset::C_CSPlayerPawn.m_bIsBuyMenuOpen =
+  C_CSPlayerPawn.m_bIsBuyMenuOpen =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_bIsBuyMenuOpen"],
                    0);
-  Offset::C_CSPlayerPawn.m_bWaitForNoAttack =
+  C_CSPlayerPawn.m_bWaitForNoAttack =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_bWaitForNoAttack"],
                    0);
-  Offset::C_CSPlayerPawn.m_bSpottedByMask =
+  C_CSPlayerPawn.m_bSpottedByMask =
       ReadJsonData(client["client.dll"]["classes"]["C_CSPlayerPawn"]["fields"]
                          ["m_entitySpottedState"],
                    0) +
@@ -414,190 +425,189 @@ bool Offset::UpdateOffsets() {
                          ["fields"]["m_bSpottedByMask"],
                    0);
 
-  Offset::C_PlantedC4.m_flC4Blow = ReadJsonData(
+  C_PlantedC4.m_flC4Blow = ReadJsonData(
       client["client.dll"]["classes"]["C_PlantedC4"]["fields"]["m_flC4Blow"],
       0);
-  Offset::C_PlantedC4.m_bC4Activated =
+  C_PlantedC4.m_bC4Activated =
       ReadJsonData(client["client.dll"]["classes"]["C_PlantedC4"]["fields"]
                          ["m_bC4Activated"],
                    0);
-  Offset::C_PlantedC4.m_bBeingDefused =
+  C_PlantedC4.m_bBeingDefused =
       ReadJsonData(client["client.dll"]["classes"]["C_PlantedC4"]["fields"]
                          ["m_bBeingDefused"],
                    0);
-  Offset::C_PlantedC4.m_bHasExploded =
+  C_PlantedC4.m_bHasExploded =
       ReadJsonData(client["client.dll"]["classes"]["C_PlantedC4"]["fields"]
                          ["m_bHasExploded"],
                    0);
-  Offset::C_PlantedC4.m_hBombDefuser =
+  C_PlantedC4.m_hBombDefuser =
       ReadJsonData(client["client.dll"]["classes"]["C_PlantedC4"]["fields"]
                          ["m_hBombDefuser"],
                    0);
-  Offset::C_PlantedC4.m_flDefuseCountDown =
+  C_PlantedC4.m_flDefuseCountDown =
       ReadJsonData(client["client.dll"]["classes"]["C_PlantedC4"]["fields"]
                          ["m_flDefuseCountDown"],
                    0);
-  Offset::C_PlantedC4.m_nBombSite = ReadJsonData(
+  C_PlantedC4.m_nBombSite = ReadJsonData(
       client["client.dll"]["classes"]["C_PlantedC4"]["fields"]["m_nBombSite"],
       0);
 
-  Offset::CPlayer_ObserverServices.m_hObserverTarget =
+  CPlayer_ObserverServices.m_hObserverTarget =
       ReadJsonData(client["client.dll"]["classes"]["CPlayer_ObserverServices"]
                          ["fields"]["m_hObserverTarget"],
                    0);
-  Offset::CPlayer_ObserverServices.m_iObserverMode =
+  CPlayer_ObserverServices.m_iObserverMode =
       ReadJsonData(client["client.dll"]["classes"]["CPlayer_ObserverServices"]
                          ["fields"]["m_iObserverMode"],
                    0);
-  Offset::CCSPlayer_ViewModelServices.m_hViewModel = ReadJsonData(
+  CCSPlayer_ViewModelServices.m_hViewModel = ReadJsonData(
       client["client.dll"]["classes"]["CCSPlayer_ViewModelServices"]["fields"]
             ["m_hViewModel"],
       0);
-  Offset::CPlayer_MovementServices_Humanoid.m_nCrouchState = ReadJsonData(
+  CPlayer_MovementServices_Humanoid.m_nCrouchState = ReadJsonData(
       client["client.dll"]["classes"]["CPlayer_MovementServices_Humanoid"]
             ["fields"]["m_nCrouchState"],
       0);
-  Offset::CCSPlayerBase_CameraServices.m_iFOVStart = ReadJsonData(
+  CCSPlayerBase_CameraServices.m_iFOVStart = ReadJsonData(
       client["client.dll"]["classes"]["CCSPlayerBase_CameraServices"]["fields"]
             ["m_iFOVStart"],
       0);
-  Offset::CCSPlayer_BulletServices.m_totalHitsOnServer =
+  CCSPlayer_BulletServices.m_totalHitsOnServer =
       ReadJsonData(client["client.dll"]["classes"]["CCSPlayer_BulletServices"]
                          ["fields"]["m_totalHitsOnServer"],
                    0);
 
-  Offset::CCSPlayerController_InGameMoneyServices.m_iAccount = ReadJsonData(
+  CCSPlayerController_InGameMoneyServices.m_iAccount = ReadJsonData(
       client["client.dll"]["classes"]["CCSPlayerController_InGameMoneyServices"]
             ["fields"]["m_iAccount"],
       0);
-  Offset::CCSPlayerController_InGameMoneyServices
-      .m_iTotalCashSpent = ReadJsonData(
+  CCSPlayerController_InGameMoneyServices.m_iTotalCashSpent = ReadJsonData(
       client["client.dll"]["classes"]["CCSPlayerController_InGameMoneyServices"]
             ["fields"]["m_iTotalCashSpent"],
       0);
-  Offset::CCSPlayerController_InGameMoneyServices
-      .m_iCashSpentThisRound = ReadJsonData(
+  CCSPlayerController_InGameMoneyServices.m_iCashSpentThisRound = ReadJsonData(
       client["client.dll"]["classes"]["CCSPlayerController_InGameMoneyServices"]
             ["fields"]["m_iCashSpentThisRound"],
       0);
 
-  Offset::WeaponBaseData.WeaponDataPTR =
+  WeaponBaseData.WeaponDataPTR =
       ReadJsonData(client["client.dll"]["classes"]["C_BaseEntity"]["fields"]
                          ["m_nSubclassID"],
                    0) +
       0x08;
-  Offset::WeaponBaseData.szName =
+  WeaponBaseData.szName =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_szName"],
                    0);
-  Offset::WeaponBaseData.Clip1 =
+  WeaponBaseData.Clip1 =
       ReadJsonData(client["client.dll"]["classes"]["C_BasePlayerWeapon"]
                          ["fields"]["m_iClip1"],
                    0);
-  Offset::WeaponBaseData.MaxClip =
+  WeaponBaseData.MaxClip =
       ReadJsonData(client["client.dll"]["classes"]["CBasePlayerWeaponVData"]
                          ["fields"]["m_iMaxClip1"],
                    0);
-  Offset::WeaponBaseData.CycleTime =
+  WeaponBaseData.CycleTime =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_flCycleTime"],
                    0);
-  Offset::WeaponBaseData.Penetration =
+  WeaponBaseData.Penetration =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_flPenetration"],
                    0);
-  Offset::WeaponBaseData.WeaponType =
+  WeaponBaseData.WeaponType =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_WeaponType"],
                    0);
-  Offset::WeaponBaseData.Inaccuracy =
+  WeaponBaseData.Inaccuracy =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_flInaccuracyMove"],
                    0);
-  Offset::WeaponBaseData.inReload =
+  WeaponBaseData.inReload =
       ReadJsonData(client["client.dll"]["classes"]["C_CSWeaponBase"]["fields"]
                          ["m_bInReload"],
                    0);
-  Offset::WeaponBaseData.m_nNumBullets =
+  WeaponBaseData.m_nNumBullets =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_nNumBullets"],
                    0);
-  Offset::WeaponBaseData.ActiveWeapon =
+  WeaponBaseData.ActiveWeapon =
       ReadJsonData(client["client.dll"]["classes"]["CPlayer_WeaponServices"]
                          ["fields"]["m_hActiveWeapon"],
                    0);
-  Offset::WeaponBaseData.Item =
+  WeaponBaseData.Item =
       ReadJsonData(client["client.dll"]["classes"]["C_AttributeContainer"]
                          ["fields"]["m_Item"],
                    0);
-  Offset::WeaponBaseData.ItemDefinitionIndex =
+  WeaponBaseData.ItemDefinitionIndex =
       ReadJsonData(client["client.dll"]["classes"]["C_EconItemView"]["fields"]
                          ["m_iItemDefinitionIndex"],
                    0);
-  Offset::WeaponBaseData.m_MeshGroupMask = ReadJsonData(
+  WeaponBaseData.m_MeshGroupMask = ReadJsonData(
       client["client.dll"]["classes"]["CModelState"]["m_MeshGroupMask"], 0);
-  Offset::WeaponBaseData.m_bIsFullAuto =
+  WeaponBaseData.m_bIsFullAuto =
       ReadJsonData(client["client.dll"]["classes"]["CCSWeaponBaseVData"]
                          ["fields"]["m_bIsFullAuto"],
                    0);
 
-  Offset::EconEntity.AttributeManager = ReadJsonData(
+  EconEntity.AttributeManager = ReadJsonData(
       client["client.dll"]["classes"]["C_EconEntity"]["m_AttributeManager"], 0);
-  Offset::EconEntity.FallbackPaintKit = ReadJsonData(
+  EconEntity.FallbackPaintKit = ReadJsonData(
       client["client.dll"]["classes"]["C_EconEntity"]["m_nFallbackPaintKit"],
       0);
-  Offset::EconEntity.FallbackSeed = ReadJsonData(
+  EconEntity.FallbackSeed = ReadJsonData(
       client["client.dll"]["classes"]["C_EconEntity"]["m_nFallbackSeed"], 0);
-  Offset::EconEntity.FallbackWear = ReadJsonData(
+  EconEntity.FallbackWear = ReadJsonData(
       client["client.dll"]["classes"]["C_EconEntity"]["m_flFallbackWear"], 0);
-  Offset::EconEntity.FallbackStatTrak = ReadJsonData(
+  EconEntity.FallbackStatTrak = ReadJsonData(
       client["client.dll"]["classes"]["C_EconEntity"]["m_nFallbackStatTrak"],
       0);
-  Offset::EconEntity.szCustomName =
+  EconEntity.szCustomName =
       ReadJsonData(client["client.dll"]["classes"]["C_EconItemView"]["fields"]
                          ["m_szCustomName"],
                    0);
-  Offset::EconEntity.EntityQuality =
+  EconEntity.EntityQuality =
       ReadJsonData(client["client.dll"]["classes"]["C_EconItemView"]["fields"]
                          ["m_iEntityQuality"],
                    0);
-  Offset::EconEntity.ItemIDHigh =
+  EconEntity.ItemIDHigh =
       ReadJsonData(client["client.dll"]["classes"]["C_EconItemView"]["fields"]
                          ["m_iItemIDHigh"],
                    0);
 
-  Offset::SmokeGrenadeProjectile.nSmokeEffectTickBegin =
+  SmokeGrenadeProjectile.nSmokeEffectTickBegin =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_nSmokeEffectTickBegin"],
                    0);
-  Offset::SmokeGrenadeProjectile.bDidSmokeEffect =
+  SmokeGrenadeProjectile.bDidSmokeEffect =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_bDidSmokeEffect"],
                    0);
-  Offset::SmokeGrenadeProjectile.nRandomSeed =
+  SmokeGrenadeProjectile.nRandomSeed =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_nRandomSeed"],
                    0);
-  Offset::SmokeGrenadeProjectile.vSmokeColor =
+  SmokeGrenadeProjectile.vSmokeColor =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_vSmokeColor"],
                    0);
-  Offset::SmokeGrenadeProjectile.vSmokeDetonationPos =
+  SmokeGrenadeProjectile.vSmokeDetonationPos =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_vSmokeDetonationPos"],
                    0);
-  Offset::SmokeGrenadeProjectile.VoxelFrameData =
+  SmokeGrenadeProjectile.VoxelFrameData =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_VoxelFrameData"],
                    0);
-  Offset::SmokeGrenadeProjectile.bSmokeVolumeDataReceived =
+  SmokeGrenadeProjectile.bSmokeVolumeDataReceived =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_bSmokeVolumeDataReceived"],
                    0);
-  Offset::SmokeGrenadeProjectile.bSmokeEffectSpawned =
+  SmokeGrenadeProjectile.bSmokeEffectSpawned =
       ReadJsonData(client["client.dll"]["classes"]["C_SmokeGrenadeProjectile"]
                          ["fields"]["m_bSmokeEffectSpawned"],
                    0);
 
   return true;
 }
+}  // namespace offset

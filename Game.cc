@@ -1,4 +1,22 @@
-﻿#include "pch.h"
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Game.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-30
+//
+// Description:
+//   This file contains functions and classes for game interaction and
+//   world-to-screen.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "Game.h"
 
 #include "UkiaStuff.h"
@@ -11,21 +29,21 @@ bool CGame::InitAddress() {
       Ukia::ProcessMgr.GetProcessModuleHandle("server.dll"));
   this->Address.Tier0DLL = reinterpret_cast<DWORD64>(
       Ukia::ProcessMgr.GetProcessModuleHandle("tier0.dll"));
-  this->Address.EntityList = GetClientDLLAddress() + Offset::EntityList;
-  this->Address.Matrix = GetClientDLLAddress() + Offset::Matrix;
-  this->Address.ViewAngle = GetClientDLLAddress() + Offset::ViewAngle;
+  this->Address.EntityList = GetClientDLLAddress() + offset::EntityList;
+  this->Address.Matrix = GetClientDLLAddress() + offset::Matrix;
+  this->Address.ViewAngle = GetClientDLLAddress() + offset::ViewAngle;
   this->Address.LocalController =
-      GetClientDLLAddress() + Offset::LocalPlayerController;
-  this->Address.LocalPawn = GetClientDLLAddress() + Offset::LocalPlayerPawn;
-  this->Address.ServerPawn = GetServerDLLAddress() + Offset::LocalPlayerPawn;
-  this->Address.PlantedC4PTR = GetClientDLLAddress() + Offset::PlantedC4;
-  this->Address.ForceJump = GetClientDLLAddress() + Offset::ForceJump;
-  this->Address.ForceCrouch = GetClientDLLAddress() + Offset::ForceCrouch;
-  this->Address.ForceForward = GetClientDLLAddress() + Offset::ForceForward;
-  this->Address.ForceLeft = GetClientDLLAddress() + Offset::ForceLeft;
-  this->Address.ForceRight = GetClientDLLAddress() + Offset::ForceRight;
-  this->Address.GlobalVars = GetClientDLLAddress() + Offset::GlobalVars;
-  this->Address.BuildNumber = GetEngineDLLAddress() + Offset::BuildNumber;
+      GetClientDLLAddress() + offset::LocalPlayerController;
+  this->Address.LocalPawn = GetClientDLLAddress() + offset::LocalPlayerPawn;
+  this->Address.ServerPawn = GetServerDLLAddress() + offset::LocalPlayerPawn;
+  this->Address.PlantedC4PTR = GetClientDLLAddress() + offset::PlantedC4;
+  this->Address.ForceJump = GetClientDLLAddress() + offset::ForceJump;
+  this->Address.ForceCrouch = GetClientDLLAddress() + offset::ForceCrouch;
+  this->Address.ForceForward = GetClientDLLAddress() + offset::ForceForward;
+  this->Address.ForceLeft = GetClientDLLAddress() + offset::ForceLeft;
+  this->Address.ForceRight = GetClientDLLAddress() + offset::ForceRight;
+  this->Address.GlobalVars = GetClientDLLAddress() + offset::GlobalVars;
+  this->Address.BuildNumber = GetEngineDLLAddress() + offset::BuildNumber;
   
   return this->Address.ClientDLL != 0;
 }

@@ -84,12 +84,12 @@ void TriggerBotRun(const CEntity& LocalEntity) {
     return;
   /*
   if (!Ukia::ProcessMgr.ReadMemory<bool>(
-          LocalEntity.Pawn.Address + Offset::C_CSPlayerPawn.m_bWaitForNoAttack,
+          LocalEntity.Pawn.Address + offset::C_CSPlayerPawn.m_bWaitForNoAttack,
           WaitForNoAttack))
     return;
     */
   if (!Ukia::ProcessMgr.ReadMemory<DWORD>(
-          LocalEntity.Pawn.Address + Offset::C_CSPlayerPawnBase.m_iIDEntIndex,
+          LocalEntity.Pawn.Address + offset::C_CSPlayerPawnBase.m_iIDEntIndex,
           uHandle))
     return;
   if (uHandle == -1) return;
