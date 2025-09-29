@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//  https://raw.githubusercontent.com/M3351AN/M3351AN/1ee25fbd5318d178d15924046fa2060e765b2f66/LICENSE
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/9e7630a8511b8306c62952ca1a4f1ce0cc5b784a/LICENSE
 //
 // -----------------------------------------------------------------------------
 // File: entrypoint.cc
