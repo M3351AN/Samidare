@@ -1,4 +1,4 @@
-#ifndef NODE_NODE_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef NODE_NODE_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define NODE_NODE_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -10,12 +10,12 @@
 #include <stdexcept>
 #include <string>
 
-#include "yaml-cpp/dll.h"
-#include "yaml-cpp/emitterstyle.h"
-#include "yaml-cpp/mark.h"
-#include "yaml-cpp/node/detail/iterator_fwd.h"
-#include "yaml-cpp/node/ptr.h"
-#include "yaml-cpp/node/type.h"
+#include "../dll.h"
+#include "../emitterstyle.h"
+#include "../mark.h"
+#include "../node/detail/iterator_fwd.h"
+#include "../node/ptr.h"
+#include "../node/type.h"
 
 namespace YAML {
 namespace detail {

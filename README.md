@@ -106,25 +106,30 @@
 This project is licensed under [**TOSSRCU**](LICENSE).
 ```diff
 + You are free to:
-	• Use: Utilize the software for any purpose not explicitly restricted
-	• Copy: Reproduce the software without limitation
-	• Modify: Create derivative works through remixing/transforming
-	• Merge: Combine with other materials
-	• Publish: Display/communicate the software publicly
-	• Distribute: Share copies of the software
+    • Use: Utilize the software for any purpose not explicitly restricted
+    • Copy: Reproduce the software without limitation
+    • Modify: Create derivative works through remixing/transforming
+    • Merge: Combine with other materials
+    • Publish: Display/communicate the software publicly
+    • Distribute: Share copies of the software
+    • Sublicense: Grant sublicenses for original/modified material
 
 + Under the following terms:
-	• Attribution: Must include copyright notice and this license in all copies
-	• Non-Commercial: Cannot use for commercial activities "as is" without written permission
-	• Waifu Clause: Don't consider the author as your waifu
+    • Attribution: Must include copyright notice and this license in all copies
+    • Non-Commercial Restriction: Cannot use for commercial activities "as is" without written permission from the right holder
+
++ Disclaimer:
+    • The Software is provided "AS IS", without warranty of any kind
+    • The right holder is not liable for any claim, damages, or other liability
 
 - You are not allowed to:
-	• Sublicense: Cannot grant sublicenses for original/modified material
-	• Commercial Use: Prohibited from monetization "as is" without explicit permission
-
+    • Commercial Use "AS IS": You cannot use the Software in its unmodified form for commercial activities without written permission from the right holder
 ```
+**Note**: This section is a simplified summary. For the full legal terms, please refer to the [LICENSE](LICENSE) file.
+
 - This project contains codes released into [**the public domain**](https://unlicense.org/).
 - This project contains codes licensed under [**The MIT License**](https://opensource.org/license/mit).
+- This project contains codes licensed under [**Apache License, Version 2.0**](https://www.apache.org/licenses/LICENSE-2.0).
 - This project contains codes licensed under [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc/4.0/).
 - This project contains HarmonyOS Sans Fonts licensed under [**HARMONYOSSANS字体许可协议**](HARMONYOSSANS字体许可协议).
 - This project contains images & texts licensed under [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc/4.0/).

@@ -1,9 +1,7 @@
-#pragma once
-#include "CallStack-Spoofer.h"
-#include <Windows.h>
+﻿#pragma once
+#include "pch.h"
+#include "./Utils/CallStack-Spoofer.h"
 
-#include <string>
-#include <vector>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846  // matches value in gcc v2 math.h
 #endif
@@ -73,9 +71,10 @@ typedef NTSTATUS(NTAPI* _RtlAdjustPrivilege)(ULONG Privilege, BOOLEAN Enable,
                                              BOOLEAN CurrentThread,
                                              PBOOLEAN Enabled);
 
-typedef NTSYSAPI NTSTATUS(NTAPI* _NtOpenProcess)(
-    PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess,
-    POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);
+typedef NTSTATUS(NTAPI* _NtOpenProcess)(PHANDLE ProcessHandle,
+                                        ACCESS_MASK DesiredAccess,
+                                        POBJECT_ATTRIBUTES ObjectAttributes,
+                                        PCLIENT_ID ClientId);
 
 typedef NTSTATUS(NTAPI* _NtQuerySystemInformation)(
     ULONG
@@ -150,7 +149,7 @@ class ProcessManager {
   HWND GetWindowHandleFromProcessId(DWORD ProcessId) noexcept;
   //bool IsActive() noexcept;
   template <typename ReadType>
-  inline bool ReadMemory(DWORD64 Address, ReadType& Value, int Size) noexcept {
+  inline bool ReadMemory(DWORD64 Address, ReadType& Value, size_t Size) noexcept {
 #ifdef USERMODE
     IS_INVALID(hProcess);
 #endif

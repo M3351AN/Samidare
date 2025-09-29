@@ -1,9 +1,5 @@
-﻿#include "Offsets.h"
-
-#include <filesystem>
-#include <fstream>
-#include <nlohmann/json.hpp>
-#include <string>
+﻿#include "pch.h"
+#include "Offsets.h"
 
 #include "Functions/config.h"
 #include "UkiaStuff.h"
@@ -128,13 +124,13 @@ bool Offset::UpdateOffsets() {
                       {currentDir + "\\" + interfaceFileName,
                        offsetsDir + interfaceFileName, "interfaces.json"}};
 
-  bool anyCopied = false;
+  // bool anyCopied = false;
   for (const auto& file : files) {
     if (fs::exists(file.src)) {
       try {
         fs::copy_file(file.src, file.dst, fs::copy_options::overwrite_existing);
         printf(XorStr("Copied and overwrote %s\n"), file.name);
-        anyCopied = true;
+        // anyCopied = true;
       } catch (const std::exception& e) {
         printf(XorStr("Error copying %s: %s\n"), file.name, e.what());
       }
@@ -144,8 +140,8 @@ bool Offset::UpdateOffsets() {
   // 检查目标文件是否都存在
   if (!(fs::exists(files[0].dst) && fs::exists(files[1].dst) &&
         fs::exists(files[2].dst) && fs::exists(files[3].dst))) {
-    printf(
-        XorStr("Failed to locate all offsets file. Please visit "
+    printf("%s",
+           XorStr("Failed to locate all offsets file. Please visit "
                "https://github.com/a2x/cs2-dumper/tree/main/output to get "
                "latest offsets.json & buttons.json & client_dll.json & "
                "interfaces.json\n"));

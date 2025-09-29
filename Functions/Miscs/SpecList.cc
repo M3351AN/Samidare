@@ -1,15 +1,8 @@
-#pragma once
+﻿#include "pch.h"
 #include "SpecList.h"
 
-#include <chrono>
-#include <ctime>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <utility>
-
 #include "../../UkiaStuff.h"
-#include "..\config.h"
+#include "../config.h"
 
 namespace SpecList {
 
@@ -41,11 +34,11 @@ void RenderWindow(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) {
     ImGui::SetCursorPosY(22);
     for (int index = 0; index < ValidEntity.size(); index++) {
       CEntity Entity = ValidEntity[index].first;
-      DWORD64 EntityAddress = ValidEntity[index].second;
+      // DWORD64 EntityAddress = ValidEntity[index].second;
 
       if (Entity.Controller.IsSpec) {
         const char* Name = (Entity.Controller.PlayerName).c_str();
-        ImGui::Text(Name);
+        ImGui::Text("%s", Name);
       }
       }
   }

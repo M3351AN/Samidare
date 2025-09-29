@@ -1,4 +1,4 @@
-#ifndef EMITTER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef EMITTER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define EMITTER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -15,12 +15,12 @@
 #include <string>
 #include <type_traits>
 
-#include "yaml-cpp/binary.h"
-#include "yaml-cpp/dll.h"
-#include "yaml-cpp/emitterdef.h"
-#include "yaml-cpp/emittermanip.h"
-#include "yaml-cpp/null.h"
-#include "yaml-cpp/ostream_wrapper.h"
+#include "../yaml-cpp/binary.h"
+#include "../yaml-cpp/dll.h"
+#include "../yaml-cpp/emitterdef.h"
+#include "../yaml-cpp/emittermanip.h"
+#include "../yaml-cpp/null.h"
+#include "../yaml-cpp/ostream_wrapper.h"
 
 namespace YAML {
 class Binary;

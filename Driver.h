@@ -19,7 +19,7 @@ class _driver {
   HANDLE _driver_handle;
   UINT64 _processid;
   UINT64 _cur_processid;
-  ULONG64 _dlladdress;
+  // ULONG64 _dlladdress;
 
 // request codes
 #define DRIVER_READVM 0xCAFE1
@@ -43,7 +43,7 @@ class _driver {
     for (size_t i = 0; i < len; i++) {
       size_t blockIndex = i / 8;
       size_t posInBlock = i % 8;
-      int shift = 8 * (7 - posInBlock);
+      int shift = static_cast<int>(8 * (7 - posInBlock));
       fs->blocks[blockIndex] |= ((uint64_t)(unsigned char)str[i]) << shift;
     }
   }
@@ -121,7 +121,7 @@ class _driver {
 
   void readsize(const uintptr_t address, const void* buffer,
                 const size_t size) {
-    readvm(_processid, address, uintptr_t(buffer), size);
+    readvm(static_cast<uint32_t>(_processid), address, uintptr_t(buffer), size);
   }
 
   template <typename T>

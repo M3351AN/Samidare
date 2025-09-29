@@ -1,7 +1,6 @@
-#pragma once
+﻿#pragma once
 
-#include <math.h>
-#include <stdlib.h>
+#include "pch.h"
 
 #define Assert(_exp) ((void)0)
 

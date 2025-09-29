@@ -1,11 +1,5 @@
-#include <algorithm>
-#include <chrono>
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include <mutex>
-#include "miniz.h"
-#include "vector.h"
+﻿#include "pch.h"
+#include "./vector.h"
 // credits tni & learn_more (www.unknowncheats.me/forum/3868338-post34.html)
 #define INRANGE(x, a, b) (x >= a && x <= b)
 #define getBits(x) \
@@ -60,7 +54,7 @@ struct Triangle {
 
     if (a > -EPSILON && a < EPSILON) return false;  // 光线与三角形平行，不相交
 
-    f = 1.0 / a;
+    f = 1.f / a;
     s = ray_origin - p1;
     u = f * s.Dot(h);
 

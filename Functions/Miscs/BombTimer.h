@@ -1,11 +1,6 @@
-#pragma once
-#include <chrono>
-#include <iostream>
-#include <utility>
-#include <sstream>
-#include <ctime>
-#include <string>
-#include "..\CS2x64.h"
+﻿#pragma once
+#include "pch.h"
+#include "../../CS2x64.h"
 
 namespace BombTimer
 {

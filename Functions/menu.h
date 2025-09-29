@@ -1,4 +1,24 @@
-#include <string>
+ï»¿// Copyright (c) 2025 æ¸Ÿé›². All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/1ee25fbd5318d178d15924046fa2060e765b2f66/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: menu.h
+// Author: æ¸Ÿé›²(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains the menu rendering function and some helper functions.
+//
+// -----------------------------------------------------------------------------
+#pragma once
+#ifndef MENU_H_
+#define MENU_H_
+#include "pch.h"
 
 #include "../CS2x64.h"
 #include "../UkiaStuff.h"
@@ -247,7 +267,7 @@ inline void DrawMenu() {
   ImGuiIO& io = ImGui::GetIO();
   ImGuiStyle& style = ImGui::GetStyle();
   if (!config::ShowMenu) return;
-  const ImVec2 vecScreenSize = io.DisplaySize;
+  // const ImVec2 vecScreenSize = io.DisplaySize;
 
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(720, 365));
 
@@ -262,8 +282,8 @@ inline void DrawMenu() {
                    ImGuiWindowFlags_NoCollapse);
 
   const ImVec2 vecMenuPos = ImGui::GetWindowPos();
-  const ImVec2 vecMenuSize = ImGui::GetWindowSize();
-  ImDrawList* pDrawList = ImGui::GetWindowDrawList();
+  // const ImVec2 vecMenuSize = ImGui::GetWindowSize();
+  // ImDrawList* pDrawList = ImGui::GetWindowDrawList();
 
   ImGui::BeginTabBar(XorStr("##Tabs"));
 #ifdef _DEBUG
@@ -301,7 +321,7 @@ inline void DrawMenu() {
       ImVec2 StartPos = ImGui::GetCursorScreenPos();
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
                           ImVec2(style.FramePadding.x, 0));
-      ImGui::Image((ImTextureID)global::Zekamashi, ImVec2{192, 260},
+      ImGui::Image((ImTextureID)global::zekamashi_texture, ImVec2{192, 260},
                    ImVec2{0, 0}, ImVec2{1, 1});
       ImGui::GetWindowDrawList()->AddLine(
           ImVec2(StartPos.x + 100, StartPos.y + 55),
@@ -424,7 +444,7 @@ inline void DrawMenu() {
         ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3,
                ImGui::GetWindowHeight() - 10.f -
                    (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
-    static float flOverlayChildSize = 0.f;
+    // static float flOverlayChildSize = 0.f;
 
     ImGui::BeginChild(LangSettings::ChildESP.c_str(), child_size);
     {
@@ -438,7 +458,7 @@ inline void DrawMenu() {
       ImGui::Checkbox(LangSettings::SwitchHealthBar.c_str(), &config::ESPHealth);
       ImGui::PopStyleVar();
 
-      flOverlayChildSize = ImGui::GetCursorPosY() + style.ItemSpacing.y;
+      // flOverlayChildSize = ImGui::GetCursorPosY() + style.ItemSpacing.y;
     }
     ImGui::EndChild();
 
@@ -539,7 +559,7 @@ inline void DrawMenu() {
       ImGui::Text(LangSettings::TextBuildVersion.c_str(),
                   std::to_string(CS_VERSION).c_str());
       ImGui::Text(LangSettings::TextCurrentGameVersion.c_str(),
-                  std::to_string(Vars::GameVersion).c_str());
+                  std::to_string(gamevars::GameVersion).c_str());
 #ifdef _MSC_VER
 #ifndef __clang__
       ImGui::Text((LangSettings::TextCompiler + XorStr(" MSVC %s")).c_str(),
@@ -557,7 +577,7 @@ inline void DrawMenu() {
                   std::to_string(__clang_major__).c_str());
 #endif
       ImGui::Text(LangSettings::TextLicenceToUser.c_str(),
-                  global::userName.c_str());
+                  global::user_name.c_str());
       ImGui::TextUnformatted(LangSettings::textfortranslator.c_str());
       ImGui::PopStyleVar();
     }
@@ -565,7 +585,7 @@ inline void DrawMenu() {
 
     ImGui::SameLine();
 
-    MyConfigSaver::UpdateConfigFiles();
+    configsaver::UpdateConfigFiles();
     ImGui::BeginChild(LangSettings::ChildConfigList.c_str(), child_size);
     {
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
@@ -577,69 +597,74 @@ inline void DrawMenu() {
 
       ImGui::Columns(columns, NULL, false);
 
-      for (const auto& [filename, modiTimeStr, author] : configFiles) {
-        ImGui::PushID(filename.c_str());
+      for (const auto& [file_name, modify_time_string, author_name] :
+           configsaver::configFiles) {
+        ImGui::PushID(file_name.c_str());
         ImGui::BeginChild(
-            (XorStr("##") + filename).c_str(), ImVec2(itemWidth - 10, 85), true,
+            (XorStr("##") + file_name).c_str(), ImVec2(itemWidth - 10, 85),
+            true,
             ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
         {
           ImGui::SetCursorPos(ImVec2(5.f, 3.f));
-          std::string configname = filename;
+          std::string configname = file_name;
           size_t pos = configname.find_last_of('.');
           if (pos != std::string::npos) {
             configname.erase(pos);
           }
           ImGui::TextUnformatted(configname.c_str());
-          ImGui::TextUnformatted(modiTimeStr.c_str());
+          ImGui::TextUnformatted(modify_time_string.c_str());
           ImGui::Text(LangSettings::TextConfigAuthor.c_str(),
-                      author.empty() ? XorStr("Akaza Akari") : author.c_str());
+                      author_name.empty() ? XorStr("Akaza Akari")
+                                          : author_name.c_str());
 
-          if (selectedConfigFile == filename) {
+          if (configsaver::selectedConfigFile == file_name) {
             if (ImGui::Button(LangSettings::ButtonSave.c_str())) {
-              MyConfigSaver::SaveConfig(filename, configAuthorBuffer);
+              configsaver::SaveConfig(file_name, configAuthorBuffer);
             }
             ImGui::SameLine();
             if (ImGui::Button(LangSettings::ButtonReLoad.c_str())) {
-              MyConfigSaver::LoadConfig(filename);
+              configsaver::LoadConfig(file_name);
             }
           } else {
             if (ImGui::Button(LangSettings::ButtonLoad.c_str())) {
-              MyConfigSaver::LoadConfig(filename);
-              selectedConfigFile = filename;
+              configsaver::LoadConfig(file_name);
+              configsaver::selectedConfigFile = file_name;
             }
           }
           ImGui::SameLine();
           if (ImGui::Button(LangSettings::ButtonDelete.c_str())) {
-            deletePendingFile = filename;
+            configsaver::deletePendingFile = file_name;
             ImGui::OpenPopup(XorStr("##deleteConfirm"));
           }
           if (ImGui::BeginPopup(XorStr("##deleteConfirm"))) {
             ImGui::Text(LangSettings::TextDeleteConfirm.c_str(),
-                        deletePendingFile.c_str());
+                        configsaver::deletePendingFile.c_str());
             if (ImGui::Button(LangSettings::ButtonYes.c_str())) {
-              std::string fullPath = config::path + "\\" + deletePendingFile;
+              std::string fullPath =
+                  config::path + "\\" + configsaver::deletePendingFile;
               std::remove(fullPath.c_str());
-              deletePendingFile.clear();
+              configsaver::deletePendingFile.clear();
               ImGui::CloseCurrentPopup();
             }
             ImGui::SameLine();
             if (ImGui::Button(LangSettings::ButtonNo.c_str())) {
-              deletePendingFile.clear();
+              configsaver::deletePendingFile.clear();
               ImGui::CloseCurrentPopup();
             }
             ImGui::EndPopup();
           }
         }
         ImGui::EndChild();
-        if (ImGui::IsItemClicked() && selectedConfigFile != filename) {
-          MyConfigSaver::LoadConfig(filename);
-          selectedConfigFile = filename;
+        if (ImGui::IsItemClicked() &&
+            configsaver::selectedConfigFile != file_name) {
+          configsaver::LoadConfig(file_name);
+          configsaver::selectedConfigFile = file_name;
         }
         bool hovered = ImGui::IsItemHovered();
         ImVec2 p_min = ImGui::GetItemRectMin();
         ImVec2 p_max = ImGui::GetItemRectMax();
         ImU32 border_color =
-            (selectedConfigFile == filename)
+            (configsaver::selectedConfigFile == file_name)
                 ? ImGui::GetColorU32(ImGuiCol_FrameBgActive)
                 : (hovered ? ImGui::GetColorU32(ImGuiCol_FrameBgHovered)
                            : ImGui::GetColorU32(ImGuiCol_FrameBg));
@@ -670,7 +695,7 @@ inline void DrawMenu() {
       ImGui::Combo(
           LangSettings::ComboStyle.c_str(), &config::Style,
           XorStr("Lumine\0Aimstar\0ImGui Classic\0ImGui Dark\0ImGui Light\0"));
-      MyConfigSaver::RenderLangsFileCombo();
+      configsaver::RenderLangsFileCombo();
       const float CursorX = 10.f;
       const float ComponentWidth = ImGui::GetColumnWidth() -
                                    ImGui::GetStyle().ItemSpacing.x -
@@ -681,25 +706,26 @@ inline void DrawMenu() {
       }
       if (ImGui::BeginPopup(XorStr("##createConfirm"))) {
         ImGui::SetNextItemWidth(ComponentWidth);
-        ImGui::Text(LangSettings::TextNewConfigName.c_str());
+        ImGui::Text("%s", LangSettings::TextNewConfigName.c_str());
         ImGui::InputText(XorStr("##newConfigName"), configNameBuffer,
                          sizeof(configNameBuffer));
 
         ImGui::SetNextItemWidth(ComponentWidth);
-        ImGui::Text(LangSettings::TextConfigAuthorName.c_str());
+        ImGui::Text("%s", LangSettings::TextConfigAuthorName.c_str());
         ImGui::InputText(XorStr("##authorName"), configAuthorBuffer,
                          sizeof(configAuthorBuffer));
         std::string configFileName =
             std::string(configNameBuffer) + XorStr(".yaml");
-        bool exists = std::any_of(configFiles.begin(), configFiles.end(),
+        bool exists = std::any_of(configsaver::configFiles.begin(),
+                        configsaver::configFiles.end(),
                                   [&](const auto& item) {
                                     return std::get<0>(item) == configFileName;
                                   });
 
         if (!exists && !configFileName.empty()) {
           if (ImGui::Button(LangSettings::ButtonCreate.c_str())) {
-            MyConfigSaver::SaveConfig(configFileName, configAuthorBuffer);
-            selectedConfigFile = configFileName;
+            configsaver::SaveConfig(configFileName, configAuthorBuffer);
+            configsaver::selectedConfigFile = configFileName;
           }
         } else {
           ImGui::BeginDisabled();
@@ -727,15 +753,15 @@ inline void DrawMenu() {
         ImGui::Checkbox(XorStr("Thai"), &LangSettings::thai);
 
         if (ImGui::Button(LangSettings::ButtonApply.c_str())) {
-          global::fontUpdatePending = true;
+          global::is_font_update_pending = true;
         }
         ImGui::EndPopup();
       }
       if (ImGui::Button(LangSettings::ButtonUnhook.c_str())) {
-        global::isRunning = false;
+        global::is_running = false;
       }
 
-      ImGui::Text(XorStr("Menukey [DEL]"));
+      ImGui::Text("%s", XorStr("Menukey [DEL]"));
       ImGui::PopStyleVar();
     }
     ImGui::EndChild();
@@ -819,12 +845,12 @@ inline void DrawMenu() {
                          interpolationFactorY * (mousePos.y - vecMenuPos.y));
   ImVec2 interpolatedPos{center.x - factor.x, center.y - factor.y};
 
-  // ¼ÆËã interpolatedPos µ½Ô²ÐÄµÄ¾àÀë
+  // è®¡ç®— interpolatedPos åˆ°åœ†å¿ƒçš„è·ç¦»
   float dx = interpolatedPos.x - center.x;
   float dy = interpolatedPos.y - center.y;
   float distance = sqrt(dx * dx + dy * dy);
 
-  // Èç¹û¾àÀë³¬¹ý°ë¾¶£¬Ôòµ÷Õû interpolatedPos
+  // å¦‚æžœè·ç¦»è¶…è¿‡åŠå¾„ï¼Œåˆ™è°ƒæ•´ interpolatedPos
   if (distance > radius) {
     float scale = radius / distance;
     factor.x = -dx * scale;
@@ -848,7 +874,8 @@ inline void DrawMenu() {
                    ImGuiWindowFlags_::ImGuiWindowFlags_NoNav);
   {
     ImGui::SetCursorPos(ImVec2{50, 25});
-    ImGui::Image((ImTextureID)global::Shigure, ImVec2{258, 349}, ImVec2{0, 0},
+    ImGui::Image((ImTextureID)global::shigure_texture, ImVec2{258, 349},
+                 ImVec2{0, 0},
                  ImVec2{1, 1});
 
     const ImVec2 vecWindPos = ImGui::GetWindowPos();
@@ -882,9 +909,9 @@ inline void DrawMenu() {
       if (config::ESPName)
         DrawNameTag(ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.w),
                     ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.y),
-                    (char*)(XorStr("Not ") + global::userName).c_str());
-      float t = ImGui::GetTime();
-      int valueHealth = std::abs(std::sin(t)) * 120.f;
+                    (char*)(XorStr("Not ") + global::user_name).c_str());
+      float t = static_cast<float>(ImGui::GetTime());
+      int valueHealth = static_cast<int>(std::abs(std::sin(t)) * 120.f);
       if (config::ESPHealth)
         DrawHealthBar(ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.w),
                       ImVec2((vecBox.x + vecBox.z) * 0.5f, vecBox.y),
@@ -892,10 +919,11 @@ inline void DrawMenu() {
     }
     ImGui::SetCursorPos(ImVec2{15 + textoffset, 250 - textoffset} * 1.f +
                         factor * 0.3351f);
-    ImGui::TextColored(ImColor(70, 50, 240, 200), XorStr("NOT FOR SELLING!!"));
+    ImGui::TextColored(ImColor(70, 50, 240, 200), "%s",
+                       XorStr("NOT FOR SELLING!!"));
     ImGui::SetCursorPos(ImVec2{15 + textoffset, 295 - textoffset} * 1.f +
                         factor * 0.1337f);
-    ImGui::TextColored(ImColor(70, 50, 240, 200),
+    ImGui::TextColored(ImColor(70, 50, 240, 200), "%s",
                        XorStr("Samidare for Counter-Strike 2"));
     ImGui::SetCursorPos(ImVec2{15 + textoffset, 335 - textoffset} * 1.f +
                         factor * 0.2024f);
@@ -903,20 +931,21 @@ inline void DrawMenu() {
                        __DATE__, __TIME__);
     ImGui::SetCursorPos(ImVec2{15 - textoffset, 250 + textoffset} * 1.f +
                         factor * 0.3351f);
-    ImGui::TextColored(ImColor(235, 5, 85, 200), XorStr("NOT FOR SELLING!!"));
+    ImGui::TextColored(ImColor(235, 5, 85, 200), "%s",
+                       XorStr("NOT FOR SELLING!!"));
     ImGui::SetCursorPos(ImVec2{15 - textoffset, 295 + textoffset} * 1.f +
                         factor * 0.1337f);
-    ImGui::TextColored(ImColor(235, 5, 85, 200),
+    ImGui::TextColored(ImColor(235, 5, 85, 200), "%s",
                        XorStr("Samidare for Counter-Strike 2"));
     ImGui::SetCursorPos(ImVec2{15 - textoffset, 335 + textoffset} * 1.f +
                         factor * 0.2024f);
     ImGui::TextColored(ImColor(235, 5, 85, 200), XorStr("Build: %s %s"),
                        __DATE__, __TIME__);
     ImGui::SetCursorPos(ImVec2{15, 250} * 1.f + factor * 0.3351f);
-    ImGui::TextColored(ImColor(245, 245, 245, 245),
+    ImGui::TextColored(ImColor(245, 245, 245, 245), "%s",
                        XorStr("NOT FOR SELLING!!"));
     ImGui::SetCursorPos(ImVec2{15, 295} * 1.f + factor * 0.1337f);
-    ImGui::TextColored(ImColor(245, 245, 245, 245),
+    ImGui::TextColored(ImColor(245, 245, 245, 245), "%s",
                        XorStr("Samidare for Counter-Strike 2"));
     ImGui::SetCursorPos(ImVec2{15, 335} * 1.f + factor * 0.2024f);
     ImGui::TextColored(ImColor(245, 245, 245, 245), XorStr("Build: %s %s"),
@@ -925,3 +954,4 @@ inline void DrawMenu() {
   ImGui::End();
 }
 }  // namespace Menu
+#endif  // MENU_H_

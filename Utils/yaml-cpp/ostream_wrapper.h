@@ -1,4 +1,4 @@
-#ifndef OSTREAM_WRAPPER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef OSTREAM_WRAPPER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define OSTREAM_WRAPPER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "yaml-cpp/dll.h"
+#include "../yaml-cpp/dll.h"
 
 namespace YAML {
 class YAML_CPP_API ostream_wrapper {

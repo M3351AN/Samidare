@@ -1,15 +1,28 @@
+ï»¿// Copyright (c) 2025 æ¸Ÿé›². All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/1ee25fbd5318d178d15924046fa2060e765b2f66/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: CS2x64.cc
+// Author: æ¸Ÿé›²(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file mainly manages the processing of game data in the Samidare project.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "CS2x64.h"
-
-#include <cstring>
-#include <memory>
 
 #include "Offsets.h"
 #include "UkiaStuff.h"
 #include "Utils/XorStr.h"
 #include "Utils/vphys_parser/ray_trace.h"
 #include "maths.h"
-#pragma comment(lib, "d3d9.lib")
-#pragma comment(lib, "dwmapi.lib")
 
 inline size_t strlen_imp(const char* str) {
   size_t length = 0;
@@ -33,7 +46,7 @@ DWORD64 GetConvar(const char* name) {
   DWORD64 objs;
   Ukia::ProcessMgr.ReadMemory(cvar_interface + 64, objs);
 
-  DWORD convar_length = strlen_imp(name);
+  DWORD convar_length = static_cast<DWORD>(strlen_imp(name));
 
   DWORD max_index;
   Ukia::ProcessMgr.ReadMemory(cvar_interface + 160, max_index);
@@ -217,16 +230,13 @@ bool PlayerController::GetSpec() {
       obsTarget);
   uintptr_t obsPawnHandle = GethPawn(obsTarget);
 
-  if (obsPawnHandle == Vars::LocalPawnAddress) {
+  if (obsPawnHandle == gamevars::LocalPawnAddress) {
     this->IsSpec = true;
   } else
     this->IsSpec = false;
   return true;
 }
 DWORD64 PlayerController::GetPlayerPawnAddress() {
-  DWORD64 EntityPawnListEntry = 0;
-  DWORD64 EntityPawnAddress = 0;
-
   std::memcpy(
       &this->Pawn,
       this->ControllerBuffer.data() + Offset::CCSPlayerController.m_hPlayerPawn,
@@ -236,8 +246,6 @@ DWORD64 PlayerController::GetPlayerPawnAddress() {
 }
 
 DWORD64 PlayerController::GetPlayerhPawnAddress() {
-  DWORD64 EntityPawnListEntry = 0;
-  DWORD64 EntityPawnAddress = 0;
   std::memcpy(
       &this->Pawn,
       this->ControllerBuffer.data() + Offset::CBasePlayerController.m_hPawn,
@@ -299,7 +307,7 @@ bool PlayerPawn::GetCameraPos() {
 }
 bool PlayerPawn::GetWeaponName() {
   DWORD64 WeaponNameAddress = 0;
-  char Buffer[256]{};
+  // char Buffer[256]{};
 
   WeaponNameAddress = Ukia::ProcessMgr.TraceAddress(
       this->Address + Offset::C_CSPlayerPawnBase.m_pClippingWeapon,
@@ -478,14 +486,14 @@ bool PlantedC4::GetBoomRemaining() {
   if (!this->isPlanted)
     this->boomRemaining = 0;
   else
-    this->boomRemaining = this->boomTime - Vars::CurTime;
+    this->boomRemaining = this->boomTime - gamevars::CurTime;
   return true;
 }
 bool PlantedC4::GetDefuseRemaining() {
   if (!this->isDefusing)
     this->defuseRemaining = 0;
   else
-    this->defuseRemaining = this->defuseTime - Vars::CurTime;
+    this->defuseRemaining = this->defuseTime - gamevars::CurTime;
   return true;
 }
 bool PlantedC4::GetBombSite() {
@@ -522,7 +530,7 @@ bool PlantedC4::UpdatePlantedC4(const DWORD64& PlantedC4Address) {
   return true;
 }
 
-// ¸üÐÂÊý¾Ý
+// æ›´æ–°æ•°æ®
 bool CEntity::UpdateController(const DWORD64& PlayerControllerAddress) {
   if (PlayerControllerAddress == 0) return false;
   this->Controller.Address = PlayerControllerAddress;
@@ -575,30 +583,30 @@ bool CEntity::UpdatePawn(const DWORD64& PlayerPawnAddress) {
 }
 
 bool CEntity::IsEnemy() {
-  if (!config::TeamCheck || Vars::FreeFire) return true;
-  if (this->Controller.TeamID == Vars::LocalEntity.Controller.TeamID)
+  if (!config::TeamCheck || gamevars::FreeFire) return true;
+  if (this->Controller.TeamID == gamevars::LocalEntity.Controller.TeamID)
     return false;
-  if (this->Pawn.TeamID == Vars::LocalEntity.Pawn.TeamID) return false;
+  if (this->Pawn.TeamID == gamevars::LocalEntity.Pawn.TeamID) return false;
   return true;
 }
 
 bool CEntity::IsVisible() {
   if (!this->IsInScreen()) return false;
-  if (Vars::IsMapFileExist) {
-    bool Visible;
-    std::lock_guard<std::mutex> lock(Vars::VisibleEntityAddrMutex);
+  if (gamevars::IsMapFileExist) {
+    std::lock_guard<std::mutex> lock(gamevars::VisibleEntityAddrMutex);
     bool ParserVisible =
-        std::find(Vars::VisibleEntityAddr.begin(),
-                  Vars::VisibleEntityAddr.end(),
-                  this->Controller.Address) != Vars::VisibleEntityAddr.end();
-    bool SpottedVisible = this->Pawn.bSpottedByMask;
+        std::find(gamevars::VisibleEntityAddr.begin(),
+                  gamevars::VisibleEntityAddr.end(),
+                                   this->Controller.Address) !=
+                         gamevars::VisibleEntityAddr.end();
+    // bool SpottedVisible = this->Pawn.bSpottedByMask;
     return (ParserVisible /* || SpottedVisible*/);
   } else {
     return this->Pawn.bSpottedByMask;
   }
 }
 
-namespace Vars {
+namespace gamevars {
 
 map_loader ParsingMap;
 std::string ParsingMapName = {};
@@ -635,11 +643,11 @@ void ParserRun() noexcept {
     if (!Entity.ESPAlive()) continue;
 
     if (!Entity.IsInScreen()) continue;
-    Vector r_start = Vector(Vars::LocalEntity.Pawn.CameraPos.x,
-                            Vars::LocalEntity.Pawn.CameraPos.y,
-                            Vars::LocalEntity.Pawn.CameraPos.z);
+    Vector r_start = Vector(LocalEntity.Pawn.CameraPos.x,
+                            LocalEntity.Pawn.CameraPos.y,
+                            LocalEntity.Pawn.CameraPos.z);
     Vector r_end = Vector(Entity.Pawn.Pos.x, Entity.Pawn.Pos.y,
-                          Entity.Pawn.Pos.z + 0.45 * Entity.Pawn.Height);
+                          Entity.Pawn.Pos.z + 0.45f * Entity.Pawn.Height);
     if (!ParsingMap.is_visible(r_start, r_end)) continue;
     tempVisibleEntityAddr.push_back(EntityAddress);
   }
@@ -690,7 +698,7 @@ void UpdateDataSlow() {
   TickCount = Global_Vars.m_tickcount;
   FrameTime = Global_Vars.m_frametime;
   UpdateIntervals();
-  GetConvarValue(XorStr("mp_teammates_are_enemies"), Vars::FreeFire);
+  GetConvarValue(XorStr("mp_teammates_are_enemies"), FreeFire);
   InGameCheck();
   GetSensitivity();
   if (!IsInGame) return;
@@ -704,7 +712,7 @@ void UpdateDataSlow() {
   if (!PlantedBomb.UpdatePlantedC4(PlantedC4Address)) return;
 }
 void UpdateData() {
-  if (!global::isFocused) return;
+  if (!global::isFocused()) return;
   if (!Ukia::ProcessMgr.ReadMemory(gGame.GetMatrixAddress(), gGame.View.Matrix,
                                    64))
     return;
@@ -719,8 +727,8 @@ void UpdateData() {
   if (!LocalEntity.UpdateController(LocalControllerAddress)) return;
   if (!LocalEntity.UpdatePawn(LocalPawnAddress) && !config::WorkInSpec) return;
 
-  if (global::userName == std::getenv(XorStr("USERNAME")))
-    global::userName = LocalEntity.Controller.PlayerName;
+  if (global::user_name == std::getenv(XorStr("USERNAME")))
+    global::user_name = LocalEntity.Controller.PlayerName;
   if (!IsInGame) {
     std::lock_guard<std::mutex> lock(validEntityMutex);
     ValidEntity.clear();
@@ -763,21 +771,23 @@ void UpdateData() {
 
 void UpdateIntervals() {
   RenderInterval =
-      config::RenderInterval ? config::RenderInterval : std::floor(FrameTime);
+      config::RenderInterval ? config::RenderInterval : static_cast<int>(std::floor(FrameTime));
   GlobalVarsInterval = config::GlobalVarsInterval ? config::GlobalVarsInterval
-                                                  : std::floor(FrameTime);
-  EntityInterval =
-      config::EntityInterval ? config::EntityInterval : std::floor(FrameTime);
-  ParserInterval =
-      config::ParserInterval ? config::ParserInterval : std::floor(FrameTime);
-  AimInterval =
-      config::AimInterval ? config::AimInterval : std::floor(FrameTime);
-  ViewInterval =
-      config::ViewInterval ? config::ViewInterval : std::floor(FrameTime);
+                           : static_cast<int>(std::floor(FrameTime));
+  EntityInterval = config::EntityInterval
+                       ? config::EntityInterval
+                       : static_cast<int>(std::floor(FrameTime));
+  ParserInterval = config::ParserInterval
+                       ? config::ParserInterval
+                       : static_cast<int>(std::floor(FrameTime));
+  AimInterval = config::AimInterval ? config::AimInterval
+                                    : static_cast<int>(std::floor(FrameTime));
+  ViewInterval = config::ViewInterval ? config::ViewInterval
+                                      : static_cast<int>(std::floor(FrameTime));
   MemoryInterval =
-      config::MemoryInterval ? config::MemoryInterval : std::floor(FrameTime);
+      config::MemoryInterval ? config::MemoryInterval : static_cast<int>(std::floor(FrameTime));
   NonMemoryInterval = config::NonMemoryInterval ? config::NonMemoryInterval
-                                                : std::floor(FrameTime);
+                                                : static_cast<int>(std::floor(FrameTime));
 }
 
 }  // namespace Vars

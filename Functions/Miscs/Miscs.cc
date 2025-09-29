@@ -1,12 +1,28 @@
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/1ee25fbd5318d178d15924046fa2060e765b2f66/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Misc.cc
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains misc functions.
+//
+// -----------------------------------------------------------------------------
+#include "pch.h"
 #include "Miscs.h"
-
-#include <mutex>
 
 namespace Sonar {
 struct SoundParams {
-  float frequency = 1000.0f;  // Ĭ��Ƶ��
-  float interval = 1000.0f;   // Ĭ�ϼ��(ms)
-  bool active = false;        // �Ƿ񼤻�
+  float frequency = 1000.0f;  // 默认频率
+  float interval = 1000.0f;   // 默认间隔(ms)
+  bool active = false;        // 是否激活
 };
 
 std::atomic<bool> running{true};
@@ -49,14 +65,14 @@ void FoundEnemy(
 
   std::ostringstream allinfo;
 
-  int centerX = static_cast<int>(global::screenSize.x * 0.5f);
-  int centerY = static_cast<int>(global::screenSize.y * 0.5f);
+  int centerX = static_cast<int>(global::screen_size.x * 0.5f);
+  int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   CEntity* best_enemy = nullptr;
   float min_center_dist_sq = FLT_MAX;
   float min_3d_dist = FLT_MAX;
   Vector2 best_screen_pos;
   bool best_on_screen = false;
-  const Vector3& local_pos = Vars::LocalEntity.Pawn.CameraPos;
+  const Vector3& local_pos = gamevars::LocalEntity.Pawn.CameraPos;
   for (int index = 0; index < ValidEntity.size(); index++) {
     CEntity Entity = ValidEntity[index].first;
     if (!Entity.IsEnemy()) continue;
@@ -115,13 +131,13 @@ void FoundEnemy(
   }
 
   allinfo << "Local:\n"
-          << "Health: " << Vars::LocalEntity.Pawn.Health << " HP\n"
-          << "Team: " << Vars::LocalEntity.Pawn.TeamID << "\n"
+          << "Health: " << gamevars::LocalEntity.Pawn.Health << " HP\n"
+          << "Team: " << gamevars::LocalEntity.Pawn.TeamID << "\n"
           << "Pos: (" << local_pos.x << ", " << local_pos.y << ", "
           << local_pos.z << ")\n"
-          << "Flags: " << Vars::LocalEntity.Pawn.fFlags << "\n"
-          << "FOV: " << Vars::LocalEntity.Pawn.Fov << "\n\n";
-  global::infos = allinfo.str();
+          << "Flags: " << gamevars::LocalEntity.Pawn.fFlags << "\n"
+          << "FOV: " << gamevars::LocalEntity.Pawn.Fov << "\n\n";
+  global::gamedata_infos = allinfo.str();
   return;
 }
 
@@ -131,14 +147,14 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
   Sonar::SoundParams newParams;
   newParams.active = false;
 
-  int centerX = static_cast<int>(global::screenSize.x * 0.5f);
-  int centerY = static_cast<int>(global::screenSize.y * 0.5f);
+  int centerX = static_cast<int>(global::screen_size.x * 0.5f);
+  int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   CEntity* best_enemy = nullptr;
   float min_center_dist_sq = FLT_MAX;
   float min_3d_dist = FLT_MAX;
   Vector2 best_screen_pos;
   bool best_on_screen = false;
-  const Vector3& local_pos = Vars::LocalEntity.Pawn.CameraPos;
+  const Vector3& local_pos = gamevars::LocalEntity.Pawn.CameraPos;
 
   for (int index = 0; index < ValidEntity.size(); index++) {
     CEntity Entity = ValidEntity[index].first;
@@ -195,9 +211,9 @@ void SonarRun(std::vector<std::pair<CEntity, DWORD64>>& ValidEntity) noexcept {
 
 void PitchIndicator(CEntity& Local) noexcept {
   if (!config::PitchIndicator) return;
-  if (!Vars::IsInGame) return;
-  int centerX = static_cast<int>(global::screenSize.x * 0.5f);
-  int centerY = static_cast<int>(global::screenSize.y * 0.5f);
+  if (!gamevars::IsInGame) return;
+  int centerX = static_cast<int>(global::screen_size.x * 0.5f);
+  int centerY = static_cast<int>(global::screen_size.y * 0.5f);
   Vector3 ViewAngle;
   if (!gGame.GetViewAngles(ViewAngle)) return;
   float pitch = ViewAngle.x;
@@ -220,9 +236,9 @@ void PitchIndicator(CEntity& Local) noexcept {
           float verticalOffsetRatio =
               (pitchRadians / (actualFOV * (3.14159265f / 180.0f)));
 
-          float verticalOffset = verticalOffsetRatio * global::screenSize.y;
+          float verticalOffset = verticalOffsetRatio * global::screen_size.y;
 
-          screenPos.y = centerY - static_cast<int>(verticalOffset);
+          screenPos.y = static_cast<float>(centerY - static_cast<int>(verticalOffset));
         }
       }
     }
@@ -233,12 +249,12 @@ void PitchIndicator(CEntity& Local) noexcept {
   RGBA lineColor = {0, 255, 0, 255};
   int lineLength = 15;
   int thickness = 1;
-  DrawNewText(centerX - 3, centerY - 3, &lineColor, "^");
-  DrawLine(centerX - lineLength, dynamicY, centerX + lineLength - 20, dynamicY,
-           &lineColor, thickness);
-  DrawLine(centerX - lineLength + 20, dynamicY, centerX + lineLength, dynamicY,
-           &lineColor, thickness);
-  DrawNewText(centerX + lineLength + 5, dynamicY, &lineColor,
+  DrawNewText(centerX - 3.f, centerY - 3.f, &lineColor, "^");
+  DrawLine(static_cast<float>(centerX - lineLength), static_cast<float>(dynamicY), static_cast<float>(centerX + lineLength - 20), static_cast<float>(dynamicY),
+           &lineColor, static_cast<float>(thickness));
+  DrawLine(static_cast<float>(centerX - lineLength + 20), static_cast<float>(dynamicY), static_cast<float>(centerX + lineLength), static_cast<float>(dynamicY),
+           &lineColor, static_cast<float>(thickness));
+  DrawNewText(static_cast<float>(centerX + lineLength + 5), static_cast<float>(dynamicY), &lineColor,
               std::to_string(pitch).c_str());
 }
 inline void SendKey(WORD vk, bool bKeyDown) {

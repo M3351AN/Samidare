@@ -1,4 +1,4 @@
-#ifndef NODE_DETAIL_NODE_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef NODE_DETAIL_NODE_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define NODE_DETAIL_NODE_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -7,11 +7,11 @@
 #pragma once
 #endif
 
-#include "yaml-cpp/dll.h"
-#include "yaml-cpp/emitterstyle.h"
-#include "yaml-cpp/node/detail/node_ref.h"
-#include "yaml-cpp/node/ptr.h"
-#include "yaml-cpp/node/type.h"
+#include "../../dll.h"
+#include "../../emitterstyle.h"
+#include "../../node/detail/node_ref.h"
+#include "../../node/ptr.h"
+#include "../../node/type.h"
 #include <set>
 #include <atomic>
 

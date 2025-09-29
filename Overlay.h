@@ -1,14 +1,14 @@
-#pragma once
+﻿#pragma once
 #include <Windows.h>
 #include <d3d9.h>
 
 #include <iostream>
 #include <string>
 
-#include "Imgui/imgui.h"
-#include "ImGui/imgui_internal.h"
-#include "Imgui/imgui_impl_dx9.h"
-#include "Imgui/imgui_impl_win32.h"
+#include "./ImGui/imgui.h"
+#include "./ImGui/imgui_internal.h"
+#include "./ImGui/imgui_impl_dx9.h"
+#include "./ImGui/imgui_impl_win32.h"
 
 #define ABS(X) ((X < 0) ? (-X) : (X))
 #define BOX_OFFSET 20.f

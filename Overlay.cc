@@ -1,11 +1,10 @@
+ï»¿#include "pch.h"
 #include "Overlay.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "Utils/stb_image.h"
-#include <XorStr.h>
-#include <memory>
 #include "Functions/config.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "./Utils/stb_image.h"
 std::string string_To_UTF8(const std::string& str) noexcept {
   int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
   wchar_t* pwBuf = new wchar_t[nwLen + 1];
@@ -31,24 +30,24 @@ void DrawStrokeText(float x, float y, RGBA* color, const char* str,
   std::string utf_8_2 = string_To_UTF8(utf_8_1);
   drawlist->AddText(ImVec2(x, y - 1),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)),
+                        ImVec4(1 / 255.f, 1 / 255.f, 1 / 255.f, 255 / 255.f)),
                     utf_8_2.c_str());
   drawlist->AddText(ImVec2(x, y + 1),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)),
+                        ImVec4(1 / 255.f, 1 / 255.f, 1 / 255.f, 255 / 255.f)),
                     utf_8_2.c_str());
   drawlist->AddText(ImVec2(x - 1, y),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)),
+                        ImVec4(1 / 255.f, 1 / 255.f, 1 / 255.f, 255 / 255.f)),
                     utf_8_2.c_str());
   drawlist->AddText(ImVec2(x + 1, y),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)),
+                        ImVec4(1 / 255.f, 1 / 255.f, 1 / 255.f, 255 / 255.f)),
                     utf_8_2.c_str());
   drawlist->AddText(ImVec2(x, y),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(color->R / 255.0, color->G / 255.0,
-                               color->B / 255.0, color->A / 255.0)),
+                        ImVec4(color->R / 255.f, color->G / 255.f,
+                               color->B / 255.f, color->A / 255.f)),
                     utf_8_2.c_str());
 }
 
@@ -59,8 +58,8 @@ void DrawNewText(float x, float y, RGBA* color, const char* str,
   std::string utf_8_2 = string_To_UTF8(utf_8_1);
   drawlist->AddText(ImVec2(x, y),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(color->R / 255.0, color->G / 255.0,
-                               color->B / 255.0, color->A / 255.0)),
+                        ImVec4(color->R / 255.f, color->G / 255.f,
+                               color->B / 255.f, color->A / 255.f)),
                     utf_8_2.c_str());
 }
 
@@ -68,8 +67,8 @@ void DrawRect(float x, float y, float w, float h, RGBA* color, float thickness,
               ImDrawList* drawlist) noexcept {
   drawlist->AddRect(ImVec2(x, y), ImVec2(x + w, y + h),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(color->R / 255.0, color->G / 255.0,
-                               color->B / 255.0, color->A / 255.0)),
+                        ImVec4(color->R / 255.f, color->G / 255.f,
+                               color->B / 255.f, color->A / 255.f)),
                     0, 0, thickness);
 }
 
@@ -79,8 +78,8 @@ void DrawEspBox2D(Vector2 feet, Vector2 head, RGBA* color, float thickness,
   float height = feet.y - head.y;
   float pd = feet.x + t;
 
-  ImVec4 boxColor(color->R / 255.0f, color->G / 255.0f, color->B / 255.0f,
-                  color->A / 255.0f);
+  ImVec4 boxColor(color->R / 255.f, color->G / 255.f, color->B / 255.f,
+                  color->A / 255.f);
 
   // Calculate box position and draw the rectangle
   ImVec2 boxMin(head.x - (height / 2) / 2, head.y);
@@ -116,8 +115,8 @@ void DrawFilledRect(float x, float y, float w, float h, RGBA* color,
                     ImDrawList* drawlist) noexcept {
   drawlist->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + h),
                           ImGui::ColorConvertFloat4ToU32(
-                              ImVec4(color->R / 255.0, color->G / 255.0,
-                                     color->B / 255.0, color->A / 255.0)),
+                              ImVec4(color->R / 255.f, color->G / 255.f,
+                                     color->B / 255.f, color->A / 255.f)),
                           0, 0);
 }
 
@@ -125,16 +124,16 @@ void DrawCircleFilled(float x, float y, float radius, RGBA* color,
                       ImDrawList* drawlist) noexcept {
   drawlist->AddCircleFilled(ImVec2(x, y), radius,
                             ImGui::ColorConvertFloat4ToU32(
-                                ImVec4(color->R / 255.0, color->G / 255.0,
-                                       color->B / 255.0, color->A / 255.0)));
+                                ImVec4(color->R / 255.f, color->G / 255.f,
+                                       color->B / 255.f, color->A / 255.f)));
 }
 
-void DrawCircle(float x, float y, float radius, RGBA* color, float segments,
+void DrawCircle(float x, float y, float radius, RGBA* color, int segments,
                 ImDrawList* drawlist) noexcept {
   drawlist->AddCircle(ImVec2(x, y), radius,
                       ImGui::ColorConvertFloat4ToU32(
-                          ImVec4(color->R / 255.0, color->G / 255.0,
-                                 color->B / 255.0, color->A / 255.0)),
+                          ImVec4(color->R / 255.f, color->G / 255.f,
+                                 color->B / 255.f, color->A / 255.f)),
                       segments);
 }
 
@@ -143,8 +142,8 @@ void DrawTriangle(float x1, float y1, float x2, float y2, float x3, float y3,
                   float thickne, ImDrawList* drawlist) noexcept {
   drawlist->AddTriangle(ImVec2(x1, y1), ImVec2(x2, y2), ImVec2(x3, y3),
                         ImGui::ColorConvertFloat4ToU32(
-                            ImVec4(color->R / 255.0, color->G / 255.0,
-                                   color->B / 255.0, color->A / 255.0)),
+                            ImVec4(color->R / 255.f, color->G / 255.f,
+                                   color->B / 255.f, color->A / 255.f)),
                         thickne);
 }
 
@@ -153,8 +152,8 @@ void DrawTriangleFilled(float x1, float y1, float x2, float y2, float x3,
                         RGBA* color, ImDrawList* drawlist) noexcept {
   drawlist->AddTriangleFilled(ImVec2(x1, y1), ImVec2(x2, y2), ImVec2(x3, y3),
                               ImGui::ColorConvertFloat4ToU32(
-                                  ImVec4(color->R / 255.0, color->G / 255.0,
-                                         color->B / 255.0, color->A / 255.0)));
+                                  ImVec4(color->R / 255.f, color->G / 255.f,
+                                         color->B / 255.f, color->A / 255.f)));
 }
 
 void DrawLine(float x1, float y1, float x2, float y2, RGBA* color,
@@ -162,8 +161,8 @@ void DrawLine(float x1, float y1, float x2, float y2, RGBA* color,
               ImDrawList* drawlist) noexcept {
   drawlist->AddLine(ImVec2(x1, y1), ImVec2(x2, y2),
                     ImGui::ColorConvertFloat4ToU32(
-                        ImVec4(color->R / 255.0, color->G / 255.0,
-                               color->B / 255.0, color->A / 255.0)),
+                        ImVec4(color->R / 255.f, color->G / 255.f,
+                               color->B / 255.f, color->A / 255.f)),
                     thickness);
 }
 
@@ -202,8 +201,8 @@ void DrawHealthBar(Vector2 feet, Vector2 head, int curHealth, int maxHealth,
   drawlist->AddRectFilled(ImVec2(barX, barY),
                           ImVec2(barX + barWidth, barY + barHeight),
                           ImGui::ColorConvertFloat4ToU32(ImVec4(
-                              backColor->R / 255.0f, backColor->G / 255.0f,
-                              backColor->B / 255.0f, backColor->A / 255.0f)));
+                              backColor->R / 255.f, backColor->G / 255.f,
+                              backColor->B / 255.f, backColor->A / 255.f)));
 
   float healthRatio = (float)curHealth / (float)maxHealth;
   float healthHeight = barHeight * healthRatio;
@@ -212,8 +211,8 @@ void DrawHealthBar(Vector2 feet, Vector2 head, int curHealth, int maxHealth,
   drawlist->AddRectFilled(ImVec2(barX, healthTop),
                           ImVec2(barX + barWidth, barY + barHeight),
                           ImGui::ColorConvertFloat4ToU32(ImVec4(
-                              barColor->R / 255.0f, barColor->G / 255.0f,
-                              barColor->B / 255.0f, barColor->A / 255.0f)));
+                              barColor->R / 255.f, barColor->G / 255.f,
+                              barColor->B / 255.f, barColor->A / 255.f)));
 
   drawlist->AddRect(ImVec2(barX, barY),
                     ImVec2(barX + barWidth, barY + barHeight),
@@ -236,7 +235,7 @@ bool LoadTextureFromMemory(IDirect3DDevice9* device,
                            const unsigned char* image_data, size_t image_size,
                            IDirect3DTexture9** out_texture) noexcept {
   int width, height, channels;
-  unsigned char* data = stbi_load_from_memory(image_data, image_size, &width,
+  unsigned char* data = stbi_load_from_memory(image_data, static_cast<int>(image_size), &width,
                                               &height, &channels, 4);
   if (!data) return false;
 
@@ -458,8 +457,7 @@ int ImGuiKeyToVK(int imguiKey) {
     case ImGuiKey_LeftBracket:
       return VK_OEM_4;  // [
     case ImGuiKey_Backslash:
-      return VK_OEM_5;  // \
-
+      return VK_OEM_5;  // "\"
     case ImGuiKey_RightBracket: return VK_OEM_6;     // ]
     case ImGuiKey_GraveAccent:
       return VK_OEM_3;  // `
@@ -599,7 +597,7 @@ bool ImGui::HotKey(const char* szLabel, int* pKey) {
             std::memset(io.MouseDown, 0, sizeof(io.MouseDown));
             io.ClearInputKeys();
             *pKey = ImGuiKey_None;
-            skipFrame = 1; // ¼¤»îºóÌø¹ıÒ»Ö¡ÊäÈë
+            skipFrame = 1; // æ¿€æ´»åè·³è¿‡ä¸€å¸§è¾“å…¥
             lastActiveId = nIndex;
         }
         SetActiveID(nIndex, pWindow);

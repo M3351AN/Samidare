@@ -1,6 +1,5 @@
-#pragma once
-#include <chrono>
-#include <thread>
+﻿#pragma once
+#include "pch.h"
 
 #include "../../CS2x64.h"
 

@@ -1,9 +1,28 @@
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/1ee25fbd5318d178d15924046fa2060e765b2f66/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: config.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains config vars and language vars of samidare project.
+// 
+// Note:
+//	 Please do not modify the var names, since they are same with yaml keys.
+//
+// -----------------------------------------------------------------------------
 #pragma once
-#include <XorStr.h>
-
-#include <string>
-#include <vector>
-
+#ifndef CONFIG_H_
+#define CONFIG_H_
+#include "pch.h"
+#include "../Utils/XorStr.h"
 #include "../Overlay.h"
 
 #define AUTO_CONFIG_VARS                   \
@@ -366,3 +385,4 @@ inline std::string TextHold = XorStr("Hold");
 inline std::string TextToggle = XorStr("Toggle");
 inline std::string TextDisable = XorStr("Disable");
 };  // namespace LangSettings
+#endif  // CONFIG_H_

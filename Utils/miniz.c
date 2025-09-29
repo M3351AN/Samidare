@@ -1,4 +1,4 @@
-#include "miniz.h"
+﻿#include "miniz.h"
 /**************************************************************************
  *
  * Copyright 2013-2014 RAD Game Tools and Valve Software
@@ -1251,7 +1251,7 @@ static mz_bool tdefl_compress_block(tdefl_compressor *d, mz_bool static_block)
     return tdefl_compress_lz_codes(d);
 }
 
-static const mz_uint s_tdefl_num_probes[11];
+extern const mz_uint s_tdefl_num_probes[11];
 
 static int tdefl_flush_block(tdefl_compressor *d, int flush)
 {

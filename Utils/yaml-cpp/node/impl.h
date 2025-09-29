@@ -1,4 +1,4 @@
-#ifndef NODE_IMPL_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef NODE_IMPL_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define NODE_IMPL_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -7,11 +7,11 @@
 #pragma once
 #endif
 
-#include "yaml-cpp/exceptions.h"
-#include "yaml-cpp/node/detail/memory.h"
-#include "yaml-cpp/node/detail/node.h"
-#include "yaml-cpp/node/iterator.h"
-#include "yaml-cpp/node/node.h"
+#include "../exceptions.h"
+#include "../node/detail/memory.h"
+#include "../node/detail/node.h"
+#include "../node/iterator.h"
+#include "../node/node.h"
 #include <sstream>
 #include <string>
 

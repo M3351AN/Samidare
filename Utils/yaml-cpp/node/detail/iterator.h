@@ -1,4 +1,4 @@
-#ifndef VALUE_DETAIL_ITERATOR_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef VALUE_DETAIL_ITERATOR_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define VALUE_DETAIL_ITERATOR_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -7,10 +7,10 @@
 #pragma once
 #endif
 
-#include "yaml-cpp/dll.h"
-#include "yaml-cpp/node/detail/node_iterator.h"
-#include "yaml-cpp/node/node.h"
-#include "yaml-cpp/node/ptr.h"
+#include "../../dll.h"
+#include "../../node/detail/node_iterator.h"
+#include "../../node/node.h"
+#include "../../node/ptr.h"
 #include <cstddef>
 #include <iterator>
 

@@ -1,13 +1,28 @@
+﻿// Copyright (c) 2025 渟雲. All rights reserved.
+//
+// Licensed under the TOSSRCU 2025.9 License (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  https://raw.githubusercontent.com/M3351AN/M3351AN/1ee25fbd5318d178d15924046fa2060e765b2f66/LICENSE
+//
+// -----------------------------------------------------------------------------
+// File: Lang.h
+// Author: 渟雲(quq[at]outlook.it)
+// Date: 2025-09-29
+//
+// Description:
+//   This file contains functions for managing language and font loading.
+//
+// -----------------------------------------------------------------------------
 #pragma once
-#include <ShlObj.h>
-#include <XorStr.h>
+#ifndef LANG_H_
+#define LANG_H_
+#include "pch.h"
 
-#include <filesystem>
-#include <string>
-
-#include "HarmonySans.h"
-#include "ImGui/imgui.h"
+#include "./HarmonyOS_SansSC_Regular.h"
 #include "Functions/config.h"
+#include "ImGui/imgui.h"
 
 static constexpr ImWchar basic_ranges[] = {
 
@@ -37,35 +52,38 @@ static constexpr ImWchar thai_ranges[] = {0x0E00, 0x0E7F,  // Thai
 
 class FontManager {
  public:
-
   inline void ReloadFonts() {
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Clear();
 
     ImFontConfig base_cfg;
     base_cfg.FontDataOwnedByAtlas = false;
-    ImFont* base_font =
-        io.Fonts->AddFontFromMemoryTTF((void*)harmonySans, sizeof(harmonySans),
-                                       16.0f, &base_cfg, basic_ranges);
+    io.Fonts->AddFontFromMemoryTTF(
+        (void*)rawdata::kHarmonyosSansscRegularRawData,
+        sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &base_cfg,
+        basic_ranges);
 
     ImFontConfig merge_cfg;
     merge_cfg.MergeMode = true;
     merge_cfg.FontDataOwnedByAtlas = false;
 
     if (LangSettings::greek) {
-      io.Fonts->AddFontFromMemoryTTF((void*)harmonySans, sizeof(harmonySans),
-                                     16.0f, &merge_cfg,
-                                     greek_ranges);
+      io.Fonts->AddFontFromMemoryTTF(
+          (void*)rawdata::kHarmonyosSansscRegularRawData,
+          sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &merge_cfg,
+          greek_ranges);
     }
     if (LangSettings::vietnamese) {
-      io.Fonts->AddFontFromMemoryTTF((void*)harmonySans, sizeof(harmonySans),
-                                     16.0f, &merge_cfg,
-                                     vietnamese_ranges);
+      io.Fonts->AddFontFromMemoryTTF(
+          (void*)rawdata::kHarmonyosSansscRegularRawData,
+          sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &merge_cfg,
+          vietnamese_ranges);
     }
     if (LangSettings::kanji) {
-      io.Fonts->AddFontFromMemoryTTF((void*)harmonySans, sizeof(harmonySans),
-                                     16.0f, &merge_cfg,
-                                     kanji_ranges);
+      io.Fonts->AddFontFromMemoryTTF(
+          (void*)rawdata::kHarmonyosSansscRegularRawData,
+          sizeof(rawdata::kHarmonyosSansscRegularRawData), 16.0f, &merge_cfg,
+          kanji_ranges);
     }
     if (LangSettings::korean) {
       AddFontWithRange(merge_cfg, "malgun.ttf", korean_ranges);
@@ -80,7 +98,7 @@ class FontManager {
     io.Fonts->Build();
     ImGui_ImplDX9_InvalidateDeviceObjects();
     ImGui_ImplDX9_CreateDeviceObjects();
-    global::fontUpdatePending = false;
+    global::is_font_update_pending = false;
   }
 
  private:
@@ -91,7 +109,7 @@ class FontManager {
   }
 
   inline void AddFontWithRange(ImFontConfig& cfg, const char* fontName,
-                        const ImWchar* ranges) {
+                               const ImWchar* ranges) {
     const std::string fullPath = GetSystemFontPath() + fontName;
     if (!std::filesystem::exists(fullPath)) {
       MessageBoxA(nullptr, XorStr("Font file missing."),
@@ -104,3 +122,4 @@ class FontManager {
 };
 
 static FontManager font_manager;
+#endif  // LANG_H_

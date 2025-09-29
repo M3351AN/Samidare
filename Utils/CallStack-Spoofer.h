@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifdef _KERNEL_MODE
 #include <ntddk.h>
 #include <ntdef.h>
@@ -8,6 +8,10 @@
 #include <utility>
 #endif
 #include  <Intrin.h> 
+
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wunused-local-typedef"
+#endif
 
 /*
  *  Copyright 2022 Barracudach

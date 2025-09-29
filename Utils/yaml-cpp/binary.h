@@ -1,4 +1,4 @@
-#ifndef BASE64_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+﻿#ifndef BASE64_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 #define BASE64_H_62B23520_7C8E_11DE_8A39_0800200C9A66
 
 #if defined(_MSC_VER) ||                                            \
@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "yaml-cpp/dll.h"
+#include "../yaml-cpp/dll.h"
 
 namespace YAML {
 YAML_CPP_API std::string EncodeBase64(const unsigned char *data,
