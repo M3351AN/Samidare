@@ -690,7 +690,7 @@ int UkiaInit(int argc, char* argv[]) noexcept {
   int iPadding = RANDOM_PADDING +
                  static_cast<int>(std::hash<std::string>{}(__FILE__)) +
                  __LINE__;
-  // So that we can get randon .exe file Hash even codes are 100% same.
+  // So that we can get random .exe file Hash even codes are 100% same.
   printf(XorStr("%d\n"), iPadding);
   system("cls");
   printf(XorStr("Build - %s - %s\n"), __DATE__, __TIME__);
