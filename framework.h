@@ -24,7 +24,6 @@
 #include <Windows.h>
 #include <ShlObj.h>
 #include <TlHelp32.h>
-#include <atlconv.h>
 #include <iphlpapi.h>
 #include <malloc.h>
 #include <mmsystem.h>

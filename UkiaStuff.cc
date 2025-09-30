@@ -613,9 +613,9 @@ DWORD ProcessManager::GetProcessID(std::string ProcessName) noexcept {
   SPOOF_FUNC;
   HANDLE hSnapshot = SPOOF_CALL(CreateToolhelp32Snapshot)(15, 0);
   Process32First(hSnapshot, &ProcessInfoPE);
-  USES_CONVERSION;
   do {
-    if (strcmp(W2A(ProcessInfoPE.szExeFile), ProcessName.c_str()) == 0) {
+    std::wstring wProcessName(ProcessName.begin(), ProcessName.end());
+    if (wcscmp(ProcessInfoPE.szExeFile, wProcessName.c_str()) == 0) {
       CloseHandle(hSnapshot);
       return ProcessInfoPE.th32ProcessID;
     }
@@ -656,9 +656,9 @@ HMODULE ProcessManager::GetProcessModuleHandle(
   HANDLE hSnapshot =
       SPOOF_CALL(CreateToolhelp32Snapshot)(TH32CS_SNAPMODULE, this->ProcessID);
   Module32First(hSnapshot, &ModuleInfoPE);
-  USES_CONVERSION;
   do {
-    if (strcmp(W2A(ModuleInfoPE.szModule), ModuleName.c_str()) == 0) {
+    std::wstring wModuleName(ModuleName.begin(), ModuleName.end());
+    if (wcscmp(ModuleInfoPE.szModule, wModuleName.c_str()) == 0) {
       SPOOF_CALL(CloseHandle)(hSnapshot);
       return ModuleInfoPE.hModule;
     }
