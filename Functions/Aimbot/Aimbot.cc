@@ -216,7 +216,9 @@ inline void AimBot(const CEntity& Local, Vector3 LocalPos,
     }
     gamevars::IsAimbotting = true;
     #ifndef USERMODE
-    driver.mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, NULL, NULL);
+    driver.mouse_event(MOUSEEVENTF_MOVE, static_cast<DWORD>(TargetX),
+                       static_cast<DWORD>(TargetY),
+                       NULL, NULL);
     #else
     my_mouse_event(MOUSEEVENTF_MOVE, static_cast<DWORD>(TargetX),
                    static_cast<DWORD>(TargetY),

@@ -439,10 +439,10 @@ BOOL UkiaWriteProcessMemory(HANDLE hProcess, LPVOID lpBaseAddress,
                             SIZE_T* lpNumberOfBytesWritten) noexcept {
 #ifndef USERMODE
 #ifndef FIFO_MODE
-  driver.write((uintptr_t)lpBaseAddress, lpBuffer, nSize);
+  driver.write((uintptr_t)lpBaseAddress, lpBuffer, static_cast<int>(nSize));
   return TRUE;
   #else
-   fifo.write((uintptr_t)lpBaseAddress, lpBuffer, nSize);
+  fifo.write((uintptr_t)lpBaseAddress, lpBuffer, static_cast<int>(nSize));
   return TRUE;
 #endif
     #else

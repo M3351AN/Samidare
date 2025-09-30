@@ -43,7 +43,7 @@ inline void encodeFixedStr64(const char* str, FixedStr64* fs) {
   for (size_t i = 0; i < len; i++) {
     size_t blockIndex = i / 8;
     size_t posInBlock = i % 8;
-    int shift = 8 * (7 - posInBlock);
+    int shift = 8 * (7 - static_cast<int>(posInBlock));
     fs->blocks[blockIndex] |=
         (static_cast<uint64_t>(static_cast<unsigned char>(str[i])) << shift);
   }
@@ -114,12 +114,13 @@ class Fifo {
 
   void readSize(const uintptr_t address, const void* buffer,
                 const size_t size) {
-    readVm(process_id_, address, reinterpret_cast<uint64_t>(buffer), size);
+    readVm(static_cast<uint32_t>(process_id_), address,
+           reinterpret_cast<uint64_t>(buffer), size);
   }
 
   template <typename T>
   void write(uintptr_t address, const T& buffer, int size) {
-    writeVm(process_id_, address, reinterpret_cast<uint64_t>(&buffer), size);
+    writeVm(static_cast<uint32_t>(process_id_), address, reinterpret_cast<uint64_t>(&buffer), size);
   }
 
   ULONG64 dllAddress(const char* dll_name) {

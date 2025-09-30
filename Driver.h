@@ -143,7 +143,7 @@ static const DWORD kDriverFetchModuleBase = 0xCAFE4;
 
   template <typename T>
   void write(const uintptr_t address, const T& buffer, int Size) {
-    writevm(_processid, address, (uintptr_t)&buffer, Size);
+    writevm((uint32_t)_processid, address, (uintptr_t)&buffer, Size);
   }
   auto dll_address(const char* dllname) -> ULONG64 {
     Requests out = {0};
