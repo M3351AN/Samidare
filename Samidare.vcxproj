@@ -104,8 +104,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <FloatingPointModel>Precise</FloatingPointModel>
-      <AdditionalOptions>/utf-8  /FI"pch.h"
-</AdditionalOptions>
+      <AdditionalOptions>/utf-8  /FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
@@ -143,8 +142,7 @@
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Precise</FloatingPointModel>
-      <AdditionalOptions>/utf-8  /FI"pch.h" -mbranches-within-32B-boundaries -Wno-microsoft-cast
-</AdditionalOptions>
+      <AdditionalOptions>/utf-8  /FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -182,7 +180,7 @@
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Precise</FloatingPointModel>
-      <AdditionalOptions>/utf-8  /FI"pch.h" -mbranches-within-32B-boundaries -Wno-microsoft-cast</AdditionalOptions>
+      <AdditionalOptions>/utf-8  /FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -220,8 +218,7 @@
       <StringPooling>true</StringPooling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Precise</FloatingPointModel>
-      <AdditionalOptions>/utf-8  /FI"pch.h" -mbranches-within-32B-boundaries -Wno-microsoft-cast
-</AdditionalOptions>
+      <AdditionalOptions>/utf-8  /FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <IntelJCCErratum>true</IntelJCCErratum>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>

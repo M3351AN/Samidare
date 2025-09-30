@@ -10,6 +10,7 @@
 #include  <Intrin.h> 
 
 #if defined(__clang__)
+#pragma clang diagnostic ignored "-Wmicrosoft-cast"
 #pragma clang diagnostic ignored "-Wunused-local-typedef"
 #endif
 

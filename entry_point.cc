@@ -676,7 +676,8 @@ bool WaitForGameFocus() {
 }
 
 bool InitializeRendering() noexcept {
-  randomWindowName = Ukia::getRandomPoem().c_str();
+  std::string RandomPoem = Ukia::getRandomPoem();
+  randomWindowName = RandomPoem.c_str();
   randomWindowNameW = Ukia::getRandomPoemW();
   OverlayWindow::Name = randomWindowName;
   SetupWindow();
